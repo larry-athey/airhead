@@ -11,5 +11,5 @@ If you have any suspended solids in your wash, they will scorch and fuse to the 
 This project aims to solve this problem and add three user selectable modes.
 
 1. Operate at a constant user selectable power level (0% to 100%)
-2. Operate at a constant user selectable temperature
+2. Operate at a constant user selectable temperature (up to 100C/212F)
 3. Perform timed runs with a user selectable starting and ending temperature
