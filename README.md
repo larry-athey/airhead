@@ -13,3 +13,7 @@ This project aims to solve this problem and add three user selectable modes:
 1. Operate at a constant user selectable power level (0% to 100%)
 2. Operate at a constant user selectable temperature (up to 100C/212F)
 3. Perform timed runs with a user selectable starting and ending temperature
+
+This project works with a common SCR controller _(shown below)_ that is available from numerous Amazon sellers.
+
+![SCR-Controller](https://github.com/user-attachments/assets/c13841bf-f4c9-4034-973b-e35a0d831be6)
