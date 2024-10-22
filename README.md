@@ -14,7 +14,7 @@ This project aims to solve this problem and add three user selectable modes:
 2. Operate at a constant user selectable temperature (up to 100C/212F)
 3. Perform timed runs with a user selectable starting and ending temperature
 
-This project works with a very common SCR controller _(shown below)_ that is available from numerous Amazon sellers. This project uses an ESP32 with a built-in touch screen display to replace the controller that comes with their unit. Here is a [link](https://www.amazon.com/gp/product/B076VKJM42/) to this unit, but please feel free to shop around to see if others are selling it for a lower price, I got mine for $20. They're all the same, no matter what the brand name is. There's a 4 conductor ribbon cable that plugs into the controller, so you can just unplug their controller and put it back in the box.
+This project works with a very common SCR controller _(shown below)_ that is available from numerous Amazon sellers. This project uses an ESP32 with a built-in touch screen display to replace the interface that comes with their unit. Here is a [link](https://www.amazon.com/gp/product/B076VKJM42/) to this unit, but please feel free to shop around to see if others are selling it for a lower price, I got mine for $20. They're all the same, no matter what the brand name is. There's a 4 conductor ribbon cable that plugs into the controller interface, so you can just unplug their interface and put it back in the box.
 
 ![Screenshot 2024-10-22 at 2 55 25 PM](https://github.com/user-attachments/assets/7daa8ebd-7aca-4462-8457-f68c4f77a3b1)
 
