@@ -21,3 +21,6 @@ This project works with a very common SCR controller _(shown below)_ that is ava
 
 ![Screenshot 2024-10-22 at 2 55 25 PM](https://github.com/user-attachments/assets/7daa8ebd-7aca-4462-8457-f68c4f77a3b1)
 
+The brains of the operation is a LilyGo T-Display-S3 ESP32 microcontroller with a built in capacitive touch color LCD display.
+
+![Screenshot 2024-10-22 at 6 17 53 PM](https://github.com/user-attachments/assets/1d3f3752-7b3e-4ca7-ac7d-7eb87c74997c)
