@@ -8,7 +8,8 @@
 //
 // This code is written for a 320x170 touch screen. If you're wanting to use a different ESP32 and
 // a larger screen, you'll need to modify a lot of coordinate values in order to use more than the
-// upper left corner of the screen.
+// upper left corner of a larger screen. Honestly, for as little information that's on the screen,
+// I don't see any point in using a larger screen or bloating the code with a built-in web API.
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans10pt7b.h"      // https://github.com/moononournation/ArduinoFreeFontFile.git 
@@ -24,7 +25,7 @@
 #define SCR_OUT 3                // Analog output to the SCR controller
 //------------------------------------------------------------------------------------------------
 bool ActiveRun = false;          // True if there's an active distillation run
-long RunTime = 0;                // Elapsed time of the current distillation run
+long StartTime = 0;              // Start time from millis() of the current distillation run
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
