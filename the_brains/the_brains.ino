@@ -17,7 +17,7 @@
 #include "DallasTemperature.h"   // Dallas Temperature DS18B20 temperature sensor library
 #include "Preferences.h"         // ESP32 Flash memory read/write library
 //------------------------------------------------------------------------------------------------
-#define ONE_WIRE 1               // 1-Wire network pin for DS18B20 temperature sensor
+#define ONE_WIRE 1               // 1-Wire network pin for the DS18B20 temperature sensor
 #define PIN_LCD_BL 38            // Screen backlight pin
 #define PIN_POWER_ON 15          // Screen on/off pin
 #define INC_BTN 0                // Value + button
