@@ -27,7 +27,7 @@
 bool ActiveRun = false;          // True if there's an active distillation run
 long StartTime = 0;              // Start time of the current distillation run
 long LoopCounter = 0;            // Timekeeper for the loop to eliminate the need to delay it
-long LastAdjustment = 0;         // Time of the last power adjustment in the active run
+long LastAdjustment = 0;         // Time of the last power adjustment
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 float UserTemp1 = 0;             // User selected mode 2 temperature or mode 3 start temperature
@@ -79,6 +79,7 @@ void TempUpdate() { // Update the temperature sensor values
 //-----------------------------------------------------------------------------------------------
 void PowerAdjust(byte Percent) { // Set the SCR controller to a target power percentage
   Serial.print("Power Adjust: "); Serial.println(Percent);
+  LastAdjustment = millis();
   // This is an analog power controller, first set the power level to zero and rest 1 second
   analogWrite(SCR_OUT,0);
   delay(1000);
