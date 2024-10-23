@@ -3,6 +3,7 @@
 //
 // This code requires the LilyGo T-Display-S3 ESP32 board. You will first need to properly set up
 // your Arduino IDE to upload to that board. See: https://github.com/Xinyuan-LilyGO/T-Display-S3
+// Make sure that you only install the Espressif ESP32 v2.0.14 board library, no version 3.x stuff
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h"
 #include "FreeSans10pt7b.h"      // https://github.com/moononournation/ArduinoFreeFontFile.git 
