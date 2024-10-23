@@ -26,6 +26,7 @@
 //------------------------------------------------------------------------------------------------
 bool ActiveRun = false;          // True if there's an active distillation run
 long StartTime = 0;              // Start time from millis() of the current distillation run
+long LoopCounter = 0;            // Timekeeper for the loop to eliminate the need to delay it
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
@@ -58,20 +59,41 @@ void setup() {
   gfx->setRotation(1);
   gfx->fillScreen(BLACK);
 
+  LoopCounter = millis();
 }
 //------------------------------------------------------------------------------------------------
+void TempUpdate() { // Update the temperature sensor values
+  DT.requestTemperatures();
+  TempC = DT.getTempCByIndex(0);
+  TempF = DT.getTempFByIndex(0);
+  Serial.print("Temp C: "); Serial.println(TempC);
+  Serial.print("Temp F: "); Serial.println(TempF);
+}
+//-----------------------------------------------------------------------------------------------
 void loop() {
+  long CurrentTime = millis();
+  if (CurrentTime > 4200000000) {
+    // Reboot the system if we're reaching the maximum long integer value of CurrentTime
+    ESP.restart();
+  }
+  // Check for touch-screen keypresses and handle as necessary
 
+  // Check for Value+ keypresses and handle as necessary
   if (digitalRead(INC_BTN) == 0) {
     Serial.println("+ button pressed");
     while (digitalRead(INC_BTN) == 0) delay(10);
   }
-
+  // Check for Value- keypresses and handle as necessary
   if (digitalRead(DEC_BTN) == 0) {
     Serial.println("- button pressed");
     while (digitalRead(DEC_BTN) == 0) delay(10);
   }
-
-  delay(100);
+  // Perform status updates every second without using a delay(1000) in the loop
+  if (CurrentTime - LoopCounter >= 1000) {
+    Serial.println("Running Status Updates");
+    TempUpdate();
+  
+    LoopCounter = CurrentTime;
+  }
 }
 //------------------------------------------------------------------------------------------------
