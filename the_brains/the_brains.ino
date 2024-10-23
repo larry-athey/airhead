@@ -27,7 +27,7 @@ bool ActiveRun = false;          // True if there's an active distillation run
 long RunTime = 0;                // Elapsed time of the current distillation run
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
-byte PowerLevel = 0;             // Current power level 0-255
+byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
 //------------------------------------------------------------------------------------------------
 Arduino_DataBus *bus = new Arduino_ESP32LCD8(7 /* DC */, 6 /* CS */, 8 /* WR */, 9 /* RD */, 39 /* D0 */, 40 /* D1 */, 41 /* D2 */, 42 /* D3 */,
                                              45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
