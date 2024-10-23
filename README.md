@@ -21,6 +21,6 @@ This project works with a very common SCR controller _(shown below)_ that is ava
 
 ![Screenshot 2024-10-22 at 2 55 25 PM](https://github.com/user-attachments/assets/7daa8ebd-7aca-4462-8457-f68c4f77a3b1)
 
-The brains of the operation is a LilyGo T-Display-S3 ESP32 microcontroller with a built in capacitive touch color LCD display. These are available with the case, or you can buy them separately, there's no need to do any 3D printing.
+The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built in capacitive touch color LCD display. These are available with the case, or you can buy them separately, there's no need to do any 3D printing.
 
 ![T-Display-S3](https://github.com/user-attachments/assets/0b984446-51cc-459e-bba1-18f2396f57d7)
