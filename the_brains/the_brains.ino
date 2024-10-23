@@ -75,6 +75,25 @@ void TempUpdate() { // Update the temperature sensor values
   Serial.print("Temp F: "); Serial.println(TempF);
 }
 //-----------------------------------------------------------------------------------------------
+void PowerAdjust(byte Percent) { // Set the SCR controller to a target power percentage
+  Serial.print("Power Adjust: "); Serial.println(Percent);
+  // This is an analog power controller, first set the power level to zero and rest 1 second
+  analogWrite(SCR_OUT,0);
+  delay(1000);
+  // Then progressively adjust the power level up to the requested percentage
+  if (Percent > 0) {
+    PowerLevel = round(Percent * 2.55);
+    byte x = 2.55;
+    while (x <= PowerLevel) {
+      analogWrite(SCR_OUT,x);
+      delay(10);
+      x += 2.55;
+    }
+  } else {
+    PowerLevel = 0;
+  }
+}
+//-----------------------------------------------------------------------------------------------
 void loop() {
   long CurrentTime = millis();
   if (CurrentTime > 4200000000) {
