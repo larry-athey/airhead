@@ -10,6 +10,21 @@
 // a larger screen, you'll need to modify a lot of coordinate values in order to use more than the
 // upper left corner of a larger screen. Honestly, for as little information that's on the screen,
 // I don't see any point in using a larger screen or bloating the code with a built-in web API.
+//
+// The code here follows the same logic used in my RPi-Smart-Still logic processor which has been
+// cooking for nearly 2 years now. We're dealing with a much smaller body of liquid here, so this
+// system uses smaller timing factors when checking for temperature changes and then adjusting the
+// boiler power to compensate. Just like my other project, the key is to make sure the temperature
+// sensor is in solid contact with the boiler, mid way between the bottom and the full mark.
+//
+// My suggestion for the installation of the temperature sensor is to use a piece of fiberglass
+// to help keep it pressed against the boiler, and an extra strip of insulation to keep the cable
+// from contacting the boiler. I would also recommend a healthy amount of heat sink compound on
+// the sensor to guarantee better heat transfer from the boiler to the sensor.
+//
+// Keep in mind that if the liquid in your boiler drops below the sensor level, your temperature
+// readings will not be accurate and likely erratic. The liquid acts as a heat conductor from the
+// inside to the sensor, so you definitely won't want to use mode 2 or 3 for distilling water.
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans10pt7b.h"      // https://github.com/moononournation/ArduinoFreeFontFile.git 
