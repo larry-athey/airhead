@@ -83,7 +83,7 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
   // Then progressively adjust the power level up to the requested percentage
   if (Percent > 0) {
     PowerLevel = round(Percent * 2.55);
-    byte x = 2.55;
+    float x = 2.55;
     while (x <= PowerLevel) {
       analogWrite(SCR_OUT,x);
       delay(10);
