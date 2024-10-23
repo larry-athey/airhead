@@ -1,10 +1,10 @@
 # Airhead
 Air Still (or clone) upgrade that uses an SCR controller for the heating element and an ESP32 to make the whole thing smarter. Eliminates that constant full power on/off switching to the heating element and the possibility of scorching. Plus even more capabilities.
 
-_**SIDE NOTE:** Save your money and just get a [$65 Air Still clone](https://www.amazon.com/VEVOR-Distiller-Countertop-Distilled-Stainless/dp/B0CN2SBJLT/) for this project._
-
 You may contact me directly at https://panhandleponics.com<br>
 Subscribe to the official YouTube channel at https://www.youtube.com/@PanhandlePonics<br>
+
+_**SIDE NOTE:** Save your money and just get a [$65 Air Still clone](https://www.amazon.com/VEVOR-Distiller-Countertop-Distilled-Stainless/dp/B0CN2SBJLT/) for this project._
 
 _**This project began on October 22, 2024 and does not yet have an official release...**_<br><br>
 
