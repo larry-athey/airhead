@@ -27,6 +27,7 @@
 bool ActiveRun = false;          // True if there's an active distillation run
 long StartTime = 0;              // Start time from millis() of the current distillation run
 long LoopCounter = 0;            // Timekeeper for the loop to eliminate the need to delay it
+long LastAdjustment = 0;         // Time of the last power adjustment in the active run
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 float UserTemp1 = 0;             // User selected mode 2 temperature or mode 3 start temperature
@@ -65,6 +66,7 @@ void setup() {
   gfx->fillScreen(BLACK);
 
   LoopCounter = millis();
+  LastAdjustment = LoopCounter;
 }
 //------------------------------------------------------------------------------------------------
 void TempUpdate() { // Update the temperature sensor values
