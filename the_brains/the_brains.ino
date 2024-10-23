@@ -21,6 +21,13 @@
 #define PIN_POWER_ON 15          // Screen on/off pin
 #define INC_BTN 0                // Value + button
 #define DEC_BTN 14               // Value - button
+#define SCR_OUT 3                // Analog output to the SCR controller
+//------------------------------------------------------------------------------------------------
+bool ActiveRun = false;          // True if there's an active distillation run
+long RunTime = 0;                // Elapsed time of the current distillation run
+float TempC = 0;                 // Current temperature reading C
+float TempF = 0;                 // Current temperature reading F
+byte PowerLevel = 0;             // Current power level 0-255
 //------------------------------------------------------------------------------------------------
 Arduino_DataBus *bus = new Arduino_ESP32LCD8(7 /* DC */, 6 /* CS */, 8 /* WR */, 9 /* RD */, 39 /* D0 */, 40 /* D1 */, 41 /* D2 */, 42 /* D3 */,
                                              45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
@@ -36,6 +43,9 @@ void setup() {
   while (! Serial) delay(10);
   Serial.println("");
   DT.begin();
+
+  pinMode(SCR_OUT,OUTPUT);
+  analogWrite(SCR_OUT,PowerLevel);
 
   pinMode(PIN_POWER_ON,OUTPUT);
   digitalWrite(PIN_POWER_ON,HIGH);
