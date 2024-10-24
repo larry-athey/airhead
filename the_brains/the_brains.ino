@@ -273,7 +273,11 @@ void loop() {
   }
   // Check for touch-screen keypresses and handle as necessary
   if (GotInterrupt) {
-    Touch.read();
+    if (Touch.read()) {
+      TP_Point Point = Touch.getPoint(0);
+      ProcessTouch(Point.x,Point.y);
+      while (Touch.read()) delay(10);
+    }
     GotInterrupt = false;
   }
   // Check for Value+ keypresses and handle as necessary
