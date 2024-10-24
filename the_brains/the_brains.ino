@@ -159,7 +159,7 @@ void RunState(byte State) { // Toggle the active distillation run state
   }
 }
 //-----------------------------------------------------------------------------------------------
-bool ButtonTapped(int Xpos, int Ypos, int X1, int Y1, int X2, int Y2) { // Button coordinate evaluator
+bool ButtonPressed(int Xpos, int Ypos, int X1, int Y1, int X2, int Y2) { // Button press evaluator
   if ((Xpos >= X1) && (Xpos <= X2) && (Ypos >= Y1) && (Ypos <= Y2)) {
     return true;
   } else {
@@ -169,7 +169,7 @@ bool ButtonTapped(int Xpos, int Ypos, int X1, int Y1, int X2, int Y2) { // Butto
 //-----------------------------------------------------------------------------------------------
 void ProcessTouch(int Xpos, int Ypos) { // Handle touch-screen inputs
   // Process start/stop button presses and exit
-  if (ButtonTapped(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
+  if (ButtonPressed(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
     if (ActiveRun) {
       RunState(0);
     } else {
