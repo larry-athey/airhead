@@ -108,7 +108,7 @@ void setup() {
   DT.begin();
   Wire.begin(SDA,SCL);
   if (! touch.init()) {
-    Serial.println("Touch IC not found");
+    Serial.println("Touch screen interface not detected");
   }
 
   // Initialize the SCR controller output pin
