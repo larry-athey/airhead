@@ -132,6 +132,7 @@ void loop() {
     while (digitalRead(DEC_BTN) == 0) delay(10);
   }
   // Perform status updates every second without using a delay(1000) in the loop
+  // The delay function can't be used in this loop due to the buttons and touch-screen
   if (CurrentTime - LoopCounter >= 1000) {
     Serial.println("Running Status Updates");
     TempUpdate();
