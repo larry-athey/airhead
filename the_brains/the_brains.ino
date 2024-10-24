@@ -6,7 +6,7 @@
 // Make sure that you only install the Espressif ESP32 v2.0.14 board library since the 3.x stuff
 // is not backward compatible and will throw syntax errors all over the place. (Nice fkin upgrade)
 //
-// This code is written for a 320x170 touch screen. If you're wanting to use a different ESP32 and
+// This code is written for a 320x170 touch-screen. If you're wanting to use a different ESP32 and
 // a larger screen, you'll need to modify a lot of coordinate values in order to use more than the
 // upper left corner of a larger screen. Honestly, for as little information that's on the screen,
 // I don't see any point in using a larger screen or making it mobile web browser capable.
@@ -32,6 +32,10 @@
 #include "OneWire.h"             // OneWire Network communications library
 #include "DallasTemperature.h"   // Dallas Temperature DS18B20 temperature sensor library
 #include "Preferences.h"         // ESP32 Flash memory read/write library
+#include "Wire.h"                // I2C communications library for touch-screen interface
+// #define TOUCH_MODULES_CST_MUTUAL   // Early use of CST328 chip
+#define TOUCH_MODULES_CST_SELF   // Use CST816 chip by default
+#include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 1               // 1-Wire network pin for the DS18B20 temperature sensor
 #define PIN_LCD_BL 38            // Screen backlight pin
