@@ -20,7 +20,8 @@
 // My suggestion for the installation of the temperature sensor is to use a piece of fiberglass
 // to help keep it pressed against the boiler, and an extra strip of insulation to keep the cable
 // from contacting the boiler. I would also recommend a healthy amount of heat sink compound on
-// the sensor to guarantee better heat transfer from the boiler to the sensor.
+// the sensor to guarantee better heat transfer from the boiler to the sensor. This glob of goop
+// will also help keep the fiberglass insulation in place and prevent it from slipping over time.
 //
 // Keep in mind that if the liquid in your boiler drops below the sensor level, your temperature
 // readings will not be accurate and likely erratic. The liquid acts as a heat conductor from the
