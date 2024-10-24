@@ -151,7 +151,7 @@ void RunState(byte State) { // Toggle the active distillation run state
       }
       PowerAdjust(100);
     } else {
-      PowerAdjust(UserTemp1);
+      PowerAdjust(UserPower);
     }
   } else {
     ActiveRun = false;
