@@ -9,7 +9,7 @@
 // This code is written for a 320x170 touch screen. If you're wanting to use a different ESP32 and
 // a larger screen, you'll need to modify a lot of coordinate values in order to use more than the
 // upper left corner of a larger screen. Honestly, for as little information that's on the screen,
-// I don't see any point in using a larger screen or bloating the code with a built-in web API.
+// I don't see any point in using a larger screen or making it mobile web browser capable.
 //
 // The code here follows the same logic used in my RPi-Smart-Still logic processor which has been
 // cooking for nearly 2 years now. We're dealing with a much smaller body of liquid here, so this
