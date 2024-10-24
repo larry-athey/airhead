@@ -224,6 +224,7 @@ void loop() {
           }
         } else {
           if (CurrentMode == 2) { // Constant temperature
+            Serial.print("Target Temp: "); Serial.println(UserTemp1);
             if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
               // Temperature is managed to +/- 1 degree C
               if (TempC >= (UserTemp1 + 1)) { // Over temperature
@@ -246,6 +247,7 @@ void loop() {
                 }
                 Mode3Counter = CurrentTime;
               }
+              Serial.print("Target Temp: "); Serial.println(Mode3Temp);
               if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
                 // Temperature is managed to +/- 1 degree C
                 if (TempC >= (Mode3Temp + 1)) { // Over temperature
