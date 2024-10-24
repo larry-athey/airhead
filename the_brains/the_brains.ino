@@ -41,6 +41,7 @@
 #define SCR_OUT 3                // Analog output to the SCR controller
 //------------------------------------------------------------------------------------------------
 bool ActiveRun = false;          // True if there's an active distillation run
+bool UpToTemp = false;           // True if the run startup has reached operating temperature
 long StartTime = 0;              // Start time of the current distillation run
 long LoopCounter = 0;            // Timekeeper for the loop to eliminate the need to delay it
 long LastAdjustment = 0;         // Time of the last power adjustment
@@ -126,9 +127,17 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
 //-----------------------------------------------------------------------------------------------
 void RunState(byte State) { // Toggle the active distillation run state
   if (State == 1 ) {
+    StartTime = millis();
     ActiveRun = true;
+    UpToTemp  = false;
+    if (CurrentMode > 1) {
+      PowerAdjust(100);
+    } else {
+      PowerAdjust(UserTemp1);
+    }
   } else {
     ActiveRun = false;
+    PowerAdjust(0);
   }
 }
 //-----------------------------------------------------------------------------------------------
@@ -187,7 +196,20 @@ void loop() {
   if (CurrentTime - LoopCounter >= 1000) {
     Serial.println("Running Status Updates");
     TempUpdate();
-  
+    if (ActiveRun) {
+      if (CurrentMode > 1 ) {
+        if (! UpToTemp) {
+          if (TempC >= UserTemp1) {
+            UpToTemp = true;
+            PowerAdjust(70);
+          }
+        } else {
+          if (CurrentMode == 2) {
+            
+          }
+        }
+      }
+    }
     LoopCounter = CurrentTime;
   }
 }
