@@ -124,12 +124,36 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
   }
 }
 //-----------------------------------------------------------------------------------------------
-void ProcessTouch(int Xpos,Ypos) { // Handle touch-screen inputs
+bool ButtonTapped(int Xpos, int Ypos, int X1, int Y1, int X2, int Y2) { // X/Y coordinate evaluator
+  if ((Xpos >= X1) && (Xpos <= X2) && (Ypos >= Y1) && (Ypos <= Y2)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+//-----------------------------------------------------------------------------------------------
+void ProcessTouch(int Xpos, int Ypos) { // Handle touch-screen inputs
+  // Process start/stop button presses and exit
+  if (ButtonTapped(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
+    if (ActiveRun) {
+      //RunState(0);
+    } else {
+      //RunState(1);
+    }
+    return;
+  }
+  // Process top row button presses
 
+  // Process bottom row button presses
+  if (CurrentMode == 3) {
+
+  } else {
+
+  }
 }
 //-----------------------------------------------------------------------------------------------
 void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
-
+  
 }
 //-----------------------------------------------------------------------------------------------
 void loop() {
@@ -141,12 +165,12 @@ void loop() {
   // Check for touch-screen keypresses and handle as necessary
 
   // Check for Value+ keypresses and handle as necessary
-  if (digitalRead(INC_BTN) == 0) {
+  if ((digitalRead(INC_BTN) == 0) && (! ActiveRun)) {
     Serial.println("+ button pressed");
     while (digitalRead(INC_BTN) == 0) delay(10);
   }
   // Check for Value- keypresses and handle as necessary
-  if (digitalRead(DEC_BTN) == 0) {
+  if ((digitalRead(DEC_BTN) == 0) && (! ActiveRun)) {
     Serial.println("- button pressed");
     while (digitalRead(DEC_BTN) == 0) delay(10);
   }
