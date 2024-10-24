@@ -159,7 +159,7 @@ void RunState(byte State) { // Toggle the active distillation run state
   }
 }
 //-----------------------------------------------------------------------------------------------
-bool ButtonPressed(int Xpos, int Ypos, int X1, int Y1, int X2, int Y2) { // Button press evaluator
+bool ButtonPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Button press evaluator
   if ((Xpos >= X1) && (Xpos <= X2) && (Ypos >= Y1) && (Ypos <= Y2)) {
     return true;
   } else {
