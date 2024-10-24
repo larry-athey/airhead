@@ -45,12 +45,14 @@ bool UpToTemp = false;           // True if the run startup has reached operatin
 long StartTime = 0;              // Start time of the current distillation run
 long LoopCounter = 0;            // Timekeeper for the loop to eliminate the need to delay it
 long LastAdjustment = 0;         // Time of the last power adjustment
+long Mode3Counter = 0;           // 15 minute timer for mode 3 target temperature adjustments
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 float Mode3Temp = 0;             // Current target temperature when running in mode 3
+float Mode3Factor = 0;           // How much to increase/decrease the mode 3 target temperature
 float UserTemp1 = 0;             // User selected mode 2 temperature or mode 3 start temperature
 float UserTemp2 = 0;             // User selected ending temperature in mode 3
-long UserTime = 0;               // User selected distillation run time in mode 3
+byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
 byte UserPower = 0;              // User selected power level in mode 1
 byte CurrentMode = 1;            // 1 = Constant Power, 2 = Constant Temp, 3 = Timed w/Temps
 byte Mode3Direction = 1;         // Mode 3 temperature direction, 0 = decrease, 1 = increase
@@ -133,12 +135,19 @@ void RunState(byte State) { // Toggle the active distillation run state
     ActiveRun = true;
     UpToTemp  = false;
     if (CurrentMode > 1) {
-      if (UserTemp1 < UserTemp2) {
-        Mode3Direction = 1;
-        Mode3Temp = UserTemp1;
-      } else {
-        Mode3Direction = 0;
-        Mode3Temp = UserTemp2;
+      if (CurrentMode == 3) {
+        byte Range;
+        if (UserTemp1 < UserTemp2) {
+          Mode3Direction = 1;
+          Mode3Temp = UserTemp1;
+          Range = UserTemp2 - UserTemp1;
+        } else {
+          Mode3Direction = 0;
+          Mode3Temp = UserTemp2;
+          Range = UserTemp1 - UserTemp2;
+        }
+        Mode3Factor  = Range / (UserTime * 4);
+        Mode3Counter = millis();
       }
       PowerAdjust(100);
     } else {
@@ -216,7 +225,7 @@ void loop() {
         } else {
           if (CurrentMode == 2) { // Constant temperature
             if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
-              // Temperature is managed to +/1 1 degree C
+              // Temperature is managed to +/- 1 degree C
               if (TempC >= (UserTemp1 + 1)) { // Over temperature
                 CurrentPercent -= 1;
                 if (CurrentPercent < 0) CurrentPercent = 0;
@@ -227,9 +236,27 @@ void loop() {
                 PowerAdjust(CurrentPercent); // Increase power 1%
               }
             }
-          } else { // Timed distillation run with progressive temperature
+          } else { // Timed distillation run with progressive temperature adjustment
             if (CurrentTime - StartTime < UserTime) {
-
+              if (CurrentTime - Mode3Counter >= 900000) { // Adjust the target temperature every 15 minutes
+                if (Mode3Direction == 1) {
+                  Mode3Temp += Mode3Factor; // Increase the target temperature
+                } else {
+                  Mode3Temp -= Mode3Factor; // Decrease the target temperature
+                }
+              }
+              if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
+                // Temperature is managed to +/- 1 degree C
+                if (TempC >= (Mode3Temp + 1)) { // Over temperature
+                  CurrentPercent -= 1;
+                  if (CurrentPercent < 0) CurrentPercent = 0;
+                  PowerAdjust(CurrentPercent); // Decrease power 1%
+                } else if (TempC <= (Mode3Temp - 1)) { // Under temperature
+                  CurrentPercent += 1;
+                  if (CurrentPercent > 100) CurrentPercent = 100;
+                  PowerAdjust(CurrentPercent); // Increase power 1%
+                }
+              }
             } else { // Distillation run time has expired, shut down
               RunState(0);
             }
