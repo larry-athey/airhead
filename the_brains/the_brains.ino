@@ -52,6 +52,17 @@ long UserTime = 0;               // User selected distillation run time in mode 
 byte UserPower = 0;              // User selected power level in mode 1
 byte CurrentMode = 1;            // 1 = Constant Power, 2 = Constant Temp, 3 = Timed w/Temps
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
+byte ActiveButton = 0;           // Currently selected touch-screen button
+//------------------------------------------------------------------------------------------------
+// Coordinates for touch-screen buttons (Modes 1 and 2)
+int ModeX1 = 0, ModeY1 = 0, ModeX2 = 0, ModeY2 = 0;
+int RunX1 = 0, RunY1 = 0, RunX2 = 0, RunY2 = 0;
+int PowerX1 = 0, PowerY1 = 0, PowerX2 = 0, PowerY2 = 0;
+int TempX1 = 0, TempY1 = 0, TempX2 = 0, TempY2 = 0;
+// Coordinates for Mode 3 bottom row buttons
+int StartX1 = 0, StartY1 = 0, StartX2 = 0, StartY2 = 0;
+int EndX1 = 0, EndY1 = 0, EndX2 = 0, EndY2 = 0;
+int TimeX1 = 0, TimeY1 = 0, TimeX2 = 0, TimeY2 = 0;
 //------------------------------------------------------------------------------------------------
 Arduino_DataBus *bus = new Arduino_ESP32LCD8(7 /* DC */, 6 /* CS */, 8 /* WR */, 9 /* RD */, 39 /* D0 */, 40 /* D1 */, 41 /* D2 */, 42 /* D3 */,
                                              45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
@@ -111,6 +122,14 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
   } else {
     PowerLevel = 0;
   }
+}
+//-----------------------------------------------------------------------------------------------
+void ProcessTouch(int Xpos,Ypos) { // Handle touch-screen inputs
+
+}
+//-----------------------------------------------------------------------------------------------
+void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
+
 }
 //-----------------------------------------------------------------------------------------------
 void loop() {
