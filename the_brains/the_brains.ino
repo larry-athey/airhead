@@ -155,7 +155,6 @@ void SetMemory() { // Update flash memory with the current user settings
   preferences.putUInt("UserTime",UserTime);
   preferences.putUInt("UserPower",UserPower);
   preferences.end();
-  Serial.println("Writing to flash memory");
 }
 //------------------------------------------------------------------------------------------------
 void TempUpdate() { // Update the temperature sensor values
