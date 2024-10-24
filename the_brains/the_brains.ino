@@ -82,7 +82,7 @@ Arduino_DataBus *bus = new Arduino_ESP32LCD8(7 /* DC */, 6 /* CS */, 8 /* WR */,
                                              45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
 Arduino_GFX *gfx = new Arduino_ST7789(bus, 5 /* RST */, 0 /* rotation */, true /* IPS */, 170 /* width */, 320 /* height */, 35 /* col offset 1 */,
                                            0 /* row offset 1 */, 35 /* col offset 2 */, 0 /* row offset 2 */);
-TouchLib touch(Wire,SDA,SCL,CTS820_SLAVE_ADDRESS,TOUCH_RES);
+TouchLib Touch(Wire,SDA,SCL,CTS820_SLAVE_ADDRESS,TOUCH_RES);
 //------------------------------------------------------------------------------------------------
 OneWire oneWire(ONE_WIRE);
 DallasTemperature DT(&oneWire);
@@ -114,7 +114,7 @@ void setup() {
   // Initialize all of the necessary GPIO libraries
   DT.begin();
   Wire.begin(SDA,SCL);
-  if (touch.init()) {
+  if (Touch.init()) {
     attachInterrupt(TOUCH_INT,[] { GotInterrupt = true; },FALLING);
   } else {
     Serial.println("Touch screen interface not detected");
@@ -273,7 +273,7 @@ void loop() {
   }
   // Check for touch-screen keypresses and handle as necessary
   if (GotInterrupt) {
-    touch.read();
+    Touch.read();
     GotInterrupt = false;
   }
   // Check for Value+ keypresses and handle as necessary
