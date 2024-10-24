@@ -187,6 +187,10 @@ void RunState(byte State) { // Toggle the active distillation run state
   }
 }
 //-----------------------------------------------------------------------------------------------
+void ScreenUpdate() { // Update button labels and highlight the active button
+
+}
+//-----------------------------------------------------------------------------------------------
 bool ButtonPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Button press evaluator
   if ((Xpos >= X1) && (Xpos <= X2) && (Ypos >= Y1) && (Ypos <= Y2)) {
     return true;
@@ -243,7 +247,9 @@ void loop() {
   if (CurrentTime - LoopCounter >= 1000) {
     Serial.println("Running Status Updates");
     TempUpdate(); // Read the DS18B20 temperature
+    ScreenUpdate(); // Update values on the screen
     if (ActiveRun) {
+      Serial.print("Current Mode: "); Serial.println(CurrentMode);
       if (CurrentMode > 1) { // Mode 1 is constant power, no temperature management
         if (! UpToTemp) {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
@@ -265,6 +271,7 @@ void loop() {
                 PowerAdjust(CurrentPercent); // Increase power 1%
               }
             }
+            Serial.print("Power Percent: "); Serial.println(CurrentPercent);
           } else { // Timed distillation run with progressive temperature adjustment
             if (CurrentTime - StartTime < UserTime) {
               if (CurrentTime - Mode3Counter >= 900000) { // Adjust the target temperature every 15 minutes
@@ -288,6 +295,7 @@ void loop() {
                   PowerAdjust(CurrentPercent); // Increase power 1%
                 }
               }
+              Serial.print("Power Percent: "); Serial.println(CurrentPercent);
             } else { // Distillation run time has expired, shut down
               RunState(0);
             }
