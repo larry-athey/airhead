@@ -43,6 +43,10 @@
 #define INC_BTN 0                // Value + button
 #define DEC_BTN 14               // Value - button
 #define SCR_OUT 3                // Analog output to the SCR controller
+#define SCL 17                   // I2C clock pin
+#define SDA 18                   // I2C data pin
+#define TOUCH_INT 16
+#define TOUCH_RES 21
 //------------------------------------------------------------------------------------------------
 bool ActiveRun = false;          // True if there's an active distillation run
 bool UpToTemp = false;           // True if the run startup has reached operating temperature
@@ -77,19 +81,22 @@ Arduino_DataBus *bus = new Arduino_ESP32LCD8(7 /* DC */, 6 /* CS */, 8 /* WR */,
                                              45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
 Arduino_GFX *gfx = new Arduino_ST7789(bus, 5 /* RST */, 0 /* rotation */, true /* IPS */, 170 /* width */, 320 /* height */, 35 /* col offset 1 */,
                                            0 /* row offset 1 */, 35 /* col offset 2 */, 0 /* row offset 2 */);
+TouchLib touch(Wire,SDA,SCL,CTS820_SLAVE_ADDRESS,TOUCH_RES);
 //------------------------------------------------------------------------------------------------
 OneWire oneWire(ONE_WIRE);
 DallasTemperature DT(&oneWire);
 Preferences preferences;
 //------------------------------------------------------------------------------------------------
 void setup() {
+  // Enable serial communications for debugging output
   Serial.begin(9600);
   while (! Serial) delay(10);
   Serial.println("");
-  DT.begin();
 
+  // Get last user settings from flash memory
   GetMemory();
   if (UserTemp1 == 0) {
+    // New chip, flash memory not initialized
     UserTemp1 = 80;
     UserTemp2 = 90;
     UserTime  = 4;
@@ -97,20 +104,31 @@ void setup() {
     SetMemory();
   }
 
+  // Initialize all of the necessary GPIO libraries
+  DT.begin();
+  Wire.begin(SDA,SCL);
+  if (! touch.init()) {
+    Serial.println("Touch IC not found");
+  }
+
+  // Initialize the SCR controller output pin
   pinMode(SCR_OUT,OUTPUT);
   analogWrite(SCR_OUT,PowerLevel);
 
+  // Power up the screen and backlight
   pinMode(PIN_POWER_ON,OUTPUT);
   digitalWrite(PIN_POWER_ON,HIGH);
   ledcSetup(0,2000,8);
   ledcAttachPin(PIN_LCD_BL,0);
   ledcWrite(0,255); // Screen brightness (0-255)
 
+  // Initialize the graphics library and draw the screen
   gfx->begin();
   gfx->setRotation(1);
   gfx->fillScreen(BLACK);
   ScreenUpdate();
 
+  // Initialize the timing related variables
   LoopCounter = millis();
   LastAdjustment = LoopCounter;
 }
