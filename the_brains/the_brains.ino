@@ -188,6 +188,10 @@ void RunState(byte State) { // Toggle the active distillation run state
   }
 }
 //-----------------------------------------------------------------------------------------------
+void DrawButton(byte WhichOne) { // Draws the specified button on the screen
+
+}
+//-----------------------------------------------------------------------------------------------
 void ScreenUpdate() { // Update button labels and highlight the active button
 
 }
