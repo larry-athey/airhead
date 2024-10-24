@@ -15,7 +15,7 @@
 // cooking for nearly 2 years now. We're dealing with a much smaller body of liquid here, so this
 // system uses smaller timing factors when checking for temperature changes and then adjusting the
 // boiler power to compensate. Just like my other project, the key is to make sure the temperature
-// sensor is in solid contact with the boiler, mid way between the bottom and the full mark.
+// sensor is in solid contact with the boiler, about mid way between the bottom and the full mark.
 //
 // My suggestion for the installation of the temperature sensor is to use a piece of fiberglass
 // to help keep it pressed against the boiler, and an extra strip of insulation to keep the cable
