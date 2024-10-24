@@ -47,6 +47,7 @@ long LoopCounter = 0;            // Timekeeper for the loop to eliminate the nee
 long LastAdjustment = 0;         // Time of the last power adjustment
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
+float Mode3Temo
 float UserTemp1 = 0;             // User selected mode 2 temperature or mode 3 start temperature
 float UserTemp2 = 0;             // User selected ending temperature in mode 3
 long UserTime = 0;               // User selected distillation run time in mode 3
@@ -174,6 +175,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
 }
 //-----------------------------------------------------------------------------------------------
 void loop() {
+  int CurrentPercent = round(0.392156863 * PowerLevel);
   long CurrentTime = millis();
   if (CurrentTime > 4200000000) {
     // Reboot the system if we're reaching the maximum long integer value of CurrentTime
@@ -205,8 +207,19 @@ void loop() {
           }
         } else {
           if (CurrentMode == 2) { // Constant temperature
-
-          } else { // Progressive temperature
+            if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
+              // Temperature is managed to +/1 1 degree C
+              if (TempC >= (UserTemp1 + 1)) { // Over temperature
+                CurrentPercent -= 1;
+                if (CurrentPercent < 0) CurrentPercent = 0;
+                PowerAdjust(CurrentPercent); // Decrease power 1%
+              } else if (TempC <= (UserTemp1 - 1)) { // Under temperature
+                CurrentPercent += 1;
+                if (CurrentPercent > 100) CurrentPercent = 100;
+                PowerAdjust(CurrentPercent); // Increase power 1%
+              }
+            }
+          } else { // Timed distillation run with progressive temperature
 
           }
         }
