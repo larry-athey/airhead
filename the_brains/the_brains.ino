@@ -104,6 +104,12 @@ void setup() {
     SetMemory();
   }
 
+  // Initialize the touch-screen reset line
+  pinMode(TOUCH_RES,OUTPUT);
+  digitalWrite(TOUCH_RES,LOW);
+  delay(500);
+  digitalWrite(TOUCH_RES,HIGH);
+
   // Initialize all of the necessary GPIO libraries
   DT.begin();
   Wire.begin(SDA,SCL);
