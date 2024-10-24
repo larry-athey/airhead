@@ -133,6 +133,13 @@ void RunState(byte State) { // Toggle the active distillation run state
     ActiveRun = true;
     UpToTemp  = false;
     if (CurrentMode > 1) {
+      if (UserTemp1 < UserTemp2) {
+        Mode3Direction = 1;
+        Mode3Temp = UserTemp1;
+      } else {
+        Mode3Direction = 0;
+        Mode3Temp = UserTemp2;
+      }
       PowerAdjust(100);
     } else {
       PowerAdjust(UserTemp1);
