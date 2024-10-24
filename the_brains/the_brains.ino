@@ -188,7 +188,13 @@ void ProcessTouch(int Xpos, int Ypos) { // Handle touch-screen inputs
 }
 //-----------------------------------------------------------------------------------------------
 void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
-  
+  if (WhichOne == 1) {
+    Serial.println("+ button pressed");
+    while (digitalRead(INC_BTN) == 0) delay(10);
+  } else {
+    Serial.println("- button pressed");
+    while (digitalRead(DEC_BTN) == 0) delay(10);
+  }
 }
 //-----------------------------------------------------------------------------------------------
 void loop() {
@@ -201,15 +207,9 @@ void loop() {
   // Check for touch-screen keypresses and handle as necessary
 
   // Check for Value+ keypresses and handle as necessary
-  if ((digitalRead(INC_BTN) == 0) && (! ActiveRun)) {
-    Serial.println("+ button pressed");
-    while (digitalRead(INC_BTN) == 0) delay(10);
-  }
+  if ((digitalRead(INC_BTN) == 0) && (! ActiveRun)) ProcessButton(1);
   // Check for Value- keypresses and handle as necessary
-  if ((digitalRead(DEC_BTN) == 0) && (! ActiveRun)) {
-    Serial.println("- button pressed");
-    while (digitalRead(DEC_BTN) == 0) delay(10);
-  }
+  if ((digitalRead(DEC_BTN) == 0) && (! ActiveRun)) ProcessButton(0);
   // Perform status updates every second without using a delay(1000) in the loop
   // The delay function can't be used in this loop due to the buttons and touch-screen
   if (CurrentTime - LoopCounter >= 1000) {
