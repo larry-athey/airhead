@@ -45,8 +45,8 @@
 #define SCR_OUT 3                // Analog output to the SCR controller
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
-#define TOUCH_INT 16
-#define TOUCH_RES 21
+#define TOUCH_INT 16             // CPU interrupt pin for touch-screen input hook
+#define TOUCH_RES 21             // Reset pin for touch-screen interface
 //------------------------------------------------------------------------------------------------
 bool ActiveRun = false;          // True if there's an active distillation run
 bool UpToTemp = false;           // True if the run startup has reached operating temperature
