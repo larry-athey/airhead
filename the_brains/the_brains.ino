@@ -195,17 +195,19 @@ void loop() {
   // The delay function can't be used in this loop due to the buttons and touch-screen
   if (CurrentTime - LoopCounter >= 1000) {
     Serial.println("Running Status Updates");
-    TempUpdate();
+    TempUpdate(); // Read the DS18B20 temperature
     if (ActiveRun) {
-      if (CurrentMode > 1 ) {
+      if (CurrentMode > 1 ) { // Mode 1 is constant power, no temperature management
         if (! UpToTemp) {
-          if (TempC >= UserTemp1) {
+          if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
             UpToTemp = true;
-            PowerAdjust(70);
+            PowerAdjust(70); // Fall back to 70% power and begin temperature management
           }
         } else {
-          if (CurrentMode == 2) {
-            
+          if (CurrentMode == 2) { // Constant temperature
+
+          } else { // Progressive temperature
+
           }
         }
       }
