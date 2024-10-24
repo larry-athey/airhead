@@ -124,7 +124,15 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
   }
 }
 //-----------------------------------------------------------------------------------------------
-bool ButtonTapped(int Xpos, int Ypos, int X1, int Y1, int X2, int Y2) { // X/Y coordinate evaluator
+void RunState(byte State) {
+  if (State == 1 ) {
+    ActiveRun = true;
+  } else {
+    ActiveRun = false;
+  }
+}
+//-----------------------------------------------------------------------------------------------
+bool ButtonTapped(int Xpos, int Ypos, int X1, int Y1, int X2, int Y2) { // Button coordinate evaluator
   if ((Xpos >= X1) && (Xpos <= X2) && (Ypos >= Y1) && (Ypos <= Y2)) {
     return true;
   } else {
@@ -136,9 +144,9 @@ void ProcessTouch(int Xpos, int Ypos) { // Handle touch-screen inputs
   // Process start/stop button presses and exit
   if (ButtonTapped(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
     if (ActiveRun) {
-      //RunState(0);
+      RunState(0);
     } else {
-      //RunState(1);
+      RunState(1);
     }
     return;
   }
