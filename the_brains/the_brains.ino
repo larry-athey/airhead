@@ -38,8 +38,8 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 1               // 1-Wire network pin for the DS18B20 temperature sensor
-#define PIN_LCD_BL 38            // Screen backlight pin
-#define PIN_POWER_ON 15          // Screen on/off pin
+#define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
+#define SCREEN_POWER_ON 15       // Screen power on/off pin
 #define INC_BTN 0                // Value + button
 #define DEC_BTN 14               // Value - button
 #define SCR_OUT 3                // Analog output to the SCR controller
@@ -122,10 +122,10 @@ void setup() {
   analogWrite(SCR_OUT,PowerLevel);
 
   // Power up the screen and backlight
-  pinMode(PIN_POWER_ON,OUTPUT);
-  digitalWrite(PIN_POWER_ON,HIGH);
+  pinMode(SCREEN_POWER_ON,OUTPUT);
+  digitalWrite(SCREEN_POWER_ON,HIGH);
   ledcSetup(0,2000,8);
-  ledcAttachPin(PIN_LCD_BL,0);
+  ledcAttachPin(SCREEN_BACKLIGHT,0);
   ledcWrite(0,255); // Screen brightness (0-255)
 
   // Initialize the graphics library and draw the screen
