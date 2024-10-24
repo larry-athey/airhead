@@ -244,6 +244,7 @@ void loop() {
                 } else {
                   Mode3Temp -= Mode3Factor; // Decrease the target temperature
                 }
+                Mode3Counter = CurrentTime;
               }
               if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
                 // Temperature is managed to +/- 1 degree C
