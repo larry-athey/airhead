@@ -200,7 +200,7 @@ void loop() {
     Serial.println("Running Status Updates");
     TempUpdate(); // Read the DS18B20 temperature
     if (ActiveRun) {
-      if (CurrentMode > 1 ) { // Mode 1 is constant power, no temperature management
+      if (CurrentMode > 1) { // Mode 1 is constant power, no temperature management
         if (! UpToTemp) {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
             UpToTemp = true;
@@ -221,7 +221,11 @@ void loop() {
               }
             }
           } else { // Timed distillation run with progressive temperature
+            if (CurrentTime - StartTime < UserTime) {
 
+            } else { // Distillation run time has expired, shut down
+              RunState(0);
+            }
           }
         }
       }
