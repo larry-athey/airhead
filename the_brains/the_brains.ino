@@ -47,12 +47,13 @@ long LoopCounter = 0;            // Timekeeper for the loop to eliminate the nee
 long LastAdjustment = 0;         // Time of the last power adjustment
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
-float Mode3Temo
+float Mode3Temp = 0;             // Current target temperature when running in mode 3
 float UserTemp1 = 0;             // User selected mode 2 temperature or mode 3 start temperature
 float UserTemp2 = 0;             // User selected ending temperature in mode 3
 long UserTime = 0;               // User selected distillation run time in mode 3
 byte UserPower = 0;              // User selected power level in mode 1
 byte CurrentMode = 1;            // 1 = Constant Power, 2 = Constant Temp, 3 = Timed w/Temps
+byte Mode3Direction = 1;         // Mode 3 temperature direction, 0 = decrease, 1 = increase
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
 byte ActiveButton = 0;           // Currently selected touch-screen button
 //------------------------------------------------------------------------------------------------
