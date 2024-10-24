@@ -50,6 +50,7 @@
 //------------------------------------------------------------------------------------------------
 bool ActiveRun = false;          // True if there's an active distillation run
 bool UpToTemp = false;           // True if the run startup has reached operating temperature
+bool GotInterrupt = false;       // True if touch input has been detected on the screen
 long StartTime = 0;              // Start time of the current distillation run
 long LoopCounter = 0;            // Timekeeper for the loop to eliminate the need to delay it
 long LastAdjustment = 0;         // Time of the last power adjustment
@@ -113,7 +114,9 @@ void setup() {
   // Initialize all of the necessary GPIO libraries
   DT.begin();
   Wire.begin(SDA,SCL);
-  if (! touch.init()) {
+  if (touch.init()) {
+    attachInterrupt(TOUCH_INT,[] { GotInterrupt = true; },FALLING);
+  } else {
     Serial.println("Touch screen interface not detected");
   }
 
