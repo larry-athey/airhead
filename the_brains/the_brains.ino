@@ -50,8 +50,8 @@ float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 float Mode3Temp = 0;             // Current target temperature when running in mode 3
 float Mode3Factor = 0;           // How much to increase/decrease the mode 3 target temperature
-float UserTemp1 = 0;             // User selected mode 2 temperature or mode 3 start temperature
-float UserTemp2 = 0;             // User selected ending temperature in mode 3
+byte UserTemp1 = 0;              // User selected mode 2 temperature or mode 3 start temperature
+byte UserTemp2 = 0;              // User selected ending temperature in mode 3
 byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
 byte UserPower = 0;              // User selected power level in mode 1
 byte CurrentMode = 1;            // 1 = Constant Power, 2 = Constant Temp, 3 = Timed w/Temps
@@ -84,6 +84,15 @@ void setup() {
   Serial.println("");
   DT.begin();
 
+  GetMemory();
+  if (UserTemp1 == 0) {
+    UserTemp1 = 80;
+    UserTemp2 = 90;
+    UserTime  = 4;
+    UserPower = 80;
+    SetMemory();
+  }
+
   pinMode(SCR_OUT,OUTPUT);
   analogWrite(SCR_OUT,PowerLevel);
 
@@ -99,6 +108,25 @@ void setup() {
 
   LoopCounter = millis();
   LastAdjustment = LoopCounter;
+}
+//------------------------------------------------------------------------------------------------
+void GetMemory() { // Get the last user settings from flash memory on startup
+  preferences.begin("prefs",true);
+  UserTemp1 = preferences.getUInt("UserTemp1",0);
+  UserTemp2 = preferences.getUInt("UserTemp2",0);
+  UserTime  = preferences.getUInt("UserTime",0);
+  UserPower = preferences.getUInt("UserPower",0);
+  preferences.end();
+}
+//------------------------------------------------------------------------------------------------
+void SetMemory() { // Update flash memory with the current user settings
+  preferences.begin("prefs",false);
+  preferences.putUInt("UserTemp1",UserTemp1);
+  preferences.putUInt("UserTemp2",UserTemp2);
+  preferences.putUInt("UserTime",UserTime);
+  preferences.putUInt("UserPower",UserPower);
+  preferences.end();
+  Serial.println("Writing to flash memory");
 }
 //------------------------------------------------------------------------------------------------
 void TempUpdate() { // Update the temperature sensor values
