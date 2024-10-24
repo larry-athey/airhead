@@ -105,6 +105,7 @@ void setup() {
   gfx->begin();
   gfx->setRotation(1);
   gfx->fillScreen(BLACK);
+  ScreenUpdate();
 
   LoopCounter = millis();
   LastAdjustment = LoopCounter;
