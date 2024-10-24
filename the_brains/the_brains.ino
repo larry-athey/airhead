@@ -124,7 +124,7 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
   }
 }
 //-----------------------------------------------------------------------------------------------
-void RunState(byte State) {
+void RunState(byte State) { // Toggle the active distillation run state
   if (State == 1 ) {
     ActiveRun = true;
   } else {
