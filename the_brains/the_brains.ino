@@ -272,7 +272,10 @@ void loop() {
     ESP.restart();
   }
   // Check for touch-screen keypresses and handle as necessary
-
+  if (GotInterrupt) {
+    touch.read();
+    GotInterrupt = false;
+  }
   // Check for Value+ keypresses and handle as necessary
   if ((digitalRead(INC_BTN) == 0) && (! ActiveRun)) ProcessButton(1);
   // Check for Value- keypresses and handle as necessary
