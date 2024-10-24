@@ -234,7 +234,7 @@ bool ButtonPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Button pr
   }
 }
 //-----------------------------------------------------------------------------------------------
-void ProcessTouch(int Xpos, int Ypos) { // Handle touch-screen inputs
+void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen inputs
   // Process start/stop button presses and exit
   if (ButtonPressed(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
     if (ActiveRun) {
