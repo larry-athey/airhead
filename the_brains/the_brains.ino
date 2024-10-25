@@ -62,7 +62,7 @@ float Mode3Factor = 0;           // How much to increase/decrease the mode 3 tar
 byte UserTemp1 = 0;              // User selected mode 2 temperature or mode 3 start temperature
 byte UserTemp2 = 0;              // User selected ending temperature in mode 3
 byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
-byte UserPower = 0;              // User selected power level in mode 1
+byte UserPower = 0;              // User selected power level in mode 1 (0% to 100%)
 byte CurrentMode = 1;            // 1 = Constant Power, 2 = Constant Temp, 3 = Timed w/Temps
 byte Mode3Direction = 1;         // Mode 3 temperature direction, 0 = decrease, 1 = increase
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
@@ -286,14 +286,40 @@ void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
   DrawButton(ActiveButton);
 }
 //-----------------------------------------------------------------------------------------------
-void IncValue(WhichOne) {
-
+void IncValue(byte WhichOne) { // Increment the value associated with the active screen button
+  if (WhichOne == 0) {
+    if (CurrentMode < 3) CurrentMode ++;
+  } else if (WhichOne == 2) {
+    if (UserTemp1 < 100) UserTemp1 ++;
+  } else if (WhichOne == 3) {
+    if (UserPower < 100) UserPower ++;
+  } else if (WhichOne == 4) {
+    if (UserTemp1 < 100) UserTemp1 ++;
+  } else if (WhichOne == 5) {
+    if (UserTemp2 < 100) UserTemp2 ++;
+  } else if (WhichOne == 6) {
+    if (UserTime < 24) UserTime ++;
+  }
   DrawButton(WhichOne);
+  SetMemory();
 }
 //-----------------------------------------------------------------------------------------------
-void DecValue(WhichOne) {
-  
+void DecValue(byte WhichOne) { // Decrement the value associated with the active screen button
+  if (WhichOne == 0) {
+    if (CurrentMode > 1) CurrentMode --;
+  } else if (WhichOne == 2) {
+    if (UserTemp1 > 38) UserTemp1 --;
+  } else if (WhichOne == 3) {
+    if (UserPower > 1) UserPower --;
+  } else if (WhichOne == 4) {
+    if (UserTemp1 > 38) UserTemp1 --;
+  } else if (WhichOne == 5) {
+    if (UserTemp2 > 38) UserTemp2 --;
+  } else if (WhichOne == 6) {
+    if (UserTime > 1) UserTime --;
+  }
   DrawButton(WhichOne);
+  SetMemory();
 }
 //-----------------------------------------------------------------------------------------------
 void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
@@ -307,8 +333,10 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
       delay(10);
       HoldCounter ++;
       if (HoldCounter == 21) { // User is intentionally holding the + button
-        IncValue(ActiveButton);
-        delay(500);
+        while (digitalRead(INC_BTN) == 0) {
+          IncValue(ActiveButton);
+          delay(500);
+        }
       }
     }
   } else {
@@ -319,8 +347,10 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
       delay(10);
       HoldCounter ++;
       if (HoldCounter == 21) { // User is intentionally holding the - button
-        DecValue(ActiveButton);
-        delay(500);
+        while (digitalRead(DEC_BTN) == 0) {
+          DecValue(ActiveButton);
+          delay(500);
+        }
       }
     }
   }
