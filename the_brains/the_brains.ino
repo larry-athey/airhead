@@ -320,7 +320,6 @@ void loop() {
   if (CurrentTime - LoopCounter >= 1000) {
     Serial.println("Running Status Updates");
     TempUpdate(); // Read the DS18B20 temperature
-    ScreenUpdate(); // Update values on the screen
     if (ActiveRun) {
       Serial.print("Current Mode: "); Serial.println(CurrentMode);
       if (CurrentMode > 1) { // Mode 1 is constant power, no temperature management
@@ -376,6 +375,7 @@ void loop() {
         }
       }
     }
+    ScreenUpdate();
     LoopCounter = CurrentTime;
   }
 }
