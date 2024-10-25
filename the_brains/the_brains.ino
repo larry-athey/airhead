@@ -220,10 +220,23 @@ void RunState(byte State) { // Toggle the active distillation run state
 //-----------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws the specified button on the screen
 
+  if (WhichOne == ActiveButton) {
+    // Draw the highlight frame if this is the active button
+
+  }
 }
 //-----------------------------------------------------------------------------------------------
 void ScreenUpdate() { // Update button labels and highlight the active button
-
+  DrawButton(0);
+  DrawButton(1);
+  if (CurrentMode == 3) {
+    DrawButton(4);
+    DrawButton(5);
+    DrawButton(6);
+  } else {
+    DrawButton(2);
+    DrawButton(3);
+  }
 }
 //-----------------------------------------------------------------------------------------------
 bool RegionPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Screen button press evaluator
