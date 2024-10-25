@@ -286,12 +286,12 @@ void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
   DrawButton(ActiveButton);
 }
 //-----------------------------------------------------------------------------------------------
-void IncButton(WhichOne) {
+void IncValue(WhichOne) {
 
   DrawButton(WhichOne);
 }
 //-----------------------------------------------------------------------------------------------
-void DeccButton(WhichOne) {
+void DecValue(WhichOne) {
   
   DrawButton(WhichOne);
 }
@@ -302,24 +302,24 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
   if (WhichOne == 1) {
     Serial.println("+ button pressed");
     // Increment active screen button by 1
-    IncButton(WhichOne);
+    IncValue(ActiveButton);
     while (digitalRead(INC_BTN) == 0) {
       delay(10);
       HoldCounter ++;
       if (HoldCounter == 21) { // User is intentionally holding the + button
-        IncButton(WhichOne);
+        IncValue(ActiveButton);
         delay(500);
       }
     }
   } else {
     Serial.println("- button pressed");
     // Decrement active screen button by 1
-    DeccButton(WhichOne);
+    DecValue(ActiveButton);
     while (digitalRead(DEC_BTN) == 0) {
       delay(10);
       HoldCounter ++;
       if (HoldCounter == 21) { // User is intentionally holding the - button
-        DeccButton(WhichOne);
+        DecValue(ActiveButton);
         delay(500);
       }
     }
