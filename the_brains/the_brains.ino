@@ -301,7 +301,6 @@ void IncValue(byte WhichOne) { // Increment the value associated with the active
     if (UserTime < 24) UserTime ++;
   }
   DrawButton(WhichOne);
-  SetMemory();
 }
 //-----------------------------------------------------------------------------------------------
 void DecValue(byte WhichOne) { // Decrement the value associated with the active screen button
@@ -319,7 +318,6 @@ void DecValue(byte WhichOne) { // Decrement the value associated with the active
     if (UserTime > 1) UserTime --;
   }
   DrawButton(WhichOne);
-  SetMemory();
 }
 //-----------------------------------------------------------------------------------------------
 void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
@@ -354,6 +352,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
       }
     }
   }
+  SetMemory();
 }
 //-----------------------------------------------------------------------------------------------
 void loop() {
