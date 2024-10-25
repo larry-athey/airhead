@@ -226,7 +226,7 @@ void ScreenUpdate() { // Update button labels and highlight the active button
 
 }
 //-----------------------------------------------------------------------------------------------
-bool ButtonPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Button press evaluator
+bool RegionPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Screen button press evaluator
   if ((Xpos >= X1) && (Xpos <= X2) && (Ypos >= Y1) && (Ypos <= Y2)) {
     return true;
   } else {
@@ -236,7 +236,7 @@ bool ButtonPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Button pr
 //-----------------------------------------------------------------------------------------------
 void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen inputs
   // Process start/stop button presses and exit
-  if (ButtonPressed(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
+  if (RegionPressed(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
     if (ActiveRun) {
       RunState(0);
     } else {
