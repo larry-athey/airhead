@@ -330,7 +330,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
     while (digitalRead(INC_BTN) == 0) {
       delay(10);
       HoldCounter ++;
-      if (HoldCounter == 21) { // User is intentionally holding the + button
+      if (HoldCounter == 200) { // User is intentionally holding the + button
         while (digitalRead(INC_BTN) == 0) {
           IncValue(ActiveButton);
           delay(500);
@@ -344,7 +344,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
     while (digitalRead(DEC_BTN) == 0) {
       delay(10);
       HoldCounter ++;
-      if (HoldCounter == 21) { // User is intentionally holding the - button
+      if (HoldCounter == 200) { // User is intentionally holding the - button
         while (digitalRead(DEC_BTN) == 0) {
           DecValue(ActiveButton);
           delay(500);
