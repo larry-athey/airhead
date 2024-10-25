@@ -67,6 +67,7 @@ byte CurrentMode = 1;            // 1 = Constant Power, 2 = Constant Temp, 3 = T
 byte Mode3Direction = 1;         // Mode 3 temperature direction, 0 = decrease, 1 = increase
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
 byte ActiveButton = 0;           // Currently selected touch-screen button
+char Runtime[10];                // HH:MM:SS formatted time of the current distillation run
 //------------------------------------------------------------------------------------------------
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 0, ModeY2 = 0;
@@ -321,6 +322,13 @@ void loop() {
     Serial.println("Running Status Updates");
     TempUpdate(); // Read the DS18B20 temperature
     if (ActiveRun) {
+      unsigned long allSeconds = (CurrentTime - StartTime) / 1000;
+      int runHours = allSeconds / 3600;
+      int secsRemaining = allSeconds % 3600;
+      int runMinutes = secsRemaining / 60;
+      int runSeconds = secsRemaining % 60;
+      sprintf(Runtime,"%02u:%02u:%02u",runHours,runMinutes,runSeconds);
+      Serial.print("Run Time: "); Serial.println(Runtime);
       Serial.print("Current Mode: "); Serial.println(CurrentMode);
       if (CurrentMode > 1) { // Mode 1 is constant power, no temperature management
         if (! UpToTemp) {
