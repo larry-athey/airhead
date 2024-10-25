@@ -71,8 +71,8 @@ byte ActiveButton = 0;           // Currently selected touch-screen button
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 0, ModeY2 = 0;
 int RunX1 = 0, RunY1 = 0, RunX2 = 0, RunY2 = 0;
-int PowerX1 = 0, PowerY1 = 0, PowerX2 = 0, PowerY2 = 0;
 int TempX1 = 0, TempY1 = 0, TempX2 = 0, TempY2 = 0;
+int PowerX1 = 0, PowerY1 = 0, PowerX2 = 0, PowerY2 = 0;
 // Coordinates for Mode 3 bottom row buttons
 int StartX1 = 0, StartY1 = 0, StartX2 = 0, StartY2 = 0;
 int EndX1 = 0, EndY1 = 0, EndX2 = 0, EndY2 = 0;
@@ -234,24 +234,42 @@ bool RegionPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Screen bu
   }
 }
 //-----------------------------------------------------------------------------------------------
-void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen inputs
-  // Process start/stop button presses and exit
-  if (RegionPressed(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
+void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
+  if (RegionPressed(Xpos,Ypos,ModeX1,ModeY1,ModeX2,ModeY2)) {
+    // Mode button
+    if (! ActiveRun) ActiveButton = 0;
+  } else if (RegionPressed(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
+    // Start/Stop button
+    ActiveButton = 1;
     if (ActiveRun) {
       RunState(0);
     } else {
       RunState(1);
     }
-    return;
   }
-  // Process top row button presses
-
-  // Process bottom row button presses
-  if (CurrentMode == 3) {
-
-  } else {
-
+  if (! ActiveRun) {
+    if (CurrentMode == 3) {
+      if (RegionPressed(Xpos,Ypos,StartX1,StartY1,StartX2,StartY2)) {
+        // Start Temp button
+        ActiveButton = 4;
+      } else if (RegionPressed(Xpos,Ypos,EndX1,EndY1,EndX2,EndY2)) {
+        // End Temp button
+        ActiveButton = 5;
+      } else if (RegionPressed(Xpos,Ypos,TimeX1,TimeY1,TimeX2,TimeY2)) {
+        // Time button
+        ActiveButton = 6;
+      }
+    } else {
+      if (RegionPressed(Xpos,Ypos,TempX1,TempY1,TempX2,TempY2)) {
+        // Temperature button
+        if (CurrentMode == 2) ActiveButton = 2;
+      } else if (RegionPressed(Xpos,Ypos,PowerX1,PowerY1,PowerX2,PowerY2)) {
+        // Power button
+        if (CurrentMode == 1) ActiveButton = 3;
+      }
+    }
   }
+  DrawButton(ActiveButton);
 }
 //-----------------------------------------------------------------------------------------------
 void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
