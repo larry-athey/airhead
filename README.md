@@ -21,7 +21,7 @@ This project aims to solve this problem and add three user selectable modes:
 
 This project works with a very common SCR controller _(shown below)_ that is available from numerous Amazon sellers. This project uses an ESP32 with a built-in touch screen display to replace the interface that comes with their unit. Here is a [link](https://www.amazon.com/gp/product/B076VKJM42/) to this unit, but please feel free to shop around to see if others are selling it for a lower price, I got mine for $20. They're all the same, no matter what the brand name is. There's a 4 conductor ribbon cable that plugs into the controller interface, so you can just unplug their interface and put it back in the box.
 
-<img width="1024" src="https://github.com/user-attachments/assets/7daa8ebd-7aca-4462-8457-f68c4f77a3b1">
+<img width="1024" src="https://github.com/user-attachments/assets/7daa8ebd-7aca-4462-8457-f68c4f77a3b1"><br>
 
 The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. These ESP32 units are available with a case or you can buy them separately, there's no need for any 3D printing. The only wires coming out of the left side are the ribbon cable from the SCR controller and a temperature sensor cable. The USB-C port for the ESP32 is accessible for software updates without the need to take anything apart. Refer to the photos and PDF files in the **/Diagrams/** directory here for more details.
 
