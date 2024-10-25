@@ -325,7 +325,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
 
   if (WhichOne == 1) {
     Serial.println("+ button pressed");
-    // Increment active screen button by 1
+    // Increment active screen button value by 1
     IncValue(ActiveButton);
     while (digitalRead(INC_BTN) == 0) {
       delay(10);
@@ -339,7 +339,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
     }
   } else {
     Serial.println("- button pressed");
-    // Decrement active screen button by 1
+    // Decrement active screen button value by 1
     DecValue(ActiveButton);
     while (digitalRead(DEC_BTN) == 0) {
       delay(10);
