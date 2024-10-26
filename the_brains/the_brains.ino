@@ -33,8 +33,7 @@
 #include "DallasTemperature.h"   // Dallas Temperature DS18B20 temperature sensor library
 #include "Preferences.h"         // ESP32 Flash memory read/write library
 #include "Wire.h"                // I2C communications library for touch-screen interface
-// #define TOUCH_MODULES_CST_MUTUAL   // Early use of CST328 chip
-#define TOUCH_MODULES_CST_SELF   // Use CST816 chip by default
+#define TOUCH_MODULES_CST_SELF   // Tell TouchLib.h to use the CST816 chip routines
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
