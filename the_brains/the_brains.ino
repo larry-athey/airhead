@@ -39,14 +39,14 @@
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
 #define SCR_OUT 1                // Analog output to the SCR controller
+#define SCL 17                   // I2C clock pin
+#define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
 #define SCREEN_POWER_ON 15       // Screen power on/off pin
 #define INC_BTN 0                // Value + button
 #define DEC_BTN 14               // Value - button
-#define SCL 17                   // I2C clock pin
-#define SDA 18                   // I2C data pin
-#define TOUCH_INT 16             // CPU interrupt pin for touch-screen input hook
-#define TOUCH_RES 21             // Reset pin for touch-screen interface
+#define TOUCH_INT 16             // CPU interrupt monitor pin for touch-screen input hook
+#define TOUCH_RES 21             // Reset pin for touch-screen controller chip
 //------------------------------------------------------------------------------------------------
 bool ActiveRun = false;          // True if there's an active distillation run
 bool UpToTemp = false;           // True if the run startup has reached operating temperature
@@ -95,7 +95,7 @@ void setup() {
   while (! Serial) delay(10);
   Serial.println("");
 
-  // Get last user settings from flash memory
+  // Get the last user settings from flash memory
   GetMemory();
   if (UserTemp1 == 0) {
     // New chip, flash memory not initialized
