@@ -306,13 +306,13 @@ void DecValue(byte WhichOne) { // Decrement the value associated with the active
   if (WhichOne == 0) {
     if (CurrentMode > 1) CurrentMode --;
   } else if (WhichOne == 2) {
-    if (UserTemp1 > 38) UserTemp1 --;
+    if (UserTemp1 > 30) UserTemp1 --;
   } else if (WhichOne == 3) {
     if (UserPower > 1) UserPower --;
   } else if (WhichOne == 4) {
-    if (UserTemp1 > 38) UserTemp1 --;
+    if (UserTemp1 > 30) UserTemp1 --;
   } else if (WhichOne == 5) {
-    if (UserTemp2 > 38) UserTemp2 --;
+    if (UserTemp2 > 30) UserTemp2 --;
   } else if (WhichOne == 6) {
     if (UserTime > 1) UserTime --;
   }
