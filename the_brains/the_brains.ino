@@ -115,6 +115,7 @@ void setup() {
   DT.begin();
   Wire.begin(SDA,SCL);
   if (Touch.init()) {
+    Serial.println("Touch screen interface initialized");
     attachInterrupt(TOUCH_INT,[] { GotInterrupt = true; },FALLING);
   } else {
     Serial.println("Touch screen interface not detected");
