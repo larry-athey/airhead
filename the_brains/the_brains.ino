@@ -376,6 +376,12 @@ void loop() {
   if (CurrentTime - LoopCounter >= 1000) {
     Serial.println("Running Status Updates");
     TempUpdate(); // Read the DS18B20 temperature
+    // Safety net in case of thermal runaway
+    if (TempC > 103) {
+      Serial.println("Shutdown due to thermal runaway");
+      RunState(0);
+    }
+    // Handle the active distillation run
     if (ActiveRun) {
       unsigned long allSeconds = (CurrentTime - StartTime) / 1000;
       int runHours = allSeconds / 3600;
