@@ -17,15 +17,10 @@
 // boiler power to compensate. Just like my other project, the key is to make sure the temperature
 // sensor is in solid contact with the boiler, about mid way between the bottom and the full mark.
 //
-// My suggestion for the installation of the temperature sensor is to use a piece of fiberglass
-// to help keep it pressed against the boiler, and an extra strip of insulation to keep the cable
-// from contacting the boiler. I would also recommend a healthy amount of heat sink compound on
-// the sensor to guarantee better heat transfer from the boiler to the sensor. This glob of goop
-// will also help keep the fiberglass insulation in place and prevent it from slipping over time.
-//
-// Keep in mind that if the liquid in your boiler drops below the sensor level, your temperature
-// readings will not be accurate and likely erratic. The liquid acts as a heat conductor from the
-// inside to the sensor, so you definitely won't want to use mode 2 or 3 for distilling water.
+// My suggestion for the installation of the temperature sensor is to use one in a TO-92 case and
+// attach it in place of the original snap switch using a TO-92 chassis heat sink mount. If those
+// are hard to find, any other strip of metal with holes on the ends for the mounting bolts works
+// just fine. Be sure to add heat sink compound for reliable heat transfer.
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans10pt7b.h"      // https://github.com/moononournation/ArduinoFreeFontFile.git 
