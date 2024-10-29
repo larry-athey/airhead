@@ -20,7 +20,8 @@
 // My suggestion for the installation of the temperature sensor is to use one in a TO-92 case and
 // attach it in place of the original snap switch using a TO-92 chassis heat sink mount. If those
 // are hard to find, any other strip of metal with holes on the ends for the mounting bolts works
-// just fine. Be sure to add heat sink compound for reliable heat transfer.
+// just fine. Be sure to add heat sink compound for reliable heat transfer. Be sure that you use
+// wire silicone insulation for the connections and heat shrink the leads to prevent any shorts.
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans10pt7b.h"      // https://github.com/moononournation/ArduinoFreeFontFile.git 
