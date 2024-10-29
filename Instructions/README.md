@@ -4,6 +4,8 @@ In these examples, I'm using a cheap $65 [Vevor water distiller](https://www.ama
 
 Refer to the photo **Air-Still-Default-Wiring.jpg** in the above. The white wires are connected to the thermal control snap switch and are the AC neutral connection to the heating element. The blue wires are for an LED power indicator on the front of the still. The red wires are from the AC hot side and go to a circuit breaker on the front of the still and come back to connect to the other side of the heating element. Lastly, the yellow wires are the earth ground of the AC connection and connect to the body of the boiler vessel.
 
+<img width="1024" src="./Air-Still-Default-Wiring.jpg"><br>
+
 Before we move any further with this, you're going to need some wire capable of handling the 750 watt load of the heating element. This shouldn't be too hard to come up with. Happen to have an old damaged extension cord? A dead blow dryer? A dead space heater, toaster, iron, etc? Just clip off a foot of the power cord, split the wires, then clip them in half and strip the ends.
 
 The object here is to disconnect the wires to the heating element and connect them to the AC input of the SCR controller. Since each side of the heating element has two wires with screw eye connectors, my suggestion is to clip off the screw eye connectors and leave about 1 inch of wire attached to them so you can reuse two of them for the return power from the SCR controller. Strip the ends of the wires, twist them together with a third wire about 6" long, then twist on a wire nut to secure the connections. Do this with the both sets of wires, then connect the third wires that you added to the AC input terminals of the SCR controller.
