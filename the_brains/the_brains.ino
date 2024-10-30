@@ -243,7 +243,9 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,MODEBTN);
     if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,HILITE);
     if (ActiveRun) {
-
+      // Run time
+      // Power level
+      // Temperature
     } else {
       canvas->setCursor(ModeX1 + 45,ModeY1 + 35);
       canvas->printf("Mode %2u",CurrentMode);
@@ -296,6 +298,8 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     if (ActiveButton == 3) canvas->drawRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,HILITE);
   } else if (WhichOne == 4) {
     canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,STARTBTN);
+    canvas->setCursor(StartX1 + 26,StartY1 + 25);
+    canvas->print("Temperature");
   } else if (WhichOne == 5) {
     canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,ENDBTN);
   } else if (WhichOne == 6) {
