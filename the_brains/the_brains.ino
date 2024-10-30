@@ -147,20 +147,21 @@ void setup() {
 //------------------------------------------------------------------------------------------------
 void GetMemory() { // Get the last user settings from flash memory on startup
   preferences.begin("prefs",true);
-  UserTemp1 = preferences.getUInt("UserTemp1",0);
-  UserTemp2 = preferences.getUInt("UserTemp2",0);
-  UserTime  = preferences.getUInt("UserTime",0);
-  UserPower = preferences.getUInt("UserPower",0);
-  UserMode  = preferences.getUInt("UserMode",0);
+  UserTemp1 = preferences.getUInt("usertemp1",0);
+  UserTemp2 = preferences.getUInt("usertemp2",0);
+  UserTime  = preferences.getUInt("usertime",0);
+  UserPower = preferences.getUInt("userpower",0);
+  UserMode  = preferences.getUInt("usermode",0);
   preferences.end();
 }
 //------------------------------------------------------------------------------------------------
 void SetMemory() { // Update flash memory with the current user settings
   preferences.begin("prefs",false);
-  preferences.putUInt("UserTemp1",UserTemp1);
-  preferences.putUInt("UserTemp2",UserTemp2);
-  preferences.putUInt("UserTime",UserTime);
-  preferences.putUInt("UserPower",UserPower);
+  preferences.putUInt("usertemp1",UserTemp1);
+  preferences.putUInt("usertemp2",UserTemp2);
+  preferences.putUInt("usertime",UserTime);
+  preferences.putUInt("userpower",UserPower);
+  preferences.putUInt("usermode",UserMode);
   preferences.end();
 }
 //------------------------------------------------------------------------------------------------
@@ -224,9 +225,9 @@ void RunState(byte State) { // Toggle the active distillation run state
 //-----------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws the specified button on the screen
   canvas->setFont(&FreeSans9pt7b);
-  canvas->setTextColor(WHITE);
+  canvas->setTextColor(LIGHTGREY);
   if (WhichOne == 0) {
-    canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,BLUE);
+    canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,NAVY);
     if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,WHITE);
     if (ActiveRun) {
 
