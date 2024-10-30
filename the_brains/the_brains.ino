@@ -76,6 +76,7 @@ int TimeX1 = 0, TimeY1 = 0, TimeX2 = 0, TimeY2 = 0;
 //------------------------------------------------------------------------------------------------
 Arduino_DataBus *bus = new Arduino_ESP32PAR8Q(7 /* DC */, 6 /* CS */, 8 /* WR */, 9 /* RD */,39 /* D0 */, 40 /* D1 */, 41 /* D2 */, 42 /* D3 */, 45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
 Arduino_GFX *gfx = new Arduino_ST7789(bus, 5 /* RST */, 0 /* rotation */, true /* IPS */, 170 /* width */, 320 /* height */, 35 /* col offset 1 */, 0 /* row offset 1 */, 35 /* col offset 2 */, 0 /* row offset 2 */);
+//Arduino_GFX *canvas = new Arduino_Canvas(320 /* width */, 170 /* height */, bus);
 TouchLib Touch(Wire,SDA,SCL,CTS820_SLAVE_ADDRESS,TOUCH_RES);
 //------------------------------------------------------------------------------------------------
 OneWire oneWire(ONE_WIRE);
@@ -220,9 +221,9 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     if (ActiveButton == 0) gfx->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,WHITE);
   } else if (WhichOne == 1) {
     if (ActiveRun) {
-      gfx->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,GREEN);
-    } else {
       gfx->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RED);
+    } else {
+      gfx->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,GREEN);
     }
     if (ActiveButton == 1) gfx->drawRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,WHITE);
   } else if (WhichOne == 2) {
