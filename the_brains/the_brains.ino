@@ -24,7 +24,7 @@
 // with silicone insulation for the connections and heat shrink the leads to prevent any shorts.
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
-#include "FreeSans10pt7b.h"      // https://github.com/moononournation/ArduinoFreeFontFile.git 
+#include "FreeSans9pt7b.h"       // https://github.com/moononournation/ArduinoFreeFontFile.git 
 #include "OneWire.h"             // OneWire Network communications library
 #include "DallasTemperature.h"   // Dallas Temperature DS18B20 temperature sensor library
 #include "Preferences.h"         // ESP32 Flash memory read/write library
@@ -219,7 +219,7 @@ void RunState(byte State) { // Toggle the active distillation run state
 }
 //-----------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws the specified button on the screen
-  canvas->setFont(&FreeSans10pt7b);
+  canvas->setFont(&FreeSans9pt7b);
   canvas->setTextColor(WHITE);
   if (WhichOne == 0) {
     canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,BLUE);
@@ -227,14 +227,29 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     if (ActiveRun) {
 
     } else {
-
+      canvas->setCursor(ModeX1 + 45,ModeY1 + 35);
+      canvas->printf("Mode %2u",CurrentMode);
+      canvas->setCursor(ModeX1 + 15,ModeY1 + 55);
+      if (CurrentMode == 1) {
+        canvas->print("Constant Power");
+      } else if (CurrentMode == 2) {
+        canvas->print("Constant Temp");    
+      } else if (CurrentMode == 3) {
+        canvas->print("Timed w/Temp"); 
+      }
     }
   } else if (WhichOne == 1) {
     if (ActiveRun) {
       canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RED);
+      canvas->setCursor(RunX1 + 63,RunY1 + 35);
+      canvas->print("Stop");
     } else {
       canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,GREEN);
+      canvas->setCursor(RunX1 + 58,RunY1 + 35);
+      canvas->print("Start");
     }
+    canvas->setCursor(RunX1 + 20,RunY1 + 55);
+    canvas->print("Distillation Run");
     if (ActiveButton == 1) canvas->drawRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,WHITE);
   } else if (WhichOne == 2) {
     canvas->fillRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,MAGENTA);
