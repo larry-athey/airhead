@@ -66,18 +66,16 @@ char Runtime[10];                // HH:MM:SS formatted time of the current disti
 //------------------------------------------------------------------------------------------------
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 158, ModeY2 = 84;
-int RunX1 = 0, RunY1 = 0, RunX2 = 0, RunY2 = 0;
-int TempX1 = 0, TempY1 = 0, TempX2 = 0, TempY2 = 0;
-int PowerX1 = 0, PowerY1 = 0, PowerX2 = 0, PowerY2 = 0;
+int RunX1 = 160, RunY1 = 0, RunX2 = 319, RunY2 = 84;
+int TempX1 = 0, TempY1 = 86, TempX2 = 158, TempY2 = 169;
+int PowerX1 = 160, PowerY1 = 86, PowerX2 = 319, PowerY2 = 169;
 // Coordinates for Mode 3 bottom row buttons
 int StartX1 = 0, StartY1 = 0, StartX2 = 0, StartY2 = 0;
 int EndX1 = 0, EndY1 = 0, EndX2 = 0, EndY2 = 0;
 int TimeX1 = 0, TimeY1 = 0, TimeX2 = 0, TimeY2 = 0;
 //------------------------------------------------------------------------------------------------
-Arduino_DataBus *bus = new Arduino_ESP32LCD8(7 /* DC */, 6 /* CS */, 8 /* WR */, 9 /* RD */, 39 /* D0 */, 40 /* D1 */, 41 /* D2 */, 42 /* D3 */,
-                                             45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
-Arduino_GFX *gfx = new Arduino_ST7789(bus, 5 /* RST */, 0 /* rotation */, true /* IPS */, 170 /* width */, 320 /* height */, 35 /* col offset 1 */,
-                                           0 /* row offset 1 */, 35 /* col offset 2 */, 0 /* row offset 2 */);
+Arduino_DataBus *bus = new Arduino_ESP32PAR8Q(7 /* DC */, 6 /* CS */, 8 /* WR */, 9 /* RD */,39 /* D0 */, 40 /* D1 */, 41 /* D2 */, 42 /* D3 */, 45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
+Arduino_GFX *gfx = new Arduino_ST7789(bus, 5 /* RST */, 0 /* rotation */, true /* IPS */, 170 /* width */, 320 /* height */, 35 /* col offset 1 */, 0 /* row offset 1 */, 35 /* col offset 2 */, 0 /* row offset 2 */);
 TouchLib Touch(Wire,SDA,SCL,CTS820_SLAVE_ADDRESS,TOUCH_RES);
 //------------------------------------------------------------------------------------------------
 OneWire oneWire(ONE_WIRE);
@@ -126,9 +124,8 @@ void setup() {
 
   // Initialize the graphics library and draw the screen
   gfx->begin();
-  gfx->setRotation(1);
-  //gfx->fillScreen(BLACK);
-  gfx->fillRect(0,0,320,170,BLACK);
+  gfx->setRotation(3);
+  gfx->fillScreen(BLACK);
   ScreenUpdate();
 
   // Assign the SCR controller output pin to a PWM channel
@@ -219,12 +216,21 @@ void RunState(byte State) { // Toggle the active distillation run state
 //-----------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws the specified button on the screen
   if (WhichOne == 0) {
-    gfx->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,3,NAVY);
-    //fillRect(0,74,320,95,ILI9341_BLACK);
-  }
-  if (WhichOne == ActiveButton) {
-    // Draw the highlight frame if this is the active button
-
+    gfx->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,BLUE);
+    if (ActiveButton == 0) gfx->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,WHITE);
+  } else if (WhichOne == 1) {
+    if (ActiveRun) {
+      gfx->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,GREEN);
+    } else {
+      gfx->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RED);
+    }
+    if (ActiveButton == 1) gfx->drawRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,WHITE);
+  } else if (WhichOne == 2) {
+    gfx->fillRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,MAGENTA);
+    if (ActiveButton == 2) gfx->drawRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,WHITE);
+  } else if (WhichOne == 3) {
+    gfx->fillRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,YELLOW);
+    if (ActiveButton == 2) gfx->drawRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,WHITE);
   }
 }
 //-----------------------------------------------------------------------------------------------
