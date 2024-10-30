@@ -58,6 +58,7 @@ byte UserTemp1 = 0;              // User selected mode 2 temperature or mode 3 s
 byte UserTemp2 = 0;              // User selected ending temperature in mode 3
 byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
 byte UserPower = 0;              // User selected power level in mode 1 (0% to 100%)
+byte UserMode = 1;               // Last used operation mode selected by the user
 byte CurrentMode = 1;            // 1 = Constant Power, 2 = Constant Temp, 3 = Timed w/Temps
 byte Mode3Direction = 1;         // Mode 3 temperature direction, 0 = decrease, 1 = increase
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
@@ -91,14 +92,16 @@ void setup() {
 
   // Get the last user settings from flash memory
   GetMemory();
-  if (UserTemp1 == 0) {
+  if (UserMode == 0) {
     // New chip, flash memory not initialized
     UserTemp1 = 80;
     UserTemp2 = 90;
     UserTime  = 4;
     UserPower = 80;
+    UserMode  = 1;
     SetMemory();
   }
+  CurrentMode = UserMode;
 
   // Initialize the touch-screen reset line
   pinMode(TOUCH_RES,OUTPUT);
@@ -148,6 +151,7 @@ void GetMemory() { // Get the last user settings from flash memory on startup
   UserTemp2 = preferences.getUInt("UserTemp2",0);
   UserTime  = preferences.getUInt("UserTime",0);
   UserPower = preferences.getUInt("UserPower",0);
+  UserMode  = preferences.getUInt("UserMode",0);
   preferences.end();
 }
 //------------------------------------------------------------------------------------------------
@@ -335,7 +339,7 @@ void IncValue(byte WhichOne) { // Increment the value associated with the active
   } else if (WhichOne == 6) {
     if (UserTime < 24) UserTime ++;
   }
-  DrawButton(WhichOne);
+  ScreenUpdate();
 }
 //-----------------------------------------------------------------------------------------------
 void DecValue(byte WhichOne) { // Decrement the value associated with the active screen button
@@ -352,7 +356,7 @@ void DecValue(byte WhichOne) { // Decrement the value associated with the active
   } else if (WhichOne == 6) {
     if (UserTime > 1) UserTime --;
   }
-  DrawButton(WhichOne);
+  ScreenUpdate();
 }
 //-----------------------------------------------------------------------------------------------
 void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
@@ -385,6 +389,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
       }
     }
   }
+  UserMode = CurrentMode;
   SetMemory();
 }
 //-----------------------------------------------------------------------------------------------
