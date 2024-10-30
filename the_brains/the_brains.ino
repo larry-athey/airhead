@@ -71,9 +71,9 @@ int RunX1 = 160, RunY1 = 0, RunX2 = 319, RunY2 = 84;
 int TempX1 = 0, TempY1 = 86, TempX2 = 158, TempY2 = 169;
 int PowerX1 = 160, PowerY1 = 86, PowerX2 = 319, PowerY2 = 169;
 // Coordinates for Mode 3 bottom row buttons
-int StartX1 = 0, StartY1 = 0, StartX2 = 0, StartY2 = 0;
-int EndX1 = 0, EndY1 = 0, EndX2 = 0, EndY2 = 0;
-int TimeX1 = 0, TimeY1 = 0, TimeX2 = 0, TimeY2 = 0;
+int StartX1 = 0, StartY1 = 86, StartX2 = 105, StartY2 = 169;
+int EndX1 = 107, EndY1 = 86, EndX2 = 213, EndY2 = 169;
+int TimeX1 = 215, TimeY1 = 86, TimeX2 = 319, TimeY2 = 169;
 // RGB values for the button and text colors
 #define MODEBTN RGB565(200,0,200)
 #define RUNBTN RGB565(0,215,0)
@@ -294,6 +294,12 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
       canvas->print("[Not Managed]");
     }
     if (ActiveButton == 3) canvas->drawRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,HILITE);
+  } else if (WhichOne == 4) {
+    canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,STARTBTN);
+  } else if (WhichOne == 5) {
+    canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,ENDBTN);
+  } else if (WhichOne == 6) {
+    canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,TIMEBTN);
   }
 }
 //-----------------------------------------------------------------------------------------------
