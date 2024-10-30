@@ -117,10 +117,6 @@ void setup() {
     Serial.println("Touch screen interface not detected");
   }
 
-  // Initialize the SCR controller output pin
-  pinMode(SCR_OUT,OUTPUT);
-  analogWrite(SCR_OUT,PowerLevel);
-
   // Power up the screen and backlight
   pinMode(SCREEN_POWER_ON,OUTPUT);
   digitalWrite(SCREEN_POWER_ON,HIGH);
@@ -133,6 +129,11 @@ void setup() {
   gfx->setRotation(1);
   gfx->fillScreen(BLACK);
   ScreenUpdate();
+
+  // Assign the SCR controller output pin to a PWM channel
+  ledcSetup(1,60,8); // 60 Hz AC power frequency, modify as necessary if your power is 50 Hz
+  ledcAttachPin(SCR_OUT,1);
+  ledcWrite(1,0);
 
   // Initialize the timing related variables
   LoopCounter = millis();
@@ -169,14 +170,14 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
   Serial.print("Power Adjust: "); Serial.println(Percent);
   LastAdjustment = millis();
   // This is an analog power controller, first set the power level to zero and rest 1 second
-  analogWrite(SCR_OUT,0);
+  ledcWrite(1,0);
   delay(1000);
   // Then progressively adjust the power level up to the requested percentage
   if (Percent > 0) {
     PowerLevel = round(Percent * 2.55);
     float x = 2.55;
     while (x <= PowerLevel) {
-      analogWrite(SCR_OUT,x);
+      ledcWrite(1,x);
       delay(10);
       x += 2.55;
     }
@@ -320,7 +321,6 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
   byte HoldCounter = 0;
 
   if (WhichOne == 1) {
-    Serial.println("+ button pressed");
     // Increment active screen button value by 1
     IncValue(ActiveButton);
     while (digitalRead(INC_BTN) == 0) {
@@ -334,7 +334,6 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
       }
     }
   } else {
-    Serial.println("- button pressed");
     // Decrement active screen button value by 1
     DecValue(ActiveButton);
     while (digitalRead(DEC_BTN) == 0) {
@@ -375,6 +374,7 @@ void loop() {
   // The delay function can't be used in this loop due to the buttons and touch-screen
   if (CurrentTime - LoopCounter >= 1000) {
     Serial.println("Running Status Updates");
+    Serial.print("Current Mode: "); Serial.println(CurrentMode);
     TempUpdate(); // Read the DS18B20 temperature
     // Safety net in case of thermal runaway
     if (TempC > 103) {
@@ -390,7 +390,6 @@ void loop() {
       int runSeconds = secsRemaining % 60;
       sprintf(Runtime,"%02u:%02u:%02u",runHours,runMinutes,runSeconds);
       Serial.print("Run Time: "); Serial.println(Runtime);
-      Serial.print("Current Mode: "); Serial.println(CurrentMode);
       if (CurrentMode > 1) { // Mode 1 is constant power, no temperature management
         if (! UpToTemp) {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
