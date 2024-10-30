@@ -106,7 +106,7 @@ void setup() {
   if (UserTemp1 == 0) {
     // New chip, flash memory not initialized
     UserTemp1 = 80;
-    UserTemp2 = 90;
+    UserTemp2 = 88;
     UserTime  = 4;
     UserPower = 80;
     UserMode  = 1;
@@ -298,12 +298,30 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     if (ActiveButton == 3) canvas->drawRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,HILITE);
   } else if (WhichOne == 4) {
     canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,STARTBTN);
-    canvas->setCursor(StartX1 + 26,StartY1 + 25);
-    canvas->print("Temperature");
+    canvas->setCursor(StartX1 + 33,StartY1 + 25);
+    canvas->print("Start");
+    canvas->setCursor(StartX1 + 33,StartY1 + 45);
+    canvas->printf("%2uC",UserTemp1);
+    Ftemp = round(UserTemp1 * 9 / 5 + 32);
+    canvas->setCursor(StartX1 + 33,StartY1 + 65);
+    canvas->printf("%2uF",Ftemp);
   } else if (WhichOne == 5) {
     canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,ENDBTN);
+    canvas->setCursor(EndX1 + 36,EndY1 + 25);
+    canvas->print("End");
+    canvas->setCursor(EndX1 + 36,EndY1 + 45);
+    canvas->printf("%2uC",UserTemp2);
+    Ftemp = round(UserTemp2 * 9 / 5 + 32);
+    canvas->setCursor(EndX1 + 36,EndY1 + 65);
+    canvas->printf("%2uF",Ftemp);
   } else if (WhichOne == 6) {
     canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,TIMEBTN);
+    canvas->setCursor(TimeX1 + 30,TimeY1 + 25);
+    canvas->print("Time");
+    canvas->setCursor(TimeX1 + 39,TimeY1 + 45);
+    canvas->printf("%2u",UserTime);
+    canvas->setCursor(TimeX1 + 28,TimeY1 + 65);
+    canvas->print("Hours");
   }
 }
 //-----------------------------------------------------------------------------------------------
