@@ -92,7 +92,7 @@ void setup() {
 
   // Get the last user settings from flash memory
   GetMemory();
-  if (UserMode == 0) {
+  if (UserTemp1 == 0) {
     // New chip, flash memory not initialized
     UserTemp1 = 80;
     UserTemp2 = 90;
@@ -224,11 +224,19 @@ void RunState(byte State) { // Toggle the active distillation run state
 }
 //-----------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws the specified button on the screen
+  #define MODEBTN RGB565(200,0,200)
+  #define RUNBTN RGB565(0,215,0)
+  #define STOPBTN RGB565(230,0,0)
+  #define TEMPBTN RGB565(0,210,210)
+  #define PWRBTN RGB565(50,50,230)
+  #define HILITE RGB565(230,230,230)
+  #define TEXT RGB565(245,245,245)
+
   canvas->setFont(&FreeSans9pt7b);
-  canvas->setTextColor(LIGHTGREY);
+  canvas->setTextColor(TEXT);
   if (WhichOne == 0) {
-    canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,NAVY);
-    if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,WHITE);
+    canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,MODEBTN);
+    if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,HILITE);
     if (ActiveRun) {
 
     } else {
@@ -245,23 +253,42 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     }
   } else if (WhichOne == 1) {
     if (ActiveRun) {
-      canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RED);
+      canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,STOPBTN);
       canvas->setCursor(RunX1 + 63,RunY1 + 35);
       canvas->print("Stop");
     } else {
-      canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,GREEN);
+      canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RUNBTN);
       canvas->setCursor(RunX1 + 58,RunY1 + 35);
       canvas->print("Start");
     }
-    canvas->setCursor(RunX1 + 20,RunY1 + 55);
+    canvas->setCursor(RunX1 + 18,RunY1 + 55);
     canvas->print("Distillation Run");
-    if (ActiveButton == 1) canvas->drawRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,WHITE);
+    if (ActiveButton == 1) canvas->drawRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,HILITE);
   } else if (WhichOne == 2) {
-    canvas->fillRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,MAGENTA);
-    if (ActiveButton == 2) canvas->drawRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,WHITE);
+    canvas->fillRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,TEMPBTN);
+    canvas->setCursor(TempX1 + 26,TempY1 + 35);
+    canvas->print("Power Level");
+    if (CurrentMode == 1) {
+      canvas->setCursor(TempX1 + 58,TempY1 + 55);
+      canvas->printf("%2u%%",UserPower);
+    } else {
+      canvas->setCursor(TempX1 + 34,TempY1 + 55);
+      canvas->print("[Managed]");
+    }
+    if (ActiveButton == 2) canvas->drawRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,HILITE);
   } else if (WhichOne == 3) {
-    canvas->fillRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,YELLOW);
-    if (ActiveButton == 2) canvas->drawRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,WHITE);
+    byte Ftemp = round(UserTemp1 * 9 / 5 + 32);
+    canvas->fillRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,PWRBTN);
+    canvas->setCursor(PowerX1 + 26,PowerY1 + 35);
+    canvas->print("Temperature");
+    if (CurrentMode == 2) {
+      canvas->setCursor(PowerX1 + 35,PowerY1 + 55);
+      canvas->printf("%2uC / %2uF",UserTemp1,Ftemp);
+    } else {
+      canvas->setCursor(PowerX1 + 20,PowerY1 + 55);
+      canvas->print("[Not Managed]");
+    }
+    if (ActiveButton == 3) canvas->drawRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,HILITE);
   }
 }
 //-----------------------------------------------------------------------------------------------
