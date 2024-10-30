@@ -231,6 +231,7 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
   #define PWRBTN RGB565(50,50,230)
   #define HILITE RGB565(230,230,230)
   #define TEXT RGB565(245,245,245)
+  byte Ftemp;
 
   canvas->setFont(&FreeSans9pt7b);
   canvas->setTextColor(TEXT);
@@ -277,7 +278,7 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     }
     if (ActiveButton == 2) canvas->drawRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,HILITE);
   } else if (WhichOne == 3) {
-    byte Ftemp = round(UserTemp1 * 9 / 5 + 32);
+    Ftemp = round(UserTemp1 * 9 / 5 + 32);
     canvas->fillRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,PWRBTN);
     canvas->setCursor(PowerX1 + 26,PowerY1 + 35);
     canvas->print("Temperature");
