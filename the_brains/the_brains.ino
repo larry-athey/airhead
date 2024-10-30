@@ -219,9 +219,16 @@ void RunState(byte State) { // Toggle the active distillation run state
 }
 //-----------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws the specified button on the screen
+  canvas->setFont(&FreeSans10pt7b);
+  canvas->setTextColor(WHITE);
   if (WhichOne == 0) {
     canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,BLUE);
     if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,WHITE);
+    if (ActiveRun) {
+
+    } else {
+
+    }
   } else if (WhichOne == 1) {
     if (ActiveRun) {
       canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RED);
