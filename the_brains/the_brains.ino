@@ -147,7 +147,7 @@ void setup() {
   ScreenUpdate();
 
   // Assign the SCR controller output pin to a PWM channel
-  ledcSetup(1,60,8); // 60 Hz AC power frequency, modify as necessary if your power is not 60 Hz
+  ledcSetup(1,600,8);
   ledcAttachPin(SCR_OUT,1);
   ledcWrite(1,0);
 
@@ -234,7 +234,7 @@ void RunState(byte State) { // Toggle the active distillation run state
   }
 }
 //-----------------------------------------------------------------------------------------------
-void DrawButton(byte WhichOne) { // Draws the specified button on the screen
+void DrawButton(byte WhichOne) { // Draws and highlights the specified button on the screen
   byte Ftemp;
 
   canvas->setFont(&FreeSans9pt7b);
@@ -305,6 +305,7 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     Ftemp = round(UserTemp1 * 9 / 5 + 32);
     canvas->setCursor(StartX1 + 33,StartY1 + 65);
     canvas->printf("%2uF",Ftemp);
+    if (ActiveButton == 4) canvas->drawRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,HILITE);
   } else if (WhichOne == 5) {
     canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,ENDBTN);
     canvas->setCursor(EndX1 + 36,EndY1 + 25);
@@ -314,6 +315,7 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     Ftemp = round(UserTemp2 * 9 / 5 + 32);
     canvas->setCursor(EndX1 + 36,EndY1 + 65);
     canvas->printf("%2uF",Ftemp);
+    if (ActiveButton == 5) canvas->drawRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,HILITE);
   } else if (WhichOne == 6) {
     canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,TIMEBTN);
     canvas->setCursor(TimeX1 + 30,TimeY1 + 25);
@@ -322,6 +324,7 @@ void DrawButton(byte WhichOne) { // Draws the specified button on the screen
     canvas->printf("%2u",UserTime);
     canvas->setCursor(TimeX1 + 28,TimeY1 + 65);
     canvas->print("Hours");
+    if (ActiveButton == 6) canvas->drawRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,HILITE);
   }
 }
 //-----------------------------------------------------------------------------------------------
@@ -464,8 +467,11 @@ void loop() {
   // Check for touch-screen keypresses and handle as necessary
   if (GotInterrupt) {
     if (Touch.read()) {
+      int Xpos,Ypos;
       TP_Point Point = Touch.getPoint(0);
-      ProcessTouch(Point.x,Point.y);
+      Xpos = 320 - Point.y; // Touch.setRotation() doesn't work for some reason
+      Ypos = Point.x;       // "                                              "
+      ProcessTouch(Xpos,Ypos);
       while (Touch.read()) delay(10);
     }
     GotInterrupt = false;
@@ -477,7 +483,7 @@ void loop() {
   // Perform status updates every second without using a delay(1000) in the loop
   // The delay function can't be used in this loop due to the buttons and touch-screen
   if (CurrentTime - LoopCounter >= 1000) {
-    Serial.println("Running Status Updates");
+    Serial.println("\nRunning Status Updates");
     Serial.print("Current Mode: "); Serial.println(CurrentMode);
     TempUpdate(); // Read the DS18B20 temperature
     // Safety net in case of thermal runaway
