@@ -65,7 +65,7 @@ byte ActiveButton = 0;           // Currently selected touch-screen button
 char Runtime[10];                // HH:MM:SS formatted time of the current distillation run
 //------------------------------------------------------------------------------------------------
 // Coordinates for touch-screen buttons (Modes 1 and 2)
-int ModeX1 = 0, ModeY1 = 0, ModeX2 = 0, ModeY2 = 0;
+int ModeX1 = 0, ModeY1 = 0, ModeX2 = 158, ModeY2 = 84;
 int RunX1 = 0, RunY1 = 0, RunX2 = 0, RunY2 = 0;
 int TempX1 = 0, TempY1 = 0, TempX2 = 0, TempY2 = 0;
 int PowerX1 = 0, PowerY1 = 0, PowerX2 = 0, PowerY2 = 0;
@@ -127,7 +127,8 @@ void setup() {
   // Initialize the graphics library and draw the screen
   gfx->begin();
   gfx->setRotation(1);
-  gfx->fillScreen(BLACK);
+  //gfx->fillScreen(BLACK);
+  gfx->fillRect(0,0,320,170,BLACK);
   ScreenUpdate();
 
   // Assign the SCR controller output pin to a PWM channel
@@ -217,7 +218,10 @@ void RunState(byte State) { // Toggle the active distillation run state
 }
 //-----------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws the specified button on the screen
-
+  if (WhichOne == 0) {
+    gfx->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,3,NAVY);
+    //fillRect(0,74,320,95,ILI9341_BLACK);
+  }
   if (WhichOne == ActiveButton) {
     // Draw the highlight frame if this is the active button
 
