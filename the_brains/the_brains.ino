@@ -142,7 +142,7 @@ void setup() {
   gfx->setRotation(3);
   gfx->fillScreen(BLACK);
 
-  // In order to eliminate screen flicker, everything is plotted to an off-screen buffer and popped to the screen when done
+  // In order to eliminate screen flicker, everything is plotted to an off-screen buffer and popped onto the screen when done
   canvas->begin();
   ScreenUpdate();
 
