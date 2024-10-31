@@ -269,7 +269,7 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
   } else if (WhichOne == 1) {
     if (ActiveRun) {
       canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,STOPBTN);
-      canvas->setCursor(RunX1 + 63,RunY1 + 35);
+      canvas->setCursor(RunX1 + 60,RunY1 + 35);
       canvas->print("Stop");
     } else {
       canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RUNBTN);
