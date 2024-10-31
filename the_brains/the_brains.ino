@@ -235,6 +235,7 @@ void RunState(byte State) { // Toggle the active distillation run state
 }
 //-----------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws and highlights the specified button on the screen
+  int CurrentPercent = round(0.392156863 * PowerLevel);
   byte Ftemp;
 
   canvas->setFont(&FreeSans9pt7b);
@@ -243,9 +244,15 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
     canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,MODEBTN);
     if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,HILITE);
     if (ActiveRun) {
-      // Run time
-      // Power level
+      // Run Time
+      canvas->setCursor(ModeX1 + 10,ModeY1 + 25);
+      canvas->printf("R: %2s",Runtime);
+      // Power Level
+      canvas->setCursor(ModeX1 + 10,ModeY1 + 45);
+      canvas->printf("P: %2u%%",CurrentPercent);
       // Temperature
+      canvas->setCursor(ModeX1 + 10,ModeY1 + 65);
+      canvas->printf("T: %2.1fC / %2.1fF",TempC,TempF);
     } else {
       canvas->setCursor(ModeX1 + 45,ModeY1 + 35);
       canvas->printf("Mode %2u",CurrentMode);
