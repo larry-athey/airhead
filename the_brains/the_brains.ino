@@ -359,12 +359,18 @@ bool RegionPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Screen bu
 }
 //-----------------------------------------------------------------------------------------------
 void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
+  // Yes, the multiple ScreenUpdate() calls seems sloppy or careless.
+  // I do this in order to provide quicker visual feedback to the user.
   if (RegionPressed(Xpos,Ypos,ModeX1,ModeY1,ModeX2,ModeY2)) {
     // Mode button
-    if (! ActiveRun) ActiveButton = 0;
+    if (! ActiveRun) {
+      ActiveButton = 0;
+      ScreenUpdate();
+    }
   } else if (RegionPressed(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
     // Start/Stop button
     ActiveButton = 1;
+    ScreenUpdate();
     if (ActiveRun) {
       RunState(0);
     } else {
@@ -392,8 +398,8 @@ void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
         if (CurrentMode == 1) ActiveButton = 3;
       }
     }
+    ScreenUpdate();
   }
-  ScreenUpdate();
 }
 //-----------------------------------------------------------------------------------------------
 void IncValue(byte WhichOne) { // Increment the value associated with the active screen button
