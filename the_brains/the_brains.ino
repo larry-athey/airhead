@@ -393,7 +393,7 @@ void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
       }
     }
   }
-  DrawButton(ActiveButton);
+  ScreenUpdate();
 }
 //-----------------------------------------------------------------------------------------------
 void IncValue(byte WhichOne) { // Increment the value associated with the active screen button
