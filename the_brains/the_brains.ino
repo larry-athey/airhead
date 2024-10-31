@@ -478,7 +478,7 @@ void loop() {
     // Reboot the system if we're reaching the maximum long integer value of CurrentTime
     ESP.restart();
   }
-  // Check for touch-screen keypresses and handle as necessary
+  // Check for touch-screen presses and handle as necessary
   if (GotInterrupt) {
     if (Touch.read()) {
       int Xpos,Ypos;
@@ -569,6 +569,8 @@ void loop() {
             }
           }
         }
+      } else {
+        Serial.print("Power Percent: "); Serial.println(CurrentPercent);
       }
     }
     ScreenUpdate();
