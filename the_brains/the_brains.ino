@@ -327,7 +327,7 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
     canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,TIMEBTN);
     canvas->setCursor(TimeX1 + 30,TimeY1 + 25);
     canvas->print("Time");
-    canvas->setCursor(TimeX1 + 39,TimeY1 + 45);
+    canvas->setCursor(TimeX1 + 40,TimeY1 + 45);
     canvas->printf("%2u",UserTime);
     canvas->setCursor(TimeX1 + 28,TimeY1 + 65);
     canvas->print("Hours");
@@ -520,7 +520,10 @@ void loop() {
             UpToTemp = true;
             PowerAdjust(70); // Fall back to 70% power and begin temperature management
           }
-          if (CurrentTime - StartTime >= (UserTime * 60000)) RunState(0);
+          if ((CurrentMode == 3) && (CurrentTime - StartTime >= (UserTime * 600000))) {
+            // Timer expired waiting to reach operating temperature
+            RunState(0);
+          }
         } else {
           if (CurrentMode == 2) { // Constant temperature
             Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
@@ -548,7 +551,7 @@ void loop() {
                 Mode3Counter = CurrentTime;
               }
               Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
-              if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
+              if (CurrentTime - LastAdjustment >= 3600000) { // Only make power adjustments once per minute
                 // Temperature is managed to +/- 1 degree C
                 if (TempC >= (Mode3Temp + 1)) { // Over temperature
                   CurrentPercent -= 1;
