@@ -197,7 +197,7 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
     PowerLevel = round(Percent * 2.55);
     float x = 2.55;
     while (x <= PowerLevel) {
-      ledcWrite(1,x); // Function appears to round x on its own
+      ledcWrite(1,x); // Function appears to round x on its own, no errors thrown
       delay(10);
       x += 2.55;
     }
