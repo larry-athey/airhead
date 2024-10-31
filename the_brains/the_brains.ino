@@ -68,8 +68,8 @@ char Runtime[10];                // HH:MM:SS formatted time of the current disti
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 158, ModeY2 = 84;
 int RunX1 = 160, RunY1 = 0, RunX2 = 319, RunY2 = 84;
-int TempX1 = 0, TempY1 = 86, TempX2 = 158, TempY2 = 169;
-int PowerX1 = 160, PowerY1 = 86, PowerX2 = 319, PowerY2 = 169;
+int PowerX1 = 0, PowerY1 = 86, PowerX2 = 158, PowerY2 = 169;
+int TempX1 = 160, TempY1 = 86, TempX2 = 319, TempY2 = 169;
 // Coordinates for Mode 3 bottom row buttons
 int StartX1 = 0, StartY1 = 86, StartX2 = 105, StartY2 = 169;
 int EndX1 = 107, EndY1 = 86, EndX2 = 213, EndY2 = 169;
@@ -78,8 +78,8 @@ int TimeX1 = 215, TimeY1 = 86, TimeX2 = 319, TimeY2 = 169;
 #define MODEBTN RGB565(200,0,200)
 #define RUNBTN RGB565(0,215,0)
 #define STOPBTN RGB565(230,0,0)
-#define TEMPBTN RGB565(0,210,210)
-#define PWRBTN RGB565(50,50,230)
+#define PWRBTN RGB565(0,210,210)
+#define TEMPBTN RGB565(50,50,230)
 #define STARTBTN RGB565(0,210,210)
 #define ENDBTN RGB565(0,210,210)
 #define TIMEBTN RGB565(50,50,230)
@@ -281,30 +281,31 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
     canvas->print("Distillation Run");
     if (ActiveButton == 1) canvas->drawRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,HILITE);
   } else if (WhichOne == 2) {
-    canvas->fillRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,TEMPBTN);
-    canvas->setCursor(TempX1 + 26,TempY1 + 35);
-    canvas->print("Power Level");
-    if (CurrentMode == 1) {
-      canvas->setCursor(TempX1 + 58,TempY1 + 55);
-      canvas->printf("%2u%%",UserPower);
-    } else {
-      canvas->setCursor(TempX1 + 34,TempY1 + 55);
-      canvas->print("[Managed]");
-    }
-    if (ActiveButton == 2) canvas->drawRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,HILITE);
-  } else if (WhichOne == 3) {
-    Ftemp = round(UserTemp1 * 9 / 5 + 32);
     canvas->fillRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,PWRBTN);
     canvas->setCursor(PowerX1 + 26,PowerY1 + 35);
+    canvas->print("Power Level");
+    if (CurrentMode == 1) {
+      canvas->setCursor(PowerX1 + 58,PowerY1 + 55);
+      canvas->printf("%2u%%",UserPower);
+    } else {
+      canvas->setCursor(PowerX1 + 34,PowerY1 + 55);
+      canvas->print("[Managed]");
+    }
+    if (ActiveButton == 2) canvas->drawRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,HILITE); 
+  } else if (WhichOne == 3) {
+    Ftemp = round(UserTemp1 * 9 / 5 + 32);
+    canvas->fillRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,TEMPBTN);
+    canvas->setCursor(TempX1 + 26,TempY1 + 35);
+    
     canvas->print("Temperature");
     if (CurrentMode == 2) {
-      canvas->setCursor(PowerX1 + 35,PowerY1 + 55);
+      canvas->setCursor(TempX1 + 35,TempY1 + 55);
       canvas->printf("%2uC / %2uF",UserTemp1,Ftemp);
     } else {
-      canvas->setCursor(PowerX1 + 20,PowerY1 + 55);
+      canvas->setCursor(TempX1 + 20,TempY1 + 55);
       canvas->print("[Not Managed]");
     }
-    if (ActiveButton == 3) canvas->drawRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,HILITE);
+    if (ActiveButton == 3) canvas->drawRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,HILITE);
   } else if (WhichOne == 4) {
     canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,STARTBTN);
     canvas->setCursor(StartX1 + 33,StartY1 + 25);
@@ -395,10 +396,10 @@ void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
     } else {
       if (RegionPressed(Xpos,Ypos,TempX1,TempY1,TempX2,TempY2)) {
         // Temperature button
-        if (CurrentMode == 2) ActiveButton = 2;
+        if (CurrentMode == 2) ActiveButton = 3;
       } else if (RegionPressed(Xpos,Ypos,PowerX1,PowerY1,PowerX2,PowerY2)) {
         // Power button
-        if (CurrentMode == 1) ActiveButton = 3;
+        if (CurrentMode == 1) ActiveButton = 2;
       }
     }
     ScreenUpdate();
@@ -409,9 +410,9 @@ void IncValue(byte WhichOne) { // Increment the value associated with the active
   if (WhichOne == 0) {
     if (CurrentMode < 3) CurrentMode ++;
   } else if (WhichOne == 2) {
-    if (UserTemp1 < 100) UserTemp1 ++;
-  } else if (WhichOne == 3) {
     if (UserPower < 100) UserPower ++;
+  } else if (WhichOne == 3) {
+    if (UserTemp1 < 100) UserTemp1 ++;
   } else if (WhichOne == 4) {
     if (UserTemp1 < 100) UserTemp1 ++;
   } else if (WhichOne == 5) {
@@ -426,9 +427,9 @@ void DecValue(byte WhichOne) { // Decrement the value associated with the active
   if (WhichOne == 0) {
     if (CurrentMode > 1) CurrentMode --;
   } else if (WhichOne == 2) {
-    if (UserTemp1 > 30) UserTemp1 --;
-  } else if (WhichOne == 3) {
     if (UserPower > 1) UserPower --;
+  } else if (WhichOne == 3) {
+    if (UserTemp1 > 30) UserTemp1 --;
   } else if (WhichOne == 4) {
     if (UserTemp1 > 30) UserTemp1 --;
   } else if (WhichOne == 5) {
