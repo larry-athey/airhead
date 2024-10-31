@@ -84,7 +84,7 @@ int TimeX1 = 215, TimeY1 = 86, TimeX2 = 319, TimeY2 = 169;
 #define ENDBTN RGB565(0,210,210)
 #define TIMEBTN RGB565(50,50,230)
 #define HILITE RGB565(230,230,230)
-#define TEXT RGB565(245,245,245)
+#define BTNTEXT RGB565(245,245,245)
 //------------------------------------------------------------------------------------------------
 Arduino_DataBus *bus = new Arduino_ESP32PAR8Q(7 /* DC */, 6 /* CS */, 8 /* WR */, 9 /* RD */,39 /* D0 */, 40 /* D1 */, 41 /* D2 */, 42 /* D3 */, 45 /* D4 */, 46 /* D5 */, 47 /* D6 */, 48 /* D7 */);
 Arduino_GFX *gfx = new Arduino_ST7789(bus, 5 /* RST */, 0 /* rotation */, true /* IPS */, 170 /* width */, 320 /* height */, 35 /* col offset 1 */, 0 /* row offset 1 */, 35 /* col offset 2 */, 0 /* row offset 2 */);
@@ -188,7 +188,8 @@ void TempUpdate() { // Update the temperature sensor values
 void PowerAdjust(byte Percent) { // Set the SCR controller to a target power percentage
   Serial.print("Power Adjust: "); Serial.println(Percent);
   LastAdjustment = millis();
-  // This is an analog power controller, first set the power level to zero and rest 1 second
+  // This is an analog power controller, first set the power level to zero
+  // and rest 1 second so all of the capacitors can fully discharge
   ledcWrite(1,0);
   delay(1000);
   // Then progressively adjust the power level up to the requested percentage
@@ -196,7 +197,7 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
     PowerLevel = round(Percent * 2.55);
     float x = 2.55;
     while (x <= PowerLevel) {
-      ledcWrite(1,x);
+      ledcWrite(1,x); // Function appears to round x on its own
       delay(10);
       x += 2.55;
     }
@@ -240,7 +241,7 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
   byte Ftemp;
 
   canvas->setFont(&FreeSans9pt7b);
-  canvas->setTextColor(TEXT);
+  canvas->setTextColor(BTNTEXT);
   if (WhichOne == 0) {
     canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,MODEBTN);
     if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,HILITE);
