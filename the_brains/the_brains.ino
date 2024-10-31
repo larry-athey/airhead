@@ -147,7 +147,8 @@ void setup() {
   ScreenUpdate();
 
   // Assign the SCR controller output pin to a PWM channel
-  ledcSetup(1,600,8);
+  // For heating elements, 1 KHz to 10 KHz is used, adjust as necessary
+  ledcSetup(1,2000,8);
   ledcAttachPin(SCR_OUT,1);
   ledcWrite(1,0);
 
