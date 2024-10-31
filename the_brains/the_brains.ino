@@ -520,6 +520,7 @@ void loop() {
             UpToTemp = true;
             PowerAdjust(70); // Fall back to 70% power and begin temperature management
           }
+          if (CurrentTime - StartTime >= (UserTime * 60000)) RunState(0);
         } else {
           if (CurrentMode == 2) { // Constant temperature
             Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
@@ -537,7 +538,7 @@ void loop() {
             }
             Serial.print("Power Percent: "); Serial.println(CurrentPercent);
           } else { // Timed distillation run with progressive temperature adjustment
-            if (CurrentTime - StartTime < UserTime) {
+            if (CurrentTime - StartTime < (UserTime * 60000)) {
               if (CurrentTime - Mode3Counter >= 900000) { // Adjust the target temperature every 15 minutes
                 if (Mode3Direction == 1) {
                   Mode3Temp += Mode3Factor; // Increase the target temperature
