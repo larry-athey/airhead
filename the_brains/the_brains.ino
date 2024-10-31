@@ -376,6 +376,7 @@ void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
     } else {
       RunState(1);
     }
+    ScreenUpdate();
   }
   if (! ActiveRun) {
     if (CurrentMode == 3) {
