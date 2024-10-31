@@ -521,7 +521,7 @@ void loop() {
             PowerAdjust(70); // Fall back to 70% power and begin temperature management
           }
           if ((CurrentMode == 3) && (CurrentTime - StartTime >= (UserTime * 3600000))) {
-            // Timer expired waiting to reach operating temperature
+            // Timer expired waiting to reach minimum operating temperature
             RunState(0);
           }
         } else {
