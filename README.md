@@ -25,4 +25,7 @@ This project works with a very common SCR controller _(shown below)_ that is ava
 
 The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. These ESP32 units are available with a case or you can buy them separately, there's no need for any 3D printing. The only wires coming out of the left side are the ribbon cable from the SCR controller and a temperature sensor cable. The USB-C port for the ESP32 is accessible for software updates without the need to take anything apart. Refer to the photos and PDF files in the **/Instructions/** directory here for more details.
 
-<img width="1024" src="https://github.com/user-attachments/assets/0b984446-51cc-459e-bba1-18f2396f57d7">
+<img width="1024" src="https://github.com/user-attachments/assets/f4c37f88-75f2-4c23-9678-8c19a809ded0"><br>
+<img width="1024" src="https://github.com/user-attachments/assets/57a78964-2d74-4d1c-a1bd-7bb5481609a5"><br>
+<img width="1024" src="https://github.com/user-attachments/assets/d9d7145a-6dce-40cc-be6c-75748c23297c"><br>
+<img width="1024" src="https://github.com/user-attachments/assets/83c0b198-6b32-4c0a-a362-4d68cfe766bc"><br>
