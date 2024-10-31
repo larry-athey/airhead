@@ -520,7 +520,7 @@ void loop() {
             UpToTemp = true;
             PowerAdjust(70); // Fall back to 70% power and begin temperature management
           }
-          if ((CurrentMode == 3) && (CurrentTime - StartTime >= (UserTime * 600000))) {
+          if ((CurrentMode == 3) && (CurrentTime - StartTime >= (UserTime * 3600000))) {
             // Timer expired waiting to reach operating temperature
             RunState(0);
           }
