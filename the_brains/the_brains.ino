@@ -363,7 +363,8 @@ bool RegionPressed(int Xpos,int Ypos,int X1,int Y1,int X2,int Y2) { // Screen bu
 //-----------------------------------------------------------------------------------------------
 void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
   // Yes, the multiple ScreenUpdate() calls seems sloppy or careless.
-  // I do this in order to provide quicker visual feedback to the user.
+  // I do this in order to provide quicker visual feedback to the user
+  // because the loop() function only updates the screen every second.
   if (RegionPressed(Xpos,Ypos,ModeX1,ModeY1,ModeX2,ModeY2)) {
     // Mode button
     if (! ActiveRun) {
