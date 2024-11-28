@@ -98,7 +98,7 @@ Preferences preferences;
 void setup() {
   // Enable serial communications for debugging output
   Serial.begin(9600);
-  while (! Serial) delay(10);
+  delay(1000);
   Serial.println("");
 
   // Get the last user settings from flash memory
