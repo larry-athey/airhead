@@ -10,4 +10,4 @@ You will now need to remove that aluminum bracket so you can remove the power in
 
 <img width="1024" src="./Air-Still-Lobotomized.jpg"><br>
 
-As you can see in the photo **Air-Still-Lobotomized.jpg** above, everything that I mentioned has been removed and the aluminum bracked has been put back in place. I slid it back as far as it would go since the reset breaker will likely never need to be used unless something goes seriously wrong.
+As you can see in the photo **Air-Still-Lobotomized.jpg** above, everything that I mentioned has been removed and the aluminum bracked has been put back in place. I slid it back as far as it would go since the reset breaker will likely never need to be used unless something goes seriously wrong. We have the blue wires that will be connected to the Airhead power supply and interface board, and the white wires which will be connected to the load side of the solid state relay. You may need to extend the white wires.
