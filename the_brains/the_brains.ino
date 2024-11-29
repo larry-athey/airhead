@@ -108,22 +108,20 @@ Preferences preferences;
 #define SSR_OUT GPIO_NUM_1 // Same pin as used with the SCR controller
 
 int dutyCyclePercentage = 0;
-volatile bool SSR_State = false;
 hw_timer_t *timer = NULL;
 //------------------------------------------------------------------------------------------------
 void IRAM_ATTR onTimer(){
-  if (SSR_State) {
-    // If SSR is currently on, see if it's time to turn off based on duty cycle
-    if (dutyCyclePercentage < 100) {
-      gpio_set_level(SSR_OUT,0);
-      SSR_State = false;
-    }
+  static uint32_t cycleCounter = 0;
+  cycleCounter ++;
+    
+  if (cycleCounter == 10) { // Reset counter every 10 interrupts (equivalent to 1 second if interrupt every 100ms)
+    cycleCounter = 0;
+  }
+
+  if (cycleCounter < (dutyCyclePercentage / 10)) { // Turn on if within duty cycle
+    gpio_set_level(SSR_OUT,1);
   } else {
-    // If SSR is off, see if it's time to turn on
-    if (dutyCyclePercentage > 0) {
-      gpio_set_level(SSR_OUT,1);
-      SSR_State = true;
-    }
+    gpio_set_level(SSR_OUT,0);
   }
 }
 #endif
@@ -186,7 +184,7 @@ void setup() {
   // Timer setup for 1 second period (100% duty cycle would be on for 1 second, off for none)
   timer = timerBegin(0,80,true); // Timer at 1 MHz, count up
   timerAttachInterrupt(timer,&onTimer,true);
-  timerAlarmWrite(timer,1000000,true); // 1 second (1 MHz clock)
+  timerAlarmWrite(timer,100000,true); // Timer trigger set to 100ms (100,000 microseconds)
   timerAlarmEnable(timer);
   #else
   // Assign the SCR controller output pin to a PWM channel
@@ -605,6 +603,9 @@ void loop() {
                 Mode3Counter = CurrentTime;
               }
               Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
+              #ifndef SCR_OUT
+              Serial.printf("SSR Duty Cycle: %d%%\n",dutyCyclePercentage);
+              #endif
               if (CurrentTime - LastAdjustment >= 3600000) { // Only make power adjustments once per minute
                 // Temperature is managed to +/- 1 degree C
                 if (TempC >= (Mode3Temp + 1)) { // Over temperature
@@ -618,6 +619,9 @@ void loop() {
                 }
               }
               Serial.print("Power Percent: "); Serial.println(CurrentPercent);
+              #ifndef SCR_OUT
+              Serial.printf("SSR Duty Cycle: %d%%\n",dutyCyclePercentage);
+              #endif
             } else { // Distillation run time has expired, shut down
               RunState(0);
             }
@@ -625,6 +629,9 @@ void loop() {
         }
       } else {
         Serial.print("Power Percent: "); Serial.println(CurrentPercent);
+        #ifndef SCR_OUT
+        Serial.printf("SSR Duty Cycle: %d%%\n",dutyCyclePercentage);
+        #endif
       }
     }
     ScreenUpdate();
