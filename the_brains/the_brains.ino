@@ -22,6 +22,12 @@
 // are hard to find, any other strip of metal with holes in the ends for the mounting bolts works
 // just fine. Be sure to add heat sink compound for reliable heat transfer. If possible, use wire
 // with silicone insulation for the connections and heat shrink the leads to prevent any shorts.
+//
+// This controller will work with any SCR controller that accepts a PWM input. If your controller
+// uses variable voltage, you would just feed a PWM to voltage convertor module between this and
+// your SCR controller. Or, if you comment out the SCR_OUT constant definition, you can use this
+// with any zero-crossing trigger solid state relay. Absolutely do not use a random-turn-on SSR!
+// It's totally up to you if you want to use an SCR controller or a solid state relay.
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans9pt7b.h"       // https://github.com/moononournation/ArduinoFreeFontFile.git 
@@ -33,7 +39,7 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
-#define SCR_OUT 1                // Analog output to the SCR controller
+#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using SSR)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
@@ -95,6 +101,33 @@ OneWire oneWire(ONE_WIRE);
 DallasTemperature DT(&oneWire);
 Preferences preferences;
 //------------------------------------------------------------------------------------------------
+#ifndef SCR_OUT
+#include "esp_timer.h"
+#include "driver/gpio.h"
+//------------------------------------------------------------------------------------------------
+#define SSR_OUT GPIO_NUM_1 // Same pin as used with the SCR controller
+
+int dutyCyclePercentage = 0;
+volatile bool SSR_State = false;
+hw_timer_t *timer = NULL;
+//------------------------------------------------------------------------------------------------
+void IRAM_ATTR onTimer(){
+  if (SSR_State) {
+    // If SSR is currently on, see if it's time to turn off based on duty cycle
+    if (dutyCyclePercentage < 100) {
+      gpio_set_level(SSR_OUT, 0);
+      SSR_State = false;
+    }
+  } else {
+    // If SSR is off, see if it's time to turn on
+    if (dutyCyclePercentage > 0) {
+      gpio_set_level(SSR_OUT, 1);
+      SSR_State = true;
+    }
+  }
+}
+#endif
+//------------------------------------------------------------------------------------------------
 void setup() {
   // Enable serial communications for debugging output
   Serial.begin(9600);
@@ -146,11 +179,22 @@ void setup() {
   canvas->begin();
   ScreenUpdate();
 
+  #ifndef SCR_OUT
+  gpio_set_direction(SSR_OUT,GPIO_MODE_OUTPUT);
+  gpio_set_level(SSR_OUT,0);
+  
+  // Timer setup for 1 second period (100% duty cycle would be on for 1 second, off for none)
+  timer = timerBegin(0,80,true); // Timer at 1 MHz, count up
+  timerAttachInterrupt(timer,&onTimer,true);
+  timerAlarmWrite(timer,1000000,true); // 1 second (1 MHz clock)
+  timerAlarmEnable(timer);
+  #else
   // Assign the SCR controller output pin to a PWM channel
-  // For heating elements, 1 KHz to 10 KHz is used, adjust as necessary
+  // For heating elements, 1 KHz to 3 KHz is used, adjust as necessary
   ledcSetup(1,2000,8);
   ledcAttachPin(SCR_OUT,1);
   ledcWrite(1,0);
+  #endif
 
   // Initialize the timing related variables
   LoopCounter = millis();
@@ -185,9 +229,14 @@ void TempUpdate() { // Update the temperature sensor values
   Serial.print("Temp F: "); Serial.println(TempF);
 }
 //-----------------------------------------------------------------------------------------------
-void PowerAdjust(byte Percent) { // Set the SCR controller to a target power percentage
+void PowerAdjust(byte Percent) { // Set the SCR controller or SSR to a target power percentage
   Serial.print("Power Adjust: "); Serial.println(Percent);
   LastAdjustment = millis();
+  #ifndef SCR_OUT
+  dutyCyclePercentage = Percent;
+  PowerLevel = round(Percent * 2.55);
+  Serial.printf("SSR Duty Cycle: %d%%\n",dutyCyclePercentage);
+  #else
   // This is an analog power controller, first set the power level to zero
   // and rest 1 second so all of the capacitors can fully discharge
   ledcWrite(1,0);
@@ -204,6 +253,7 @@ void PowerAdjust(byte Percent) { // Set the SCR controller to a target power per
   } else {
     PowerLevel = 0;
   }
+  #endif
 }
 //-----------------------------------------------------------------------------------------------
 void RunState(byte State) { // Toggle the active distillation run state
