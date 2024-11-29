@@ -39,7 +39,7 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
-#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR)
+//#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
@@ -603,9 +603,6 @@ void loop() {
                 Mode3Counter = CurrentTime;
               }
               Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
-              #ifndef SCR_OUT
-              Serial.printf("SSR Duty Cycle: %d%%\n",dutyCyclePercentage);
-              #endif
               if (CurrentTime - LastAdjustment >= 3600000) { // Only make power adjustments once per minute
                 // Temperature is managed to +/- 1 degree C
                 if (TempC >= (Mode3Temp + 1)) { // Over temperature
@@ -619,9 +616,6 @@ void loop() {
                 }
               }
               Serial.print("Power Percent: "); Serial.println(CurrentPercent);
-              #ifndef SCR_OUT
-              Serial.printf("SSR Duty Cycle: %d%%\n",dutyCyclePercentage);
-              #endif
             } else { // Distillation run time has expired, shut down
               RunState(0);
             }
@@ -629,9 +623,6 @@ void loop() {
         }
       } else {
         Serial.print("Power Percent: "); Serial.println(CurrentPercent);
-        #ifndef SCR_OUT
-        Serial.printf("SSR Duty Cycle: %d%%\n",dutyCyclePercentage);
-        #endif
       }
     }
     ScreenUpdate();
