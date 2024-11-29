@@ -110,7 +110,7 @@ Preferences preferences;
 int dutyCyclePercentage = 0;
 hw_timer_t *timer = NULL;
 //------------------------------------------------------------------------------------------------
-void IRAM_ATTR onTimer(){
+void IRAM_ATTR onTimer() { // Custom low frequency PWM similar to what you see in a PID controller
   static uint32_t cycleCounter = 0;
   cycleCounter ++;
     
