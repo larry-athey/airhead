@@ -21,7 +21,9 @@ This project aims to solve that problem and add three user selectable modes:
 
 This controller works with any (1) PWM controlled SCR board, or (2) voltage controlled SCR board, or (3) zero-crossing-trigger solid [state relay](https://www.amazon.com/gp/product/B08FR13GYR/). This controller puts out PWM, but you can use any opto-isolated [PWM to voltage convertor](https://www.amazon.com/dp/B0BG2G5FMX) to connect it to any voltage controlled SCR board _(one that has a knob to control power)_. It's totally up to you which one to use, the SSR is easiest to set up but requires more space with a heat sink.
 
-The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. The only wires coming out of the 3D printed case are 4 wires that connect to an internal power supply and interface PCB in the bottom of the still. The USB-C port for the ESP32 is accessible for software updates without the need to take anything apart. Refer to the contents in the **/Instructions/** directory here for more information.
+The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. The only wires coming out of the 3D printed case are 4 wires that connect to an internal power supply and interface PCB in the bottom of the still. The USB-C port for the ESP32 is accessible for software updates without the need to take anything apart.
+
+Refer to the contents in the **/Instructions/** directory here for more information.
 
 <img width="1024" src="https://github.com/user-attachments/assets/f4c37f88-75f2-4c23-9678-8c19a809ded0"><br><br>
 <img width="1024" src="https://github.com/user-attachments/assets/57a78964-2d74-4d1c-a1bd-7bb5481609a5"><br><br>
