@@ -115,13 +115,13 @@ void IRAM_ATTR onTimer(){
   if (SSR_State) {
     // If SSR is currently on, see if it's time to turn off based on duty cycle
     if (dutyCyclePercentage < 100) {
-      gpio_set_level(SSR_OUT, 0);
+      gpio_set_level(SSR_OUT,0);
       SSR_State = false;
     }
   } else {
     // If SSR is off, see if it's time to turn on
     if (dutyCyclePercentage > 0) {
-      gpio_set_level(SSR_OUT, 1);
+      gpio_set_level(SSR_OUT,1);
       SSR_State = true;
     }
   }
