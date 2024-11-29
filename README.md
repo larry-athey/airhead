@@ -1,5 +1,5 @@
 # Airhead
-Air Still (or clone) upgrade that uses an SCR controller for the heating element and an ESP32 to make the whole thing smarter. Eliminates that constant full power on/off switching to the heating element and the possibility of scorching. Plus even more capabilities.
+Air Still (or clone) upgrade that uses an SCR controller or SSR for the heating element and an ESP32 to make the whole thing smarter. Eliminates that constant full power on/off switching to the heating element and the possibility of scorching. Plus even more capabilities.
 
 You may contact me directly at https://panhandleponics.com<br>
 Subscribe to the official YouTube channel at https://www.youtube.com/@PanhandlePonics<br>
@@ -19,9 +19,7 @@ This project aims to solve that problem and add three user selectable modes:
 3. Perform timed runs with a user selectable starting and ending temperature
 4. _Perhaps additional features will be added as time goes by_
 
-This project works with a very common SCR controller _(shown below)_ that is available from numerous Amazon sellers. This project uses an ESP32 with a built-in touch screen display to replace the interface that comes with their unit. Here is a [link](https://www.amazon.com/gp/product/B076VKJM42/) to this unit, but please feel free to shop around to see if others are selling it for a lower price, I got mine for $20. They're all the same, no matter what the brand name is. There's a 4 conductor ribbon cable that plugs into the controller interface, so you can just unplug their interface and put it back in the box.
-
-<img width="1024" src="https://github.com/user-attachments/assets/7daa8ebd-7aca-4462-8457-f68c4f77a3b1"><br>
+This controller works with any (1) PWM controlled SCR board, or (2) voltage controlled SCR board, or (3) zero-crossing-trigger solid [state relay](https://www.amazon.com/gp/product/B08FR13GYR/). This controller puts out PWM, but you can use any opto-isolated [PWM to voltage convertor](https://www.amazon.com/dp/B0BG2G5FMX) to connect it to any voltage controlled SCR board _(one that has a knob to control power)_. It's totally up to you which one to use, the SSR is easiest to set up but requires more space.
 
 The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. These ESP32 units are available with a case or you can buy them separately, there's no need for any 3D printing. The only wires coming out of the case are 4 wires that connect to an internal power supply in the bottom of the still. The USB-C port for the ESP32 is accessible for software updates without the need to take anything apart. Refer to the contents in the **/Instructions/** directory here for more information.
 
