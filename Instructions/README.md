@@ -6,7 +6,7 @@ Referring to the photo **Air-Still-Default-Wiring.jpg** here. The white wires ar
 
 <img width="1024" src="./Air-Still-Default-Wiring.jpg"><br>
 
-You will now need to remove that aluminum bracket so you can remove the power indicator, the button for the reset breaker, and the snap switch that currently controls the temperature. We will not be removing the reset breaker, but it will likely never be used since the Airhead brain will shut down the unit if it ever goes over 103C/217F. You can clip the wires to the power indicator and strip them back since they will be used to power the Airhead controller. The wires to the snap switch will be connected to the solid state relay.
+You will now need to remove that aluminum bracket so you can remove the power indicator, the button for the reset breaker, and the snap switch that currently controls the temperature. We will not be removing the reset breaker, but it will likely never be used since the Airhead brain will shut down the unit if it ever goes over 103C/217F. You can clip the wires to the power indicator and strip them back since they will be used to power the Airhead controller system. The wires to the snap switch will be connected to the solid state relay.
 
 <img width="1024" src="./Air-Still-Lobotomized.jpg"><br>
 
