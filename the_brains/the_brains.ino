@@ -39,7 +39,7 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
-#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR)
+//#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
@@ -114,11 +114,11 @@ void IRAM_ATTR onTimer() { // Custom low frequency PWM similar to what you see i
   static uint32_t cycleCounter = 0;
   cycleCounter ++;
     
-  if (cycleCounter == 10) { // Reset counter every 10 interrupts (equivalent to 1 second if interrupt every 100ms)
+  if (cycleCounter == 10) { // Reset counter every 10 interrupts (equivalent to 2.5 seconds if interrupt every 250ms)
     cycleCounter = 0;
   }
 
-  if (cycleCounter < (dutyCyclePercentage / 10)) { // Turn on if within duty cycle
+  if (cycleCounter < (dutyCyclePercentage / 10)) { // Turn on if within duty cycle, power level can never be < 10%
     gpio_set_level(SSR_OUT,1);
   } else {
     gpio_set_level(SSR_OUT,0);
@@ -181,11 +181,12 @@ void setup() {
   gpio_set_direction(SSR_OUT,GPIO_MODE_OUTPUT);
   gpio_set_level(SSR_OUT,0);
   
-  // Timer setup for 1 second period (100% duty cycle would be on for 1 second, off for none)
+  // Timer setup for 2.5 second period (100% duty cycle would be on for 2.5 seconds, off for none)
+  // Air Still heating elements have a slow reaction time, an SCR's switching frequency is wasteful
   timer = timerBegin(0,80,true); // Timer at 1 MHz, count up
-  timerAttachInterrupt(timer,&onTimer,true);
-  timerAlarmWrite(timer,100000,true); // Timer trigger set to 100ms (100,000 microseconds)
-  timerAlarmEnable(timer);
+  timerAttachInterrupt(timer,&onTimer,true); // Attach the PWM toggle function
+  timerAlarmWrite(timer,250000,true); // Timer trigger set to 250ms (250,000 microseconds)
+  timerAlarmEnable(timer); // Now enable the .20 Hz pulse width modulator
   #else
   // Assign the SCR controller output pin to a PWM channel
   // For heating elements, 1 KHz to 3 KHz is used, adjust as necessary
