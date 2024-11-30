@@ -15,3 +15,5 @@ As you can see in the photo **Air-Still-Lobotomized.jpg** above, everything that
 <img width="1024" src="./Airhead-Case-Back-Fitting.jpg"><br>
 
 As demonstrated in the photo **Airhead-Case-Back-Fitting.jpg** above, you need to align the back part of your Airhead case over the hole that the reset button was removed from. It's best if you set your spacer ring in place to get your vertical alignment correct. You should mark the two screw holes using a pencil, or small paint brush and paint, or nail polish if you happen to have that at home. Carefully drill the holes while avoiding damage to the boiler vessel inside. Then attach the case with nuts and bolts, paint the threads to lock the nuts in place.
+
+<img width="1024" src="./Airhead-Brain-Installed.jpg"><br>
