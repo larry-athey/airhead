@@ -18,4 +18,4 @@ As demonstrated in the photo **Airhead-Case-Back-Fitting.jpg** above, you need t
 
 <img width="1024" src="./Airhead-Brain-Installed.jpg"><br>
 
-As you can see in the photo **Airhead-Brain-Installed.jpg** above, the Airhead brain is installed in its case and it doesn't interfere with the seating of the spacer ring.
+As you can see in the photo **Airhead-Brain-Installed.jpg** above, the Airhead brain is installed in its case and it doesn't interfere with the seating of the spacer ring. This is just a dry fitting test before we procede with the wiring.
