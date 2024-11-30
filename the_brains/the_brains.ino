@@ -39,7 +39,7 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
-//#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR)
+#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
@@ -476,7 +476,7 @@ void DecValue(byte WhichOne) { // Decrement the value associated with the active
   if (WhichOne == 0) {
     if (CurrentMode > 1) CurrentMode --;
   } else if (WhichOne == 2) {
-    if (UserPower > 1) UserPower --;
+    if (UserPower > 10) UserPower --;
   } else if (WhichOne == 3) {
     if (UserTemp1 > 30) UserTemp1 --;
   } else if (WhichOne == 4) {
@@ -501,7 +501,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
       if (HoldCounter == 150) { // User is intentionally holding the + button
         while (digitalRead(INC_BTN) == 0) {
           IncValue(ActiveButton);
-          delay(400);
+          delay(250);
         }
       }
     }
@@ -514,7 +514,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
       if (HoldCounter == 150) { // User is intentionally holding the - button
         while (digitalRead(DEC_BTN) == 0) {
           DecValue(ActiveButton);
-          delay(400);
+          delay(250);
         }
       }
     }
