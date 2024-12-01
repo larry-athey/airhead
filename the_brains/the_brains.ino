@@ -584,7 +584,7 @@ void loop() {
               // Temperature is managed to +/- .5 degree C
               if (TempC >= (UserTemp1 + .5)) { // Over temperature
                 CurrentPercent -= 1;
-                if (CurrentPercent < 0) CurrentPercent = 0;
+                if (CurrentPercent < 10) CurrentPercent = 10;
                 PowerAdjust(CurrentPercent); // Decrease power 1%
               } else if (TempC <= (UserTemp1 - .5)) { // Under temperature
                 CurrentPercent += 1;
@@ -608,7 +608,7 @@ void loop() {
                 // Temperature is managed to +/- .5 degree C
                 if (TempC >= (Mode3Temp + .5)) { // Over temperature
                   CurrentPercent -= 1;
-                  if (CurrentPercent < 0) CurrentPercent = 0;
+                  if (CurrentPercent < 10) CurrentPercent = 10;
                   PowerAdjust(CurrentPercent); // Decrease power 1%
                 } else if (TempC <= (Mode3Temp - .5)) { // Under temperature
                   CurrentPercent += 1;
