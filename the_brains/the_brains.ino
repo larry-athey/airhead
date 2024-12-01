@@ -27,7 +27,7 @@
 // uses variable voltage, you would just feed a PWM to voltage convertor module between this and
 // your SCR controller. Or, if you comment out the SCR_OUT constant definition, you can use this
 // with any zero-crossing trigger solid state relay. Absolutely do not use a random-turn-on SSR!
-// It's totally up to you if you want to use an SCR controller or a solid state relay.
+// SCR controller or solid state relay as a basic PID controller, choose the method you like best.
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans9pt7b.h"       // https://github.com/moononournation/ArduinoFreeFontFile.git 
