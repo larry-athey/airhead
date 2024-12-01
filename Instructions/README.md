@@ -28,4 +28,4 @@ As you can see in the photo **Air-Still-Wiring-Fix-1.jpg** above, the bottom con
 
 <img width="1024" src="./Air-Still-Wiring-Fix-2.jpg"><br>
 
-Looking at the photo **Air-Still-Wiring-Fix-2.jpg** above, you can see that the white wire that was clipped has been extended about 4 inches. This connects to one of the screws on the load side of the solid state relay. The blue wire was removed the the bottom side of the heating element, cut in half, and then joined together with the two white wires that were connected to the snap switch that was removed.
+Looking at the photo **Air-Still-Wiring-Fix-2.jpg** above, you can see that the white wire that was clipped has been extended about 4 inches. This connects to one of the screws on the load side of the solid state relay. The blue wire was removed the the bottom side of the heating element, cut in half, and then joined together with the two white wires that were connected to the snap switch that was removed. The blue wire with the eyelet connector on the end connects to the other screw on the load side of the solid state relay.
