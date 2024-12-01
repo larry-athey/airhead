@@ -12,6 +12,8 @@ You will now need to remove that aluminum bracket so you can remove the power in
 
 As you can see in the photo **Air-Still-Lobotomized.jpg** above, everything that I mentioned has been removed and the aluminum bracket has been put back in place. I slid it back as far as it would go since the reset breaker will likely never need to be used unless something goes seriously wrong. We have the blue wires that will be connected to the Airhead power supply and interface board, and the white wires which will be connected to the load side of the solid state relay. You may or may not need to extend the white wires.
 
+**NOTE:** _Depending on your Air Still (or clone) model, the manufacturer may have put the fan on the switched side of the heating element. This is an absolutely stupid plan, the fan should run continuously. The temperature control should only run the heating element. This may require a simple wiring modification of your unit._
+
 <img width="1024" src="./Airhead-Case-Back-Fitting.jpg"><br>
 
 As demonstrated in the photo **Airhead-Case-Back-Fitting.jpg** above, you need to align the back part of your Airhead case over the hole that the reset button was removed from. It's best if you set your spacer ring in place to get your vertical alignment correct. You should mark the two screw holes using a pencil, or small paint brush and paint, or nail polish if you happen to have that at home. Carefully drill the holes while avoiding damage to the boiler vessel inside. Then attach the case with nuts and bolts, paint the threads to lock the nuts in place.
