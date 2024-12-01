@@ -102,8 +102,8 @@ DallasTemperature DT(&oneWire);
 Preferences preferences;
 //------------------------------------------------------------------------------------------------
 #ifndef SCR_OUT
-#include "esp_timer.h"
-#include "driver/gpio.h"
+#include "esp_timer.h"   // High resolution timer library for use with interrupt driven code
+#include "driver/gpio.h" // ESP-IDF GPIO library
 //------------------------------------------------------------------------------------------------
 #define SSR_OUT GPIO_NUM_1 // Same pin as used with the SCR controller
 
