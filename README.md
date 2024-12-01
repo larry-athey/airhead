@@ -4,7 +4,7 @@ Air Still (or clone) upgrade that uses an SCR controller or SSR for heating elem
 You may contact me directly at https://panhandleponics.com<br>
 Subscribe to the official YouTube channel at https://www.youtube.com/@PanhandlePonics<br>
 
-_**SIDE NOTE:** Save your money and just get a [$65 Air Still clone](https://www.amazon.com/VEVOR-Distiller-Countertop-Distilled-Stainless/dp/B0CN2SBJLT/) water distiller for this project. Add that to the cost to build this or purchase a kit from my website, and it still comes in less expensive than an original Still Spirits Air Still without the Airhead upgrade._
+_**SIDE NOTE:** Save your money and just get a [$65 Air Still clone](https://www.amazon.com/VEVOR-Distiller-Countertop-Distilled-Stainless/dp/B0CN2SBJLT/) water distiller for this project. Add that to the cost to build this or purchase a kit from my website, and it still comes in less expensive than an original Still Spirits Air Still with the temperature control problems._
 
 _**This project began on October 22, 2024 and does not yet have an official release...**_<br><br>
 
