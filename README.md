@@ -25,6 +25,9 @@ The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp
 
 Refer to the contents in the **/Instructions/** directory here for more information.<br><br>
 
+<img width="1024" src="https://github.com/user-attachments/assets/5718c5b2-e66c-4fb2-8cd2-e12219879c87"><br><br>
+
+
 <img width="1024" src="https://github.com/user-attachments/assets/f4c37f88-75f2-4c23-9678-8c19a809ded0"><br><br>
 <img width="1024" src="https://github.com/user-attachments/assets/57a78964-2d74-4d1c-a1bd-7bb5481609a5"><br><br>
 <img width="1024" src="https://github.com/user-attachments/assets/d9d7145a-6dce-40cc-be6c-75748c23297c"><br><br>
