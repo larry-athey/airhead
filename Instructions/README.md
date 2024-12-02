@@ -26,6 +26,8 @@ As you can see in the photo **Airhead-Brain-Installed.jpg** above, the Airhead b
 
 As you can see in the photo **Air-Still-Wiring-Fix-1.jpg** above, the bottom connection of the heating element has one of the blue wires and a white wire connected to it. If we were to leave things as is and connect the two white wires from the snap switch to the solid state relay, the entire system would never turn on. If it did, the entire system including the fan would turn off as soon as it's up to temperature. This is the stupid plan that I was referring to. Cut that white wire connected from the element to the fan power socket.
 
+_**NOTE:** The goal here is to have all of the neutral lines connected together, except for the neutral side of the heatng element._
+
 <img width="1024" src="./Air-Still-Wiring-Fix-2.jpg"><br>
 
 Looking at the photo **Air-Still-Wiring-Fix-2.jpg** above, you can see that the white wire that was clipped has been extended about 4 inches. This connects to one of the screws on the load side of the solid state relay. The blue wire was removed the the bottom side of the heating element, cut in half, and then joined together with the two white wires that were connected to the snap switch that was removed. The blue wire with the eyelet connector on the end connects to the other screw on the load side of the solid state relay.
@@ -33,3 +35,15 @@ Looking at the photo **Air-Still-Wiring-Fix-2.jpg** above, you can see that the 
 <img width="1024" src="./Airhead-Interface+PSU.jpg"><br>
 
 As you can see in the photo **Airhead-Interface+PSU.jpg** above, the prototype interface and PSU board has been attached to one of the spacer ring halves. The two blue wires with the stripped ends have been connected to the AC input terminals. The Airhead brain ribbon cable and the DS18B20 temperature sensor have also been connected. The temperature sensor has been installed under a copper heat sink clip against the aluminum bracket. Thermal transfer compound may be applied here if you have it on hand.
+
+Airhead brain connector, left to right:
+1. PWM, ESP32 pin 1
+2. Temperature, ESP32 pin 13
+3. +5 volts
+4. Ground
+
+Temperature sensor connector, left to right:
+1. +5 volts
+2. Data
+3. Ground
+
