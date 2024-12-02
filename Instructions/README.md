@@ -37,8 +37,8 @@ Looking at the photo **Air-Still-Wiring-Fix-2.jpg** above, you can see that the 
 As you can see in the photo **Airhead-Interface+PSU.jpg** above, the prototype interface and PSU board has been attached to one of the spacer ring halves. The two blue wires with the stripped ends have been connected to the AC input terminals. The Airhead brain ribbon cable and the DS18B20 temperature sensor have also been connected. The temperature sensor has been installed under a copper heat sink clip against the aluminum bracket. Thermal transfer compound may be applied here if you have it on hand.
 
 Airhead brain connector, left to right:
-1. PWM, ESP32 pin 1
-2. Temperature, ESP32 pin 13
+1. PWM, ESP32 GPIO 1
+2. Temperature, ESP32 GPIO 13
 3. +5 volts
 4. Ground
 
