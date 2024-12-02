@@ -47,3 +47,6 @@ Temperature sensor connector, left to right:
 2. Data
 3. Ground
 
+PWM/SSR connector, left to right:
+1. +3.3 volts
+2. Ground
