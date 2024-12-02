@@ -48,5 +48,5 @@ Temperature sensor connector, left to right:
 3. Ground
 
 PWM/SSR connector, left to right:
-1. +3.3 volts
+1. +3.3 volt PWM output
 2. Ground
