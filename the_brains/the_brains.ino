@@ -232,9 +232,9 @@ void PowerAdjust(byte Percent) { // Set the SCR controller or SSR to a target po
   Serial.print("Power Adjust: "); Serial.println(Percent);
   LastAdjustment = millis();
   #ifndef SCR_OUT
+  // This is a digital power controller, there are only on and off states
   dutyCyclePercentage = Percent;
   PowerLevel = round(Percent * 2.55);
-  Serial.printf("SSR Duty Cycle: %d%%\n",dutyCyclePercentage);
   #else
   // This is an analog power controller, first set the power level to zero
   // and rest 1 second so all of the capacitors can fully discharge
