@@ -1,1 +1,1 @@
-All 3D models in these folders are created by [James "The Doc"](https://www.youtube.com/@TheDocChannel) from Ireland.
+All 3D models in these folders are created by [James "The Doc"](https://www.youtube.com/@TheDocChannel) from Ireland. Keep in mind that the 3D models for the spacer ring may require rotation in Cura _(or whatever slicer you use)_ in order to fit on your print bed.
