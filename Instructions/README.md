@@ -26,7 +26,7 @@ As you can see in the photo **Airhead-Brain-Installed.jpg** above, the Airhead b
 
 As you can see in the photo **Air-Still-Wiring-Fix-1.jpg** above, the bottom connection of the heating element has one of the blue wires and a white wire connected to it. If we were to leave things as is and connect the two white wires from the snap switch to the solid state relay, the entire system would never turn on. If it did, the entire system including the fan would turn off as soon as it's up to temperature. This is the stupid plan that I was referring to. Cut that white wire connected from the element to the fan power socket.
 
-_**NOTE:** Don't panic, the goal here is to have all of the neutral lines connected together, except for the neutral side of the heatng element._
+_**NOTE:** Don't panic, the goal here is just to have all of the neutral lines connected together, except for the neutral side of the heatng element._
 
 <img width="1024" src="./Air-Still-Wiring-Fix-2.jpg"><br>
 
