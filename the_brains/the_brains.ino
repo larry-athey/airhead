@@ -28,6 +28,10 @@
 // your SCR controller. Or, if you comment out the SCR_OUT constant definition, you can use this
 // with any zero-crossing trigger solid state relay. Absolutely do not use a random-turn-on SSR!
 // SCR controller or a solid state relay as a simplified PID controller, the choice is yours.
+//
+// NOTE: You can still use a solid state relay in the place of an SCR controller, but at a much
+//       lower frequency. If your mains power is 50 Hz, then you would use 100 Hz for your PWM.
+//       If your mains power is 60 Hz, then you would use 120 Hz for your PWM.
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans9pt7b.h"       // https://github.com/moononournation/ArduinoFreeFontFile.git 
