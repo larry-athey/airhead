@@ -53,4 +53,4 @@ PWM/SSR connector, left to right:
 
 <img width="1024" src="./Airhead-SSR-Installed.jpg"><br>
 
-Finally, as shown in the photo **Airhead-SSR-Installed.jpg** above, the solid state relay is installed and wired in. The heat sink isn't really necessary, this SSR just came with one so I went ahead and used it to show that there actually is room for one.
+Finally, as shown in the photo **Airhead-SSR-Installed.jpg** above, the solid state relay is installed and wired in. The heat sink isn't really necessary, this SSR just came with one so I went ahead and used it to show that there actually is room for one. The documentation for these state that a heat sink isn't needed until a 1200 watt load is on it and the heating element used here is only 700 watts.
