@@ -576,8 +576,13 @@ void loop() {
         if (! UpToTemp) {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
             UpToTemp = true;
-            PowerAdjust(50); // Fall back to 50% power and begin temperature management
-          }                  // This will result in a little temporary instability
+            if (CurrentPercent > 50) PowerAdjust(50); // Fall back to 50% power and begin temperature management
+          } else {                                    // This will result in a short period of temperature instability
+            if (CurrentTime - LastAdjustment >= 60000) {
+              if (CurrentPercent > 10) CurrentPercent --;
+              PowerAdjust(CurrentPercent);
+            }
+          }
           if ((CurrentMode == 3) && (CurrentTime - StartTime >= (UserTime * 3600000))) {
             // Timer expired waiting to reach minimum operating temperature
             RunState(0);
