@@ -576,8 +576,7 @@ void loop() {
         if (! UpToTemp) {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
             UpToTemp = true;
-            //if (CurrentPercent > 50) PowerAdjust(50); // Fall back to 50% power and begin temperature management
-          } else {                                    // This will result in a short period of temperature instability
+          } else {
             if (CurrentTime - LastAdjustment >= 60000) {
               if (CurrentPercent < 100) CurrentPercent ++;
               PowerAdjust(CurrentPercent);
