@@ -44,7 +44,7 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
-#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR as a simplified PID)
+//#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR as a simplified PID)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
@@ -589,7 +589,7 @@ void loop() {
         } else {
           if (CurrentMode == 2) { // Constant temperature
             Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
-            if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
+            if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
               // Temperature is managed to +/- .5 degree C
               if (TempC >= (UserTemp1 + .5)) { // Over temperature
                 if (CurrentPercent > 10) CurrentPercent --;
@@ -601,7 +601,7 @@ void loop() {
             }
             Serial.print("Power Percent: "); Serial.println(CurrentPercent);
           } else { // Timed distillation run with progressive temperature adjustment
-            if (CurrentTime - StartTime < (UserTime * 60000)) {
+            if (CurrentTime - StartTime < (UserTime * 30000)) {
               if (CurrentTime - Mode3Counter >= 900000) { // Adjust the target temperature every 15 minutes
                 if (Mode3Direction == 1) {
                   Mode3Temp += Mode3Factor; // Increase the target temperature
@@ -611,7 +611,7 @@ void loop() {
                 Mode3Counter = CurrentTime;
               }
               Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
-              if (CurrentTime - LastAdjustment >= 3600000) { // Only make power adjustments once per minute
+              if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
                 // Temperature is managed to +/- .5 degree C
                 if (TempC >= (Mode3Temp + .5)) { // Over temperature
                   if (CurrentPercent > 10) CurrentPercent --;
