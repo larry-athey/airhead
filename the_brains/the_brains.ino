@@ -280,7 +280,7 @@ void RunState(byte State) { // Toggle the active distillation run state
         Mode3Factor  = Range / (UserTime * 4);
         Mode3Counter = millis();
       }
-      PowerAdjust(100);
+      PowerAdjust(95);
     } else {
       PowerAdjust(UserPower);
     }
@@ -576,8 +576,8 @@ void loop() {
         if (! UpToTemp) {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
             UpToTemp = true;
-            PowerAdjust(70); // Fall back to 70% power and begin temperature management
-          }
+            PowerAdjust(50); // Fall back to 50% power and begin temperature management
+          }                  // This will result in a little temporary instability
           if ((CurrentMode == 3) && (CurrentTime - StartTime >= (UserTime * 3600000))) {
             // Timer expired waiting to reach minimum operating temperature
             RunState(0);
