@@ -31,7 +31,8 @@
 //
 // NOTE: You can still use a solid state relay in the place of an SCR board, but at a much
 //       lower frequency. If your mains power is 50 Hz, then you would use 100 Hz for your
-//       PWM frequency. If your mains power is 60 Hz, then you would use 120 Hz instead.
+//       PWM frequency. If your mains power is 60 Hz, you would use 120 Hz instead. Please
+//       keep in mind that this will cause the SSR to generate more heat, use a heat sink!
 //------------------------------------------------------------------------------------------------
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans9pt7b.h"       // https://github.com/moononournation/ArduinoFreeFontFile.git 
