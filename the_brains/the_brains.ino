@@ -280,7 +280,7 @@ void RunState(byte State) { // Toggle the active distillation run state
         Mode3Factor  = Range / (UserTime * 4);
         Mode3Counter = millis();
       }
-      PowerAdjust(95);
+      PowerAdjust(10);
     } else {
       PowerAdjust(UserPower);
     }
@@ -576,10 +576,10 @@ void loop() {
         if (! UpToTemp) {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
             UpToTemp = true;
-            if (CurrentPercent > 50) PowerAdjust(50); // Fall back to 50% power and begin temperature management
+            //if (CurrentPercent > 50) PowerAdjust(50); // Fall back to 50% power and begin temperature management
           } else {                                    // This will result in a short period of temperature instability
             if (CurrentTime - LastAdjustment >= 60000) {
-              if (CurrentPercent > 10) CurrentPercent --;
+              if (CurrentPercent < 100) CurrentPercent ++;
               PowerAdjust(CurrentPercent);
             }
           }
@@ -593,12 +593,10 @@ void loop() {
             if (CurrentTime - LastAdjustment >= 60000) { // Only make power adjustments once per minute
               // Temperature is managed to +/- .5 degree C
               if (TempC >= (UserTemp1 + .5)) { // Over temperature
-                CurrentPercent -= 1;
-                if (CurrentPercent < 10) CurrentPercent = 10;
+                if (CurrentPercent > 10) CurrentPercent --;
                 PowerAdjust(CurrentPercent); // Decrease power 1%
               } else if (TempC <= (UserTemp1 - .5)) { // Under temperature
-                CurrentPercent += 1;
-                if (CurrentPercent > 100) CurrentPercent = 100;
+                if (CurrentPercent < 100) CurrentPercent ++;
                 PowerAdjust(CurrentPercent); // Increase power 1%
               }
             }
@@ -617,12 +615,10 @@ void loop() {
               if (CurrentTime - LastAdjustment >= 3600000) { // Only make power adjustments once per minute
                 // Temperature is managed to +/- .5 degree C
                 if (TempC >= (Mode3Temp + .5)) { // Over temperature
-                  CurrentPercent -= 1;
-                  if (CurrentPercent < 10) CurrentPercent = 10;
+                  if (CurrentPercent > 10) CurrentPercent --;
                   PowerAdjust(CurrentPercent); // Decrease power 1%
                 } else if (TempC <= (Mode3Temp - .5)) { // Under temperature
-                  CurrentPercent += 1;
-                  if (CurrentPercent > 100) CurrentPercent = 100;
+                  if (CurrentPercent < 100) CurrentPercent ++;
                   PowerAdjust(CurrentPercent); // Increase power 1%
                 }
               }
