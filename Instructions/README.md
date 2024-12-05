@@ -50,3 +50,7 @@ Temperature sensor connector, left to right:
 PWM/SSR connector, left to right:
 1. +3.3 volt PWM output
 2. Ground
+
+<img width="1024" src="./Airhead-SSR-Installed.jpg"><br>
+
+Finally, as shown in the photo **Airhead-SSR-Installed.jpg** above, the solid state relay is installed and wired in.
