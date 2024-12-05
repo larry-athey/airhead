@@ -44,7 +44,7 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
-//#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR as a simplified PID)
+#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR as a simplified PID)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
