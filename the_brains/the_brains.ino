@@ -595,11 +595,11 @@ void loop() {
             if (CurrentMode == 2) { // Constant temperature mode
               Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
               if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
-                // Temperature is managed to +/- .5 degree C
-                if (TempC >= (UserTemp1 + .5)) { // Over temperature
+                // Temperature is managed to +/- .2 degree C
+                if (TempC >= (UserTemp1 + .2)) { // Over temperature
                   if (CurrentPercent > 10) CurrentPercent --;
                   PowerAdjust(CurrentPercent); // Decrease power 1%
-                } else if (TempC <= (UserTemp1 - .5)) { // Under temperature
+                } else if (TempC <= (UserTemp1 - .2)) { // Under temperature
                   if (CurrentPercent < 100) CurrentPercent ++;
                   PowerAdjust(CurrentPercent); // Increase power 1%
                 }
@@ -617,11 +617,11 @@ void loop() {
                 }
                 Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
                 if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
-                  // Temperature is managed to +/- .5 degree C
-                  if (TempC >= (Mode3Temp + .5)) { // Over temperature
+                  // Temperature is managed to +/- .2 degree C
+                  if (TempC >= (Mode3Temp + .2)) { // Over temperature
                     if (CurrentPercent > 10) CurrentPercent --;
                     PowerAdjust(CurrentPercent); // Decrease power 1%
-                  } else if (TempC <= (Mode3Temp - .5)) { // Under temperature
+                  } else if (TempC <= (Mode3Temp - .2)) { // Under temperature
                     if (CurrentPercent < 100) CurrentPercent ++;
                     PowerAdjust(CurrentPercent); // Increase power 1%
                   }
