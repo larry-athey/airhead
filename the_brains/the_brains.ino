@@ -44,7 +44,7 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
-#define SCR_OUT 1                // PWM output to the SCR controller (comment out if using an SSR as a simplified PID)
+//#define SCR_OUT 1                // PWM output to an SCR board (comment out if using an SSR as a simplified PID)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
@@ -578,6 +578,7 @@ void loop() {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
             UpToTemp = true;
             FallBackTime = millis();
+            if (CurrentMode == 3) StartTime = FallBackTime; // Mode 3 runs reset the timer when the minimum operating temperature has been reached
             if (CurrentPercent > 33) CurrentPercent = 33; // Fall back to one third power and begin temperature management
             PowerAdjust(CurrentPercent);                  // There will be a few minutes of temperature instability here
           } else {
@@ -591,7 +592,7 @@ void loop() {
             RunState(0);
           }
         } else {
-          if (CurrentTime - FallBackTime >= 120000) { // Wait 2 minutes for the temperature to level out after the fall-back
+          if (CurrentTime - FallBackTime >= 60000) { // Wait 1 minute for the temperature to level out after the fall-back
             if (CurrentMode == 2) { // Constant temperature mode
               Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
               if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
