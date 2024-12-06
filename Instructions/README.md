@@ -1,4 +1,4 @@
-# Instructions
+# Assembly Instructions
 
 In these examples, I'm using a cheap $65 [Vevor water distiller](https://www.amazon.com/dp/B0CN2SBJLT). No need for an expensive original Air Still for this project. For the sake of simplicity, I will be setting up this Air Still clone to use a solid state relay as a simlified PID controller rather than an SCR board. You can also use a solid state relay like an SCR board at a much lower frequency, refer to the source code comments. Anyway, the first step is to turn your Air Still upside down and remove the bottom cover.
 
@@ -53,6 +53,6 @@ PWM/SSR connector, left to right:
 
 <img width="1024" src="./Airhead-SSR-Installed.jpg"><br>
 
-Finally, as shown in the photo **Airhead-SSR-Installed.jpg** above, the solid state relay is installed and wired in. The heat sink isn't really necessary, this SSR just came with one so I went ahead and used it to show that there actually is room for one. The documentation for these state that a heat sink isn't needed until a 1200 watt load is on it and the heating element used here is only 700 watts.
+Finally, as shown in the photo **Airhead-SSR-Installed.jpg** above, the solid state relay is installed and wired in. The heat sink isn't really necessary, this SSR just came with one so I went ahead and used it to show that there actually is room for one. The documentation for these states that a heat sink isn't needed until a 1200 watt load is on it and the heating element used here is only 700 watts.
 
 _**NOTE:** If you think your temperature sensor is picking up too much heat from the heating element in the location shown in the photos, move it over where the snap switch was installed. That region of the aluminum bracket is further away from the heating element and has more free air around the mounting point. This will tame down its readings a little bit and may be beneficial to your use of the still._
