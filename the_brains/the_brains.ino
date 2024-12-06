@@ -230,7 +230,7 @@ void SetMemory() { // Update flash memory with the current user settings
 void TempUpdate() { // Update the temperature sensor values
   DT.requestTemperatures();
   TempC = DT.getTempCByIndex(0);
-  Tempc -= CorrectionFactor; // Adjust if DS18B20 is picking up too much heating element temperature
+  TempC -= CorrectionFactor; // Adjust if DS18B20 is picking up too much heating element temperature
   TempF = TempC * 9 / 5 + 32;
   Serial.print("Temp C: "); Serial.println(TempC);
   Serial.print("Temp F: "); Serial.println(TempF);
