@@ -280,7 +280,7 @@ void RunState(byte State) { // Toggle the active distillation run state
           Mode3Temp = UserTemp2;
           Range = UserTemp1 - UserTemp2;
         }
-        Mode3Factor  = Range / (UserTime * 4);
+        Mode3Factor  = float(Range) / float(UserTime * 4);
         Mode3Counter = millis();
       }
       PowerAdjust(50);
