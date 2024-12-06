@@ -591,7 +591,7 @@ void loop() {
             RunState(0);
           }
         } else {
-          if (CurrentTime - FallBackTime >= 300000) { // Wait 5 minutes for the temperature to level out after the fall-back
+          if (CurrentTime - FallBackTime >= 120000) { // Wait 2 minutes for the temperature to level out after the fall-back
             if (CurrentMode == 2) { // Constant temperature mode
               Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
               if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
