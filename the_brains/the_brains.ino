@@ -618,6 +618,7 @@ void loop() {
                   }
                   Mode3Counter = CurrentTime;
                 }
+                Serial.print("Mode 3 Factor: "); Serial.println(Mode3Factor);
                 Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
                 if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
                   // Temperature is managed to +/- .2 degree C
