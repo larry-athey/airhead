@@ -66,6 +66,7 @@ float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 float Mode3Temp = 0;             // Current target temperature when running in mode 3
 float Mode3Factor = 0;           // How much to increase/decrease the mode 3 target temperature
+float CorrectionFactor = 3;      // How much to reduce temp readings to reflect internal temperatue
 byte UserTemp1 = 0;              // User selected mode 2 temperature or mode 3 start temperature
 byte UserTemp2 = 0;              // User selected ending temperature in mode 3
 byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
@@ -229,7 +230,8 @@ void SetMemory() { // Update flash memory with the current user settings
 void TempUpdate() { // Update the temperature sensor values
   DT.requestTemperatures();
   TempC = DT.getTempCByIndex(0);
-  TempF = DT.getTempFByIndex(0);
+  Tempc -= CorrectionFactor; // Adjust if DS18B20 is picking up too much heating element temperature
+  TempF = TempC * 9 / 5 + 32;
   Serial.print("Temp C: "); Serial.println(TempC);
   Serial.print("Temp F: "); Serial.println(TempF);
 }
