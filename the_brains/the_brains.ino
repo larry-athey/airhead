@@ -58,6 +58,7 @@ bool ActiveRun = false;          // True if there's an active distillation run
 bool UpToTemp = false;           // True if the run startup has reached operating temperature
 bool GotInterrupt = false;       // True if touch input has been detected on the screen
 long StartTime = 0;              // Start time of the current distillation run
+long FallBackTime = 0;           // Time of the still finally reached minimum operating temperature
 long LoopCounter = 0;            // Timekeeper for the loop to eliminate the need to delay it
 long LastAdjustment = 0;         // Time of the last power adjustment
 long Mode3Counter = 0;           // 15 minute timer for mode 3 target temperature adjustments
@@ -576,8 +577,9 @@ void loop() {
         if (! UpToTemp) {
           if (TempC >= UserTemp1) { // Minimum operating temperature has been reached
             UpToTemp = true;
+            FallBackTime = millis();
             if (CurrentPercent > 33) CurrentPercent = 33; // Fall back to one third power and begin temperature management
-            PowerAdjust(CurrentPercent);                  // There will likely be a few minutes of temperature instability
+            PowerAdjust(CurrentPercent);                  // There will be a few minutes of temperature instability here
           } else {
             if (CurrentTime - LastAdjustment >= 60000) {
               if (CurrentPercent < 100) CurrentPercent ++;
@@ -589,43 +591,45 @@ void loop() {
             RunState(0);
           }
         } else {
-          if (CurrentMode == 2) { // Constant temperature
-            Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
-            if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
-              // Temperature is managed to +/- .5 degree C
-              if (TempC >= (UserTemp1 + .5)) { // Over temperature
-                if (CurrentPercent > 10) CurrentPercent --;
-                PowerAdjust(CurrentPercent); // Decrease power 1%
-              } else if (TempC <= (UserTemp1 - .5)) { // Under temperature
-                if (CurrentPercent < 100) CurrentPercent ++;
-                PowerAdjust(CurrentPercent); // Increase power 1%
-              }
-            }
-            Serial.print("Power Percent: "); Serial.println(CurrentPercent);
-          } else { // Timed distillation run with progressive temperature adjustment
-            if (CurrentTime - StartTime < (UserTime * 3600000)) { // 3600000 milliseconds = 1 hour
-              if (CurrentTime - Mode3Counter >= 900000) { // Adjust the target temperature every 15 minutes
-                if (Mode3Direction == 1) {
-                  Mode3Temp += Mode3Factor; // Increase the target temperature
-                } else {
-                  Mode3Temp -= Mode3Factor; // Decrease the target temperature
-                }
-                Mode3Counter = CurrentTime;
-              }
-              Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
+          if (CurrentTime - FallBackTime >= 300000) { // Wait 5 minutes for the temperature to level out after the fall-back
+            if (CurrentMode == 2) { // Constant temperature
+              Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
               if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
                 // Temperature is managed to +/- .5 degree C
-                if (TempC >= (Mode3Temp + .5)) { // Over temperature
+                if (TempC >= (UserTemp1 + .5)) { // Over temperature
                   if (CurrentPercent > 10) CurrentPercent --;
                   PowerAdjust(CurrentPercent); // Decrease power 1%
-                } else if (TempC <= (Mode3Temp - .5)) { // Under temperature
+                } else if (TempC <= (UserTemp1 - .5)) { // Under temperature
                   if (CurrentPercent < 100) CurrentPercent ++;
                   PowerAdjust(CurrentPercent); // Increase power 1%
                 }
               }
               Serial.print("Power Percent: "); Serial.println(CurrentPercent);
-            } else { // Distillation run time has expired, shut down
-              RunState(0);
+            } else { // Timed distillation run with progressive temperature adjustment
+              if (CurrentTime - StartTime < (UserTime * 3600000)) { // 3600000 milliseconds = 1 hour
+                if (CurrentTime - Mode3Counter >= 900000) { // Adjust the target temperature every 15 minutes
+                  if (Mode3Direction == 1) {
+                    Mode3Temp += Mode3Factor; // Increase the target temperature
+                  } else {
+                    Mode3Temp -= Mode3Factor; // Decrease the target temperature
+                  }
+                  Mode3Counter = CurrentTime;
+                }
+                Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
+                if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
+                  // Temperature is managed to +/- .5 degree C
+                  if (TempC >= (Mode3Temp + .5)) { // Over temperature
+                    if (CurrentPercent > 10) CurrentPercent --;
+                    PowerAdjust(CurrentPercent); // Decrease power 1%
+                  } else if (TempC <= (Mode3Temp - .5)) { // Under temperature
+                    if (CurrentPercent < 100) CurrentPercent ++;
+                    PowerAdjust(CurrentPercent); // Increase power 1%
+                  }
+                }
+                Serial.print("Power Percent: "); Serial.println(CurrentPercent);
+              } else { // Distillation run time has expired, shut down
+                RunState(0);
+              }
             }
           }
         }
