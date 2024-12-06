@@ -1,4 +1,4 @@
-# Instructions
+# Assembly Instructions
 
 In these examples, I'm using a cheap $65 [Vevor water distiller](https://www.amazon.com/dp/B0CN2SBJLT). No need for an expensive original Air Still for this project. For the sake of simplicity, I will be setting up this Air Still clone to use a solid state relay as a simlified PID controller rather than an SCR board. You can also use a solid state relay like an SCR board at a much lower frequency, refer to the source code comments. Anyway, the first step is to turn your Air Still upside down and remove the bottom cover.
 
