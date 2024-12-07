@@ -1,5 +1,11 @@
 # Frequently Asked Questions
 
+Q: I thought it was illegal to own a still in the USA.
+
+A: Nope, not at all. Where do you think distilled water and "essential oils" come from? Because our government is a bunch of money thieving control freaks, they say that you can't distill spirits at home, even though you can make wine or beer at home as strong as you want. You can even freeze homemade hard cider and skim the concentrated ethanol off the top. But they have a problem with home distillers making their beer or wine stronger the easy way. Solution? Simply don't invite them over to watch you.
+
+---
+
 Q: Why am I getting such low-proof distillate?
 
 A: You're running your temperature entirely too hot. Start with a target temperature of 80C/176F and feel the air blowing out the top of the still when ethanol starts flowing. You'll notice that the air is mostly cool. Then try a target temperature of 88C/190F and feel the air, it will feel much warmer. This is because you're getting water vapor into the condenser which carries much more heat and you will water down your distillate. Avoid going over 86C/186F unless you intentionally want to water it down.
