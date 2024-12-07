@@ -144,7 +144,7 @@ void setup() {
     // New chip, flash memory not initialized
     UserTemp1 = 80;
     UserTemp2 = 86;
-    UserTime  = 3;
+    UserTime  = 2;
     UserPower = 80;
     UserMode  = 1;
     SetMemory();
