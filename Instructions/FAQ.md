@@ -23,3 +23,9 @@ Q: What is the highest proof that you can get out of one of these stills?
 A: The highest I've ever gotten was 140 and that was from a Gin redistillation run at a constant 80C/176F over 8 hours. The object was to tame down the flavor from the juniper berries but I just ended up with really high proof Gin. Distilling normal stuff like wine to make Brandy, usually ends up being between 110 and 120 on a 2 hour progressive run.
 
 ---
+
+Q: Can you use one of these to tame down something that was aged on too much char?
+
+A: Absolutely! Just be sure to do a vingar run afterwards because it will leave char on the inside of the condenser. Knock your existing hooch down to 80 proof first and then redistill it at 80C/176F to 86C/186F so water vapor doesn't carry the char flavor through. Knock the secondary distillation down to anywhere from 110 to 120 proof and age it again with less char.
+
+---
