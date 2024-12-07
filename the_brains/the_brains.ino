@@ -14,20 +14,19 @@
 // The code here follows the same logic used in my RPi-Smart-Still logic processor which has been
 // cooking for nearly 2 years now. We're dealing with a much smaller body of liquid here, so this
 // system uses smaller timing factors when checking for temperature changes and then adjusting the
-// boiler power to compensate. Just like my other project, the key is to make sure the temperature
-// sensor is in solid contact with the boiler, about mid way between the bottom and the full mark.
+// boiler power to compensate.
 //
 // My suggestion for the installation of the temperature sensor is to use one in a TO-92 case and
 // attach it in place of the original snap switch using a TO-92 chassis heat sink mount. If those
 // are hard to find, any other strip of metal with holes in the ends for the mounting bolts works
-// just fine. Be sure to add heat sink compound for reliable heat transfer. If possible, use wire
-// with silicone insulation for the connections and heat shrink the leads to prevent any shorts.
+// just fine. If possible, use wire with silicone insulation for the connections, and heat shrink
+// the leads to prevent any shorts. Thermal transfer compound isn't needed and may cause problems.
 //
-// This controller will work with any SCR controller that accepts a PWM input. If your controller
-// uses variable voltage, you would just feed a PWM to voltage convertor module between this and
-// your SCR controller. Or, if you comment out the SCR_OUT constant definition, you can use this
-// with any zero-crossing trigger solid state relay. Absolutely do not use a random-turn-on SSR!
-// SCR controller or a solid state relay as a simplified PID controller, the choice is yours.
+// This controller will work with any SCR board that accepts a PWM input. If your SCR board uses
+// variable voltage, you would just feed a PWM to voltage convertor module between this and your
+// your SCR board. Or, if you comment out the SCR_OUT constant definition, you can use this with
+// any zero-crossing trigger solid state relay. Absolutely do not use a random-turn-on SSR! SCR
+// board or solid state relay as a simplified PID controller, the choice is totally up to you.
 //
 // NOTE: You can still use a solid state relay in the place of an SCR board, but at a much
 //       lower frequency. If your mains power is 50 Hz, then you would use 100 Hz for your
