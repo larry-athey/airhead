@@ -14,7 +14,7 @@ A: You're running your temperature entirely too hot. Start with a target tempera
 
 Q: How do you deal with methanol with these? I'm not in a hurry to go blind.
 
-A: The first step is to quit paying attention to old wive's tales and prohibition era propaganda. You couldn't possibly create enough methanol with one of these little stills to blind you, or even one 10 times its size. Buy a gallon of apple juice and drink it moderately fast, like within an hour. Then an hour after that, ask yourself why you have a headache. It's because there is naturally occuring methanol in apple juice and you just gave yourself a hangover without drinking any booze at all. Be careful what you worry about in life.
+A: The first step is to quit paying attention to old wive's tales and prohibition era propaganda. You couldn't possibly create enough methanol with one of these little stills to blind you, or even one 10 times its size. Buy a gallon of apple juice and drink it moderately fast, like within an hour. Then an hour after that, ask yourself why you have a headache. It's because there is naturally occuring methanol in apple juice, you just gave yourself a hangover without drinking any booze at all. Be careful what you worry about in life.
 
 ---
 
