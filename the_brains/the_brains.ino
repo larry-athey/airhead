@@ -144,7 +144,7 @@ void setup() {
   if (UserTemp1 == 0) {
     // New chip, flash memory not initialized
     UserTemp1 = 80;
-    UserTemp2 = 88;
+    UserTemp2 = 86;
     UserTime  = 3;
     UserPower = 80;
     UserMode  = 1;
