@@ -20,6 +20,6 @@ A: That's vapor condensing back into a liquid and blocking the air path, it's ju
 
 Q: What is the highest proof that you can get out of one of these stills?
 
-A: The highest I've ever gotten was 140 and that was from a Gin redistillation run at a constant 80C/176F over 8 hours. The object was to just tame down the flavor from the juniper berries but I just ended up with really high proof Gin.
+A: The highest I've ever gotten was 140 and that was from a Gin redistillation run at a constant 80C/176F over 8 hours. The object was to tame down the flavor from the juniper berries but I just ended up with really high proof Gin.
 
 ---
