@@ -2,7 +2,7 @@
 
 Q: I thought it was illegal to own a still in the USA.
 
-A: Nope, not at all. Where do you think distilled water and "essential oils" come from? Because our government is a bunch of money thieving control freaks, they say that you can't distill spirits at home, even though you can make wine or beer at home as strong as you want. You can even freeze homemade hard cider and skim the concentrated ethanol off the top. But they have a problem with home distillers making their beer or wine stronger the easy way. Solution? Simply don't invite them over to watch you.
+A: Nope, not at all. Where do you think distilled water and "essential oils" come from? Because our government is a bunch of money thieving control freaks, they say that you can't distill spirits at home, even though you can make wine or beer at home as strong as you want. You can even freeze homemade hard cider and skim the concentrated ethanol off the top. But they have a problem with home distillers making their beer or wine stronger the easy way. Solution? Simply don't invite them over to watch you and don't distribute it.
 
 ---
 
