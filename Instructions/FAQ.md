@@ -12,6 +12,12 @@ A: You're running your temperature entirely too hot. Start with a target tempera
 
 ---
 
+Q: How do you deal with methanol with these? I'm not in a hurry to go blind.
+
+A: The first step is to quit paying attention to old wive's tales and prohibition era propaganda. You couldn't possibly create enough methanol with one of these little stills to blind you, or even one 10 times its size. Try this sometime, get a gallon of apple juice and drink it moderately fast, like within an hour. Then an hour after that, ask yourself why you have a headache. It's because there is natually occuring methanol in a gallon of apple juice and you just gave yourself a hangover without drinking any booze at all.
+
+---
+
 Q: What is the benefit to using a progressive temperature in mode 3?
 
 A: If you were to run at a set target temperature of 80C/176F, it could take you 6 hours or more to get all of the ethanol out. Your output slows down as the ethanol is removed and you may only see one drop per minute after a couple hours, even though there's still a decent amount of ethanol remaining inside. Starting at 80C/176F and ending at 86C/186F over 2 hours will achieve the same result in far less time. 
