@@ -594,7 +594,7 @@ void loop() {
             RunState(0);
           }
         } else {
-          if (CurrentTime - FallBackTime >= 60000) { // Wait 1 minute for the temperature to level out after the 33% fall-back
+          if (CurrentTime - FallBackTime >= 60000) { // Wait 1 minute for the turbulence to calm down after the 33% fall-back
             if (CurrentMode == 2) { // Constant temperature mode
               Serial.print("Target Temp: "); Serial.println(UserTemp1,2);
               if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
