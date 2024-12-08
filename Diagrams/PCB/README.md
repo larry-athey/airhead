@@ -1,1 +1,1 @@
-Printed circuit boards for the Airhead Interface and a spearate PWM to Voltage convertor are currently being designed and tested at this time. The Gerber files will be located here once all testing is complete.
+Printed circuit boards for the Airhead PSU and Interface, plus a spearate PWM to Voltage convertor PCB are currently being designed and tested at this time. The Gerber files will be located here once all testing is complete.
