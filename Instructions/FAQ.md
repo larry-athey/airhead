@@ -44,6 +44,6 @@ A: The highest I've ever gotten was 140 and that was from a Gin redistillation r
 
 Q: Can you use one of these to tame down something that was aged on too much char?
 
-A: Absolutely! Just be sure to do a vinegar run afterwards because it will leave char on the inside of the condenser. Knock your existing hooch down to 80 proof first and then redistill it at 80C/176F to 86C/186F so water vapor doesn't carry the char flavor through. Knock the secondary distillation down to anywhere from 110 to 120 proof and age it again with less char.
+A: Absolutely! Just be sure to do a vinegar run afterwards because it will leave char on the inside of the condenser. Knock your existing hooch down to 80 proof first and then redistill it at 80C/176F to 86C/186F so water vapor doesn't carry the char flavor through. Knock the secondary distillation down to anywhere from 110 to 120 proof and age it again with less char. Any higher proof and you will end up drawing undesirable flavors out of the wood.
 
 ---
