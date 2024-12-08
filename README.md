@@ -4,7 +4,9 @@ Air Still (or clone) upgrade that uses an SCR board or SSR for heating element c
 You may contact me directly at https://panhandleponics.com<br>
 Subscribe to the official YouTube channel at https://www.youtube.com/@PanhandlePonics<br>
 
-_**SIDE NOTE:** Save your money and just get a [$65 Air Still clone](https://www.amazon.com/VEVOR-Distiller-Countertop-Distilled-Stainless/dp/B0CN2SBJLT/) water distiller for this project. Add that to the cost to build this or purchase a kit from my website, and it still comes in less expensive than an original Still Spirits Air Still with the temperature control problems._<br><br>
+_**SIDE NOTE:** Save your money and just get a [$65 Air Still clone](https://www.amazon.com/VEVOR-Distiller-Countertop-Distilled-Stainless/dp/B0CN2SBJLT/) water distiller for this project. Add that to the cost to build this or purchase a kit from my website, and it still comes in less expensive than an original Still Spirits Air Still with the temperature control problems._
+
+---
 
 Aside from Still Spirits brand Air Stills only being sold as an Ethanol Version and a Water Version, they both suffer the same design flaw where the temperature is managed the same way it is with an electric cooking appliance. Even the various Air Still clones out there work the same way, including the ones with adjustable temperature. They send full power to the heating element when heating up, shut it off when they're up to temperature, then repeat this cycle.
 
