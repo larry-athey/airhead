@@ -18,6 +18,12 @@ A: You're running your temperature entirely too hot. Start with a target tempera
 
 ---
 
+Q: I dumped a 6-pack of PBR in my still and didn't get more than a few drops out of it. Why?
+
+A: Well, that's about the best thing you can do with that beer. Your problem is two-fold, you first need to use totally flat beer and you should always fill up the boiler to its full line. The first part of your problem is that the ethanol can't get through the foam. The second part is that the small volume of liquid causes your temperature sensor to reach minimum operating temp faster because there isn't enough liquid to rob the heat from the boiler vessel.
+
+---
+
 Q: How do you deal with methanol with these? I'm not in a hurry to go blind.
 
 A: The first step is to quit paying attention to old wive's tales and prohibition era propaganda. You couldn't possibly create enough methanol with one of these little stills to blind you, or even one 10 times its size. Buy a gallon of apple juice and drink it moderately fast, like within an hour. Then an hour after that, ask yourself why you have a headache. It's because there is naturally occuring methanol in apple juice, you just gave yourself a hangover without drinking any booze at all. Be careful what you worry about in life.
