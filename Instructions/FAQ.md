@@ -20,7 +20,7 @@ A: You're running your temperature entirely too hot. Start with a target tempera
 
 Q: I dumped a 6-pack of PBR in my still and didn't get more than a few drops out of it. Why?
 
-A: Well, that's about the best thing you can do with that beer. Your problem is two-fold, you first need to use totally flat beer and you should always fill up the boiler to its full line. The first part of your problem is that the ethanol vapor is trapped under the foam. The second part is that the small volume of liquid causes your temperature sensor to reach operating temp faster because there isn't enough liquid to rob the heat from the boiler vessel.
+A: Well, that's about the best thing you can do with that beer. Your problem is two-fold, you first need to use totally flat beer and you should always fill up the boiler to its full line. The first part of your problem is that the ethanol vapor is trapped under the beer foam. The second part is that the small volume of liquid causes your temperature sensor to reach operating temp faster because there isn't enough liquid to rob the heat from the boiler vessel.
 
 ---
 
