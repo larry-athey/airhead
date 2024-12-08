@@ -6,6 +6,12 @@ A: Nope, not at all. Where do you think distilled water and "essential oils" com
 
 ---
 
+Q: Can you distill on the grain with this system?
+
+A: No, there's a huge difference between suspended solids and a bucket of mash. To distill on the grain, you need a boiler with a motorized paddle or agitator. Suspended solids would refer to small particles or botanicals that you would use for making Gin.
+
+---
+
 Q: Why am I getting such low-proof distillate?
 
 A: You're running your temperature entirely too hot. Start with a target temperature of 80C/176F and feel the air blowing out the top of the still when ethanol starts flowing. You'll notice that the air is mostly cool. Then try a target temperature of 88C/190F and feel the air, it will feel much warmer. This is because you're getting water vapor into the condenser which carries much more heat and you will water down your distillate. Avoid going over 86C/186F unless you intentionally want to water it down.
