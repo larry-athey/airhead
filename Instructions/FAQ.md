@@ -38,7 +38,7 @@ A: If you were to run at a set target temperature of 80C/176F, it could take you
 
 Q: What are the popping noises that I keep hearing coming out of the still?
 
-A: That's vapor condensing back into a liquid and blocking the air path, it's just bubbles popping. Nothing to be alarmed about, nothing is broken. It's just because the condenser used here is mostly horizontal rather than vertical like larger stills.
+A: That's vapor condensing back into a liquid and blocking the air path, it's just bubbles popping. Nothing to be alarmed about, there is nothing broken. It's just because the condenser used here is mostly horizontal rather than vertical like larger stills.
 
 ---
 
