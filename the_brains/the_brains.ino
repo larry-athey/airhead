@@ -36,7 +36,7 @@
 #include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
 #include "FreeSans9pt7b.h"       // https://github.com/moononournation/ArduinoFreeFontFile.git 
 #include "OneWire.h"             // OneWire Network communications library
-#include "DallasTemperature.h"   // Dallas Temperature DS18B20 temperature sensor library
+#include "DallasTemperature.h"   // Dallas Semiconductor DS18B20 temperature sensor library
 #include "Preferences.h"         // ESP32 Flash memory read/write library
 #include "Wire.h"                // I2C communications library for touch-screen interface
 #define TOUCH_MODULES_CST_SELF   // Tell TouchLib.h to use the CST816 chip routines
