@@ -111,7 +111,7 @@ Preferences preferences;
 #include "esp_timer.h"   // High resolution timer library for use with interrupt driven code
 #include "driver/gpio.h" // ESP-IDF GPIO library
 //------------------------------------------------------------------------------------------------
-#define SSR_OUT GPIO_NUM_1 // Same pin as used with the SCR controller
+#define SSR_OUT GPIO_NUM_1 // Same pin as used with an SCR board
 
 int dutyCyclePercentage = 0;
 hw_timer_t *timer = NULL;
@@ -235,7 +235,7 @@ void TempUpdate() { // Update the temperature sensor values
   Serial.print("Temp F: "); Serial.println(TempF);
 }
 //-----------------------------------------------------------------------------------------------
-void PowerAdjust(byte Percent) { // Set the SCR controller or SSR to a target power percentage
+void PowerAdjust(byte Percent) { // Set the SCR board or SSR timing to a target power percentage
   Serial.print("Power Adjust: "); Serial.println(Percent);
   LastAdjustment = millis();
   #ifndef SCR_OUT
