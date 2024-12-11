@@ -263,7 +263,7 @@ void PowerAdjust(byte Percent) { // Set the SCR board or SSR timing to a target 
 }
 //-----------------------------------------------------------------------------------------------
 void RunState(byte State) { // Toggle the active distillation run state
-  if (State == 1 ) {
+  if (State == 1) {
     StartTime = millis();
     ActiveRun = true;
     UpToTemp  = false;
