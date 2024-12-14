@@ -76,6 +76,7 @@ byte Mode3Direction = 1;         // Mode 3 temperature direction, 0 = decrease, 
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
 byte ActiveButton = 0;           // Currently selected touch-screen button
 char Runtime[10];                // HH:MM:SS formatted time of the current distillation run
+String Version = "1.0.1";        // Current release version of the project
 //------------------------------------------------------------------------------------------------
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 158, ModeY2 = 84;
