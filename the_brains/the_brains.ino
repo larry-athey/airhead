@@ -1,6 +1,8 @@
 //------------------------------------------------------------------------------------------------
 // Airhead - Air Still Brain | (CopyLeft) 2024-Present | Larry Athey (https://panhandleponics.com)
 //
+// Tested up to Espressif ESP32 v2.0.14 due to LilyGo requirements
+//
 // This code requires the LilyGo T-Display-S3 ESP32 board. You will first need to properly set up
 // your Arduino IDE to upload to that board. See: https://github.com/Xinyuan-LilyGO/T-Display-S3
 // Make sure that you only install the Espressif ESP32 v2.0.14 board library since the 3.x stuff
