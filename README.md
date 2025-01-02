@@ -32,7 +32,9 @@ It's totally up to you which one to use. The SSR is easiest to set up and doesn'
 
 The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. The boiler control code is a port of the code from my [RPi-Smart-Still](https://github.com/larry-athey/rpi-smart-still) project. This means that even though this is a newer project, the code has already been refined and fine tuned for 2 years.
 
-Refer to the contents of the **/Diagrams/** and **/Instructions/** directories here to learn how to build this project.<br><br>
+Refer to the contents of the **/Diagrams/** and **/Instructions/** directories here to learn how to build this project.
+
+_**NOTE:** Turnkey kits will be available from [my website](https://panhandleponics.com/) in the coming weeks._<br><br>
 
 <img width="1024" src="https://github.com/user-attachments/assets/5718c5b2-e66c-4fb2-8cd2-e12219879c87"><br><br>
 <img width="1024" src="https://github.com/user-attachments/assets/0a62e45b-1fc2-4e6d-bd1d-f9f94309f22b"><br><br>
