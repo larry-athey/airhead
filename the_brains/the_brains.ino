@@ -195,7 +195,7 @@ void setup() {
   timer = timerBegin(0,80,true); // Timer at 1 MHz, count up
   timerAttachInterrupt(timer,&onTimer,true); // Attach the PWM toggle function
   timerAlarmWrite(timer,250000,true); // Timer trigger set to 250ms (250,000 microseconds)
-  timerAlarmEnable(timer); // Now enable the .20 Hz pulse width modulator
+  timerAlarmEnable(timer); // Now enable the 0.2 Hz pulse width modulator
   #else
   // Assign the SCR controller output pin to a PWM channel
   // For heating elements, 1 KHz to 3 KHz is used, adjust as necessary
