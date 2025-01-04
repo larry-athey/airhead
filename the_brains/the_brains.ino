@@ -189,8 +189,8 @@ void setup() {
   #ifndef SCR_OUT
   gpio_set_direction(SSR_OUT,GPIO_MODE_OUTPUT);
   gpio_set_level(SSR_OUT,0);
-  
   // Air Still heating elements have a slow reaction time, an SCR's switching frequency is wasteful
+  // Therefore, a custom low frequency PWM driving a solid state relay is a better option
   timer = timerBegin(0,80,true); // Timer at 1 MHz, count up
   timerAttachInterrupt(timer,&onTimer,true); // Attach the PWM toggle function
   timerAlarmWrite(timer,250000,true); // Timer trigger set to 250ms (250,000 microseconds)
