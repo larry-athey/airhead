@@ -190,12 +190,11 @@ void setup() {
   gpio_set_direction(SSR_OUT,GPIO_MODE_OUTPUT);
   gpio_set_level(SSR_OUT,0);
   
-  // Timer setup for 2.5 second period (100% duty cycle would be on for 2.5 seconds, off for none)
   // Air Still heating elements have a slow reaction time, an SCR's switching frequency is wasteful
   timer = timerBegin(0,80,true); // Timer at 1 MHz, count up
   timerAttachInterrupt(timer,&onTimer,true); // Attach the PWM toggle function
   timerAlarmWrite(timer,250000,true); // Timer trigger set to 250ms (250,000 microseconds)
-  timerAlarmEnable(timer); // Now enable the 0.2 Hz pulse width modulator
+  timerAlarmEnable(timer); // Now enable the low frequency pulse width modulator
   #else
   // Assign the SCR controller output pin to a PWM channel
   // For heating elements, 1 KHz to 3 KHz is used, adjust as necessary
