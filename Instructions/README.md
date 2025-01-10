@@ -1,7 +1,11 @@
 # Airhead Turn-Key Kit
 
+For those who aren't up to component level electronics work or 3D printing, Airhead turn-key kits are available from my website for $140 plus shipping in the USPS flat-rate box coverage area.
+
 <img width="1024" src="./Airhead-Kit-1.jpg"><br>
+
 <img width="1024" src="./Airhead-Kit-2.jpg"><br>
+
 <img width="1024" src="./Airhead-Kit-3.jpg"><br>
 
 # Assembly Instructions
