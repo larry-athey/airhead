@@ -1,6 +1,6 @@
 # Airhead Turn-Key Kit
 
-For those who aren't up to component level electronics work or 3D printing, Airhead turn-key kits are available from my website for $140 plus shipping in the USA where the USPS flat-rate box coverage area applies.
+For those who aren't up to component level electronics work or 3D printing, Airhead turn-key kits are available from my website for $140 plus shipping in the USA where the USPS flat-rate box coverage area applies. The interface board will soon be a printed circuit board rather than a handmade one, I'm just waiting to order a bulk supply of printed circuit boards for three of my projects.
 
 <img width="1024" src="./Airhead-Kit-1.jpg"><br>
 
