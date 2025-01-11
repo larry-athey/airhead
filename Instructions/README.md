@@ -1,6 +1,6 @@
 # Airhead Turn-Key Kit
 
-For those who aren't up to component level electronics work or 3D printing, Airhead turn-key kits are available from my website for $140 plus shipping in the USA where the USPS flat-rate box coverage area applies. The interface board will soon be a printed circuit board rather than a handmade one, I'm just waiting to order a bulk supply of printed circuit boards for three of my projects.
+For those who aren't up to component level electronics work or 3D printing, [Airhead turn-key kits](https://panhandleponics.com/technology-assisted-distillation/) are available from my website for $140 plus shipping in the USA where the USPS flat-rate box coverage area applies. The interface board will soon be a printed circuit board rather than a handmade one, I'm just waiting to order a bulk supply of printed circuit boards for three of my projects.
 
 Please keep in mind that I'm not running a full blown mail-order operation. I only have three 3D printers and only one that is large enough to print the Airhead spacer ring. Each of these halves take 9 hours to print, so I'm only capable of building one per day. My other two printers are pretty much dedicated to printing [Boilermaker](https://github.com/larry-athey/boilermaker) cases.
 
