@@ -12,6 +12,8 @@ Please keep in mind that I'm not running a full blown mail-order operation. I on
 
 # Assembly Instructions
 
+_The following instructions are for modifying an Air Still (or clone). Personally, I would recommend just gutting the unit and rewiring the unit from scratch according to the (Airhead Implementation)[https://github.com/larry-athey/airhead/blob/main/Diagrams/Schematic_Airhead-Implementation.pdf] schematic without the temperature snap switch or the circuit breaker that kicks if it boils dry._
+
 In these examples, I'm using a cheap $65 [Vevor water distiller](https://www.amazon.com/dp/B0CN2SBJLT). No need for an expensive original Air Still for this project. For the sake of simplicity, I will be setting up this Air Still clone to use a solid state relay as a simlified PID controller rather than an SCR board. You can also use a solid state relay like an SCR board at a much lower frequency, refer to the source code comments. Anyway, the first step is to turn your Air Still upside down and remove the bottom cover.
 
 Referring to the photo **Air-Still-Default-Wiring.jpg** here. The white wires are connected to the thermal control snap switch and are the AC neutral connection to the heating element. The blue wires are for an LED power indicator on the front of the still. The red wires are from the AC hot side and go to a circuit breaker on the front of the still and then come back to connect to the other side of the heating element. Lastly, the yellow wires are the earth ground of the AC connection and connect to the body of the boiler vessel.
