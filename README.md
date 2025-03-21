@@ -11,7 +11,7 @@ _**ALSO:** If you'd like a stand-alone WiFi enabled version of the temperature/p
 ---
 
 **Facebook Idiot:** _Why would you bother?_<br>
-**Me:** It's only a "bother" for somebody who couldn't do it if they had to. I'd rather have nicer things.
+**Me:** It's only a "bother" for somebody who couldn't do it on their best day. I'd rather have nicer things.
 
 Aside from Still Spirits brand Air Stills only being sold as an Ethanol Version and a Water Version, they both suffer the same design flaw where the temperature is managed the same way it is with an electric cooking appliance. Even the various Air Still clones out there work the same way, including the ones with adjustable temperature. They send full power to the heating element when heating up, shut it off when they're up to temperature, then repeat this cycle. Thanks for the unstable yo-yo temperatures!
 
