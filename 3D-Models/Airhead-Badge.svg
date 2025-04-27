@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.4948513"
-     inkscape:cx="173.93034"
-     inkscape:cy="196.67508"
+     inkscape:zoom="2.9897026"
+     inkscape:cx="158.20972"
+     inkscape:cy="60.206657"
      inkscape:window-width="1920"
      inkscape:window-height="1011"
      inkscape:window-x="0"
@@ -41,7 +41,10 @@
     <path
        id="rect31"
        style="fill:none;stroke:#000000;stroke-width:1.91741"
-       d="M 5.8472276,0.95870501 H 80.152771 c 2.708241,0 4.888522,2.09638049 4.888522,4.70040469 V 26.340889 c 0,2.604024 -2.180281,4.700404 -4.888522,4.700404 H 5.8472276 c -2.7082415,0 -4.88852259,-2.09638 -4.88852259,-4.700404 V 5.6591097 c 0,-2.6040242 2.18028109,-4.70040469 4.88852259,-4.70040469 z" />
+       d="M 5.8472276,0.95870501 H 80.152771 c 2.708241,0 4.888522,2.09638049 4.888522,4.70040469 V 26.340889 c 0,2.604024 -2.180281,4.700404 -4.888522,4.700404 H 5.8472276 c -2.7082415,0 -4.88852259,-2.09638 -4.88852259,-4.700404 V 5.6591097 c 0,-2.6040242 2.18028109,-4.70040469 4.88852259,-4.70040469 z"
+       inkscape:export-filename="/home/larryathey/Nextcloud/LaserGRBL/Airhead-Badge.png"
+       inkscape:export-xdpi="254"
+       inkscape:export-ydpi="254" />
     <text
        xml:space="preserve"
        style="font-style:italic;font-weight:bold;font-size:5.29167px;line-height:1.25;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans Bold Italic';text-align:center;text-anchor:middle;stroke-width:0.264583"
@@ -57,7 +60,10 @@
        aria-label="Airhead"
        transform="scale(1.1135344,0.89804141)"
        id="text61583"
-       style="font-weight:bold;font-size:12.5706px;line-height:1.25;font-family:'Nimbus Roman';-inkscape-font-specification:'Nimbus Roman,  Bold';text-align:center;text-anchor:middle;stroke-width:0.294622">
+       style="font-weight:bold;font-size:12.5706px;line-height:1.25;font-family:'Nimbus Roman';-inkscape-font-specification:'Nimbus Roman,  Bold';text-align:center;text-anchor:middle;stroke-width:0.294622"
+       inkscape:export-filename="/home/larryathey/Nextcloud/LaserGRBL/Airhead-Badge.png"
+       inkscape:export-xdpi="254"
+       inkscape:export-ydpi="254">
       <path
          d="m 24.532417,12.458074 c -0.553106,0 -0.691383,-0.175989 -1.370195,-1.747313 L 20.358978,4.0986252 h -0.351976 l -2.790674,6.8886888 c -0.477682,1.181636 -0.62853,1.357624 -1.231918,1.47076 v 0.314265 h 2.551831 v -0.314265 c -0.754236,-0.05028 -1.030789,-0.188559 -1.030789,-0.515395 0,-0.163417 0.08799,-0.465112 0.364548,-1.143924 l 0.188559,-0.502824 h 2.828385 c 0.4274,0.993077 0.578247,1.433048 0.578247,1.709601 0,0.276553 -0.163418,0.389689 -0.603389,0.41483 -0.06285,0.01257 -0.22627,0.02514 -0.402259,0.03771 v 0.314265 h 4.072874 z m -6.285299,-2.6523966 1.181636,-3.0546557 1.269631,3.0546557 z"
          id="path17" />
@@ -83,7 +89,10 @@
     <g
        aria-label="Air Still Smart Controller"
        id="text80282"
-       style="font-weight:bold;font-size:5.99722px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Bold';text-align:center;text-anchor:middle;stroke-width:0.264583">
+       style="font-weight:bold;font-size:5.99722px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+       inkscape:export-filename="/home/larryathey/Nextcloud/LaserGRBL/Airhead-Badge.png"
+       inkscape:export-xdpi="254"
+       inkscape:export-ydpi="254">
       <path
          d="m 11.984317,18.233629 h 1.043517 l -1.253419,-4.156073 h -1.193447 l -1.2534193,4.156073 h 1.0195273 l 0.209903,-0.893586 h 1.211438 z m -1.259416,-1.607255 0.437797,-1.835149 0.437797,1.835149 z"
          id="path32" />
@@ -155,11 +164,13 @@
          id="path76" />
     </g>
     <g
-       aria-label="Designed and engineered by Larry Athey
-https://panhandleponics.com"
+       aria-label="Designed and engineered by Larry Athey https://panhandleponics.com"
        transform="scale(1.0422863,0.95942929)"
        id="text104090"
-       style="font-style:italic;font-weight:bold;font-size:4.06158px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Bold Italic';text-align:center;text-anchor:middle;stroke-width:0.253849">
+       style="font-style:italic;font-weight:bold;font-size:4.06158px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Bold Italic';text-align:center;text-anchor:middle;stroke-width:0.253849"
+       inkscape:export-filename="/home/larryathey/Nextcloud/LaserGRBL/Airhead-Badge.png"
+       inkscape:export-xdpi="254"
+       inkscape:export-ydpi="254">
       <path
          d="M 5.7063795,21.882833 H 4.9428024 l -0.3939733,2.814675 h 0.8407471 c 1.2022277,0 1.5921394,-0.832624 1.5921394,-1.74648 0,-0.869178 -0.6051754,-1.068195 -1.2753361,-1.068195 z m 0.040616,0.483328 c 0.3249264,0 0.5645596,0.101539 0.5645596,0.584867 0,0.548314 -0.1624632,1.267213 -0.8245008,1.267213 H 5.2717904 l 0.2599411,-1.85208 z"
          id="path79" />
@@ -341,5 +352,25 @@ https://panhandleponics.com"
          d="m 67.620963,27.548737 c -0.251817,0 -0.499574,0.15434 -0.67016,0.402097 -0.04062,-0.259942 -0.219326,-0.402097 -0.471144,-0.402097 -0.268064,0 -0.499574,0.158402 -0.674222,0.422404 l 0.01219,-0.353357 h -0.548313 l -0.300557,2.156699 h 0.629545 l 0.166524,-1.194104 c 0.121848,-0.300557 0.276188,-0.507698 0.414282,-0.507698 0.08935,0 0.158401,0.04874 0.125908,0.276187 l -0.203079,1.425615 h 0.629545 l 0.170587,-1.210351 c 0.12997,-0.288372 0.276187,-0.491451 0.418343,-0.491451 0.08935,0 0.15434,0.04874 0.121847,0.276187 l -0.203079,1.425615 h 0.629545 l 0.219325,-1.56777 c 0.05686,-0.410219 -0.134032,-0.657976 -0.467082,-0.657976 z"
          id="path197" />
     </g>
+    <ellipse
+       style="fill:none;stroke:#000000;stroke-width:2.23287"
+       id="path124"
+       cx="6.2500024"
+       cy="15.25"
+       rx="0.13356721"
+       ry="0.13356736"
+       inkscape:export-filename="/home/larryathey/Nextcloud/LaserGRBL/Airhead-Badge.png"
+       inkscape:export-xdpi="254"
+       inkscape:export-ydpi="254" />
+    <ellipse
+       style="fill:none;stroke:#000000;stroke-width:2.23287"
+       id="path124-3"
+       cx="79.25"
+       cy="15.250003"
+       rx="0.13356721"
+       ry="0.13356736"
+       inkscape:export-filename="/home/larryathey/Nextcloud/LaserGRBL/Airhead-Badge.png"
+       inkscape:export-xdpi="254"
+       inkscape:export-ydpi="254" />
   </g>
 </svg>
