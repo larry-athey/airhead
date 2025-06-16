@@ -648,3 +648,19 @@ void loop() {
   }
 }
 //------------------------------------------------------------------------------------------------
+/*
+// Create & run a new sketch with the following code to fully erase the flash memory of an ESP32
+
+#include <nvs_flash.h>
+
+void setup() {
+  nvs_flash_erase(); // erase the NVS partition and...
+  nvs_flash_init();  // initialize the NVS partition.
+  while(true);
+}
+
+void loop() {
+
+}
+*/
+//------------------------------------------------------------------------------------------------
