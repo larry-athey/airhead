@@ -58,10 +58,10 @@
 bool ActiveRun = false;          // True if there's an active distillation run
 bool UpToTemp = false;           // True if the run startup has reached operating temperature
 bool GotInterrupt = false;       // True if touch input has been detected on the screen
-long StartTime = 0;              // Start time of the current distillation run
-long FallBackTime = 0;           // Time of the still finally reached minimum operating temperature
-long LoopCounter = 0;            // Timekeeper for the loop to eliminate the need to delay it
-long LastAdjustment = 0;         // Time of the last power adjustment
+unsigned long StartTime = 0;     // Start time of the current distillation run
+unsigned long FallBackTime = 0;  // Time of the still finally reached minimum operating temperature
+unsigned long LoopCounter = 0;   // Timekeeper for the loop to eliminate the need to delay it
+unsigned long LastAdjustment = 0;// Time of the last power adjustment
 long Mode3Counter = 0;           // 15 minute timer for mode 3 target temperature adjustments
 float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
@@ -591,7 +591,7 @@ void loop() {
               PowerAdjust(CurrentPercent);
             }
           }
-          if ((CurrentMode == 3) && (CurrentTime - StartTime >= (UserTime * 3600000))) {
+          if ((CurrentMode == 3) && (long(CurrentTime - StartTime) >= long(UserTime * 3600000))) {
             // Timer expired waiting to reach minimum operating temperature
             RunState(0);
           }
