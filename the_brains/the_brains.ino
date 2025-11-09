@@ -231,8 +231,10 @@ void SetMemory() { // Update flash memory with the current user settings
 void TempUpdate() { // Update the temperature sensor values
   DT.requestTemperatures();
   float Test = DT.getTempCByIndex(0); // Returns -127.00 if the device reading fails
-  if (Test > -127.00) TempC = Test;
-  TempC += CorrectionFactor; // CorrectionFactor can be a positive or negative value to calibrate
+  if (Test > -127.00) {
+    TempC = Test;
+    TempC += CorrectionFactor; // CorrectionFactor can be a positive or negative value to calibrate
+  }
   TempF = TempC * 9 / 5 + 32;
   Serial.print("Temp C: "); Serial.println(TempC);
   Serial.print("Temp F: "); Serial.println(TempF);
