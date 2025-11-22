@@ -36,7 +36,7 @@ As demonstrated in the photo **Airhead-Case-Back-Fitting.jpg** above, you need t
 
 As you can see in the photo **Airhead-Brain-Installed.jpg** above, the Airhead brain is installed in its case and it doesn't interfere with the seating of the spacer ring. This is just a dry fitting test before we procede with the wiring. Please keep in mind that the wiring steps that follow are using a prototype power supply and interface board. The Airhead kits that I will be selling on my website will come with an actual custom designed printed circuit board. I just don't have them at this time since they have to be ordered from China in bulk.
 
-_**NOTE:** If you are using the same Air Still clone that I'm using, you will need a 6mm-1.00x70mm bolt to reattach the bottom after the spacer ring is in place. Other brands may use a different method to attach the bottom, I have another brand that uses 3 screws._
+_**NOTE:** If you are using the same Air Still clone that I'm using, you will need a [6mm-1.00x70mm bolt](https://www.amazon.com/VGBUY-Stainless-Spanner-Included-VG30115/dp/B0CK1RQWGH/) to reattach the bottom after the spacer ring is in place. Other brands may use a different method to attach the bottom, I have another brand that uses 3 screws._
 
 <img width="1024" src="./Air-Still-Wiring-Fix-1.jpg"><br>
 
