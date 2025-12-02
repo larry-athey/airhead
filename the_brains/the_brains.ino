@@ -68,6 +68,8 @@ float TempF = 0;                 // Current temperature reading F
 float Mode3Temp = 0;             // Current target temperature when running in mode 3
 float Mode3Factor = 0;           // How much to increase/decrease the mode 3 target temperature
 float CorrectionFactor = 2.5;    // How much to correct temp sensor C readings (positive or negative)
+                                 // Keep in mind that an external sensor will read slighly lower than
+                                 // an immersion thermometer. So, we need a positive correction factor.
 byte UserTemp1 = 0;              // User selected mode 2 temperature or mode 3 start temperature
 byte UserTemp2 = 0;              // User selected ending temperature in mode 3
 byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
