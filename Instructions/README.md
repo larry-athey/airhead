@@ -1,6 +1,6 @@
 # Installation Guide Video
 
-I have put together the video [Airhead Installation Using a Vevor Air Still](https://youtu.be/vFivj2nX99s) to show people how to install the Airhead Turn-Key Kit _(as detailed below)_. I also offer people the option to drop-ship their Vevor air still clone to me to have the Airhead installed and tested with an actual run before shipping it out to them.
+I have put together the video [Airhead Installation Using a Vevor Air Still](https://youtu.be/vFivj2nX99s) to show people how to install the Airhead Turn-Key Kit _(as detailed below)_. I also offer people the option to drop-ship their Vevor air still clone to me to have the Airhead installed and tested with an actual run before shipping it out to them. It's only slightly more than the price of the kit alone and saves you the trouble.
 
 # Airhead Turn-Key Kit
 
