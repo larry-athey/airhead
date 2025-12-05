@@ -28,7 +28,7 @@
 // variable voltage, you would just feed a PWM to voltage convertor module between this and your
 // your SCR board. Or, if you comment out the SCR_OUT constant definition, you can use this with
 // any zero-crossing trigger solid state relay. Absolutely do not use a random-turn-on SSR! SCR
-// board or solid state relay as a simplified PID controller, the choice is totally up to you.
+// board or a solid state relay "Boilermaker style", the choice is totally up to you.
 //
 // NOTE: You can still use a solid state relay in the place of an SCR board, but at a much
 //       lower frequency. If your mains power is 50 Hz, then you would use 100 Hz for your
@@ -45,7 +45,7 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
-//#define SCR_OUT 1                // PWM output to an SCR board (comment out if using an SSR as a simplified PID)
+//#define SCR_OUT 1              // PWM output to an SCR board (comment out if using a Boilermaker style SSR)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
@@ -67,9 +67,10 @@ float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 float Mode3Temp = 0;             // Current target temperature when running in mode 3
 float Mode3Factor = 0;           // How much to increase/decrease the mode 3 target temperature
-float CorrectionFactor = 2.5;    // How much to correct temp sensor C readings (positive or negative)
+float CorrectionFactor = 5.0;    // How much to correct temp sensor C readings (positive or negative)
                                  // Keep in mind that an external sensor will read slighly lower than
                                  // an immersion thermometer. So, we need a positive correction factor.
+                                 // Thie is why they chose a 150F thermal snap switch to detect 212F.
 byte UserTemp1 = 0;              // User selected mode 2 temperature or mode 3 start temperature
 byte UserTemp2 = 0;              // User selected ending temperature in mode 3
 byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
