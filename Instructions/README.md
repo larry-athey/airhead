@@ -14,7 +14,7 @@ Please keep in mind that I'm not running a full blown mail-order operation. I on
 
 <img width="1024" src="./Airhead-Kit-3.jpg"><br>
 
-# Assembly Instructions
+# Assembly Instructions (original version)
 
 _The following instructions are for **modifying** an Air Still (or clone). Personally, I would recommend just gutting the unit and rewiring the unit from scratch according to the [Airhead Implementation](https://github.com/larry-athey/airhead/blob/main/Diagrams/Schematic_Airhead-Implementation.pdf) schematic without the temperature snap switch or the circuit breaker that kicks if it boils dry. The Airhead Code already has protection built-in that shuts down the run if the boiler temperature exceeds 103C/217F. It's clear that these devices are not built to any solid standards, so it's really not possible to create a one-size-fits-all set of modification instructions._
 
