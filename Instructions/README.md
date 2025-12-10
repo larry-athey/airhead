@@ -2,6 +2,8 @@
 
 I have put together the video [Airhead Installation Using a Vevor Air Still](https://youtu.be/vFivj2nX99s) to show people how to install the Airhead Turn-Key Kit _(as detailed below)_. I also offer people the option to drop-ship their Vevor air still clone to me to have the Airhead installed and tested with an actual run before shipping it out to them. It's only slightly more than the price of the kit alone and saves you the trouble of installing it yourself.
 
+Please use this video as your guide rather than the original instructions below.
+
 # Airhead Turn-Key Kit
 
 For those who aren't up to component level electronics work or 3D printing, [Airhead turn-key kits](https://panhandleponics.com/technology-assisted-distillation/) are available from my website for $140 plus shipping in the USA where the USPS flat-rate box coverage area applies. The interface board will soon be a printed circuit board rather than a handmade one, I'm just waiting to order a bulk supply of printed circuit boards for three of my projects.
