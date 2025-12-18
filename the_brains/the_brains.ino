@@ -130,7 +130,7 @@ void IRAM_ATTR onTimer() { // Custom low frequency PWM designed specifically for
     cycleCounter = 0;
   }
 
-  if (cycleCounter < (dutyCyclePercentage / 10)) { // Turn on if within duty cycle, power level can never be < 10%
+  if (cycleCounter < (dutyCyclePercentage / 10.0)) { // Turn on if within duty cycle
     gpio_set_level(SSR_OUT,1);
   } else {
     gpio_set_level(SSR_OUT,0);
