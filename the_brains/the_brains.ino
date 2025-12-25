@@ -35,7 +35,7 @@
 //       PWM frequency. If your mains power is 60 Hz, you would use 120 Hz instead. Please
 //       keep in mind that this will cause the SSR to generate more heat, use a heat sink!
 //------------------------------------------------------------------------------------------------
-#include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.4.9
+#include "Arduino_GFX_Library.h" // Standard GFX library for Arduino, built with version 1.5.9
 #include "FreeSans9pt7b.h"       // https://github.com/moononournation/ArduinoFreeFontFile.git 
 #include "OneWire.h"             // OneWire Network communications library
 #include "DallasTemperature.h"   // Dallas Semiconductor DS18B20 temperature sensor library
