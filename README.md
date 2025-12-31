@@ -28,7 +28,7 @@ This project aims to solve that problem and add three user selectable modes:
 
 The greatest benefit of the low speed PWM and SSR is that it doesn't contribute to premature heating element failure as with the high-speed on/off switching in SCR controllers. SCR phase-angle control generates harmonics _(distortions in the AC sine wave)_ which leads to uneven current distribution, physical vibration, and stress within a heating element. The Boilermaker is actually better for your boiler's longevity!
 
-The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. The boiler control code is a port of the code from my [RPi-Smart-Still](https://github.com/larry-athey/rpi-smart-still) project. This means that even though this is a newer project, the code has already been refined and fine tuned for 2 years.
+The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. The boiler control code is a port of the code from my [RPi-Smart-Still](https://github.com/larry-athey/rpi-smart-still) project. This means that even though this is a newer project, the code has already been refined and fine tuned for 2 years in advance.
 
 Refer to the contents of the **/Diagrams/** and **/Instructions/** directories here to learn how to build this project.
 
