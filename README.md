@@ -32,7 +32,7 @@ The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp
 
 Refer to the contents of the **/Diagrams/** and **/Instructions/** directories here to learn how to build this project.
 
-_**NOTE:** Turn-key kits for those not comfortable with building this from scratch are now available from [my website](https://panhandleponics.com/technology-assisted-distillation/). There may be a short lead time on orders to allow for 3D printing of the 3D models or parts restocking. You may also drop-ship your air still to me to have the Airhead upgrade installed and tested with an actual run before I send it to you ready to roll! And it still works out to be less expensive than an original Air Still!_<br><br>
+_**NOTE:** Turn-key kits for those not comfortable with building this from scratch are now available from [my website](https://panhandleponics.com/technology-assisted-distillation/). There may be a short lead time on orders to allow for 3D printing of the 3D models or parts restocking. You may also drop-ship your air still clone to me to have the Airhead upgrade installed and tested with an actual run before I send it to you ready to roll! And it still works out to be less expensive than an original Air Still!_<br><br>
 
 <img width="1024" src="https://github.com/user-attachments/assets/5718c5b2-e66c-4fb2-8cd2-e12219879c87"><br><br>
 <img width="1024" src="https://github.com/user-attachments/assets/0a62e45b-1fc2-4e6d-bd1d-f9f94309f22b"><br><br>
