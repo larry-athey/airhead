@@ -24,7 +24,7 @@ This project aims to solve that problem and add three user selectable modes:
 1. Operate at a constant user selectable power level (10% to 100%)
 2. Operate at a constant user selectable temperature (up to 100C/212F)
 3. Perform timed runs with a user selectable starting and ending temperature
-4. _Perhaps additional features will be added as time goes by_
+4. _Maybe I'll add WiFi to it someday_
 
 This controller works with any (1) PWM controlled SCR board, or (2) voltage controlled SCR board, or (3) zero-crossing trigger [solid state relay](https://www.amazon.com/gp/product/B08FR13GYR/). This controller puts out PWM, but you can use any opto-isolated [PWM to voltage convertor](https://www.amazon.com/dp/B0BG2G5FMX) to connect it to any voltage controlled SCR board _(one that has a knob to control power)_.
 
