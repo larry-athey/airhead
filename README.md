@@ -17,7 +17,7 @@ Aside from Still Spirits brand Air Stills only being sold as an Ethanol Version 
 
 If you have any suspended solids in your wash, they will scorch and fuse to the bottom as they fall out of solution. This will add foul flavors to anything that you're distilling, especially gin. As with my [RPi-Smart-Still](https://github.com/larry-athey/rpi-smart-still) project, this problem is solved by replacing the relays or snap switches on the heating element with a temperature controlled low speed PWM _(0.20 Hz)_ and a solid state relay that never runs lower than 10% duty cycle.
 
-As long as the heating element is always running a little bit, it will radiate heat upward and force most of the suspended solids to stay afloat. This will eliminate the possibility of scorching for the most part. Just don't try to fill your still with a thick goopy mash.
+As long as the heating element is always running even just a little bit, it will radiate heat upward and force most of the suspended solids to stay afloat. This will eliminate the possibility of scorching for the most part. Just don't try to fill your still with a thick goopy mash.
 
 This project aims to solve that problem and add three user selectable modes:
 
