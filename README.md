@@ -30,7 +30,7 @@ This controller works with any (1) PWM controlled SCR board, or (2) voltage cont
 
 It's totally up to you which one to use. The SSR is easiest to set up and doesn't require a heat sink if the load is less than 1200 watts _(the heating element used here is only 700 watts, the fan is the other 50 watts)_.
 
-The greatest benefit of the PWM and SSR combination is that it doesn't contribute to premature heating element failure as with the high-speed on/off switching in SCR controllers. SCR phase-angle control generates harmonics (distortions in the AC sine wave) which leads to uneven current distribution, physical vibration, and stress within a heating element. The Boilermaker is actually better for your boiler's longevity!
+The greatest benefit of the PWM and SSR combination is that it doesn't contribute to premature heating element failure as with the high-speed on/off switching in SCR controllers. SCR phase-angle control generates harmonics _(distortions in the AC sine wave)_ which leads to uneven current distribution, physical vibration, and stress within a heating element. The Boilermaker is actually better for your boiler's longevity!
 
 The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. The boiler control code is a port of the code from my [RPi-Smart-Still](https://github.com/larry-athey/rpi-smart-still) project. This means that even though this is a newer project, the code has already been refined and fine tuned for 2 years.
 
