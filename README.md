@@ -6,7 +6,7 @@ Subscribe to the official YouTube channel at https://www.youtube.com/@PanhandleP
 
 _**SIDE NOTE:** Save your money and just get a [Vevor Air Still clone](https://www.amazon.com/dp/B0CN2SBJLT/) water distiller for this project. Add that to the cost to build this or purchase a kit from my website, and it still comes in less expensive than an original Still Spirits Air Still with the temperature control problems._
 
-_**ALSO:** If you'd like a stand-alone WiFi enabled version of the temperature/power controller that I designed here, check out my [Boilermaker](https://github.com/larry-athey/boilermaker) project!_
+_**ALSO:** If you'd like a stand-alone WiFi enabled version of the temperature/power controller that I designed here, with a truckload more features, check out my [Boilermaker](https://github.com/larry-athey/boilermaker) project!_
 
 **Facebook Idiot:** _Why would you bother?_<br>
 **Me:** It's only a "bother" for somebody who couldn't do it on their best day. I'd rather have nicer things.
