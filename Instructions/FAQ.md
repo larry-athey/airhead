@@ -12,6 +12,12 @@ A: No, there's a huge difference between suspended solids and a bucket of mash. 
 
 ---
 
+Q: Why does a thermometer in the boiler show a higher temperature than I see on the screen?
+
+A: An immersion thermometer is reading the liquid temperature and the Airhead thermometer is reading the vessel temperature. This is why they used a 150F snap switch to open up when the water in the boiler hits 212F. Generally, setting the CorrectionFactor variable to +5.0C gets it acceptably close when the boiler is running, and as long has your temperature sensor makes good contact with the boiler _(be sure that you use thermal paste when you install it)_.
+
+---
+
 Q: Why am I getting such low-proof distillate?
 
 A: You're likely running your temperature entirely too hot. Start with a target temperature of 80C/176F and feel the air blowing out the top of the still when ethanol starts flowing. You'll notice that the air is mostly cool. Then try a target temperature of 88C/190F and feel the air, it will feel much warmer. This is because you're getting water vapor into the condenser which carries much more heat and you will water down your distillate. Avoid going over 86C/186F unless you intentionally want to water it down.
