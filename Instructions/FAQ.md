@@ -44,7 +44,7 @@ A: That's vapor condensing back into a liquid and blocking the air path, it's ju
 
 Q: What is the highest proof that you can get out of one of these stills?
 
-A: The highest I've ever gotten was 140 and that was from a Gin redistillation run at a constant 80C/176F over 8 hours. The object was to tame down the flavor from the juniper berries but I just ended up with really clear and high proof Gin. Distilling normal stuff like wine to make Brandy, usually ends up being between 110 and 120 on a 2 hour progressive run.
+A: The highest I've ever gotten was 140 and that was from a Gin redistillation run at a constant 80C/176F over 6 hours, but I've heard of others redistilling a gallon of 80 proof vodka and get 162 proof out of it on a progressive run. Distilling normal stuff like wine to make Brandy, usually ends up being between 120 and 130 on a 2 hour progressive run.
 
 ---
 
