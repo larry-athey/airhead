@@ -18,6 +18,12 @@ A: An immersion thermometer is reading the liquid temperature and the Airhead th
 
 ---
 
+Q: Why does it appear that you do everything in celcius and cahrenheit is an after-thought?
+
+A: Because that's just the way the world works. The temperature sensor used in the Airhead outputs its readings in celcius and bloating the code with bidirectional temperature translations just to satisfy one country on the planet doesn't make sense. Unlike a normal computer, an ESP32 doesn't have an enless pool of storage space an RAM.
+
+---
+
 Q: Why am I getting such low-proof distillate?
 
 A: You're likely running your temperature entirely too hot. Start with a target temperature of 80C/176F and feel the air blowing out the top of the still when ethanol starts flowing. You'll notice that the air is mostly cool. Then try a target temperature of 88C/190F and feel the air, it will feel much warmer. This is because you're getting water vapor into the condenser which carries much more heat and you will water down your distillate. Avoid going over 86C/186F unless you intentionally want to water it down.
