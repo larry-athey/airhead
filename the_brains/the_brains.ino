@@ -22,7 +22,7 @@
 // attach it in place of the original snap switch using a TO-92 chassis heat sink mount. If those
 // are hard to find, any other strip of metal with holes in the ends for the mounting bolts works
 // just fine. If possible, use wire with silicone insulation for the connections, and heat shrink
-// the leads to prevent any shorts. Thermal transfer compound isn't needed and may cause problems.
+// the leads to prevent any shorts. Thermal transfer compound may or may not be necessary.
 //
 // This controller will work with any SCR board that accepts a PWM input. If your SCR board uses
 // variable voltage, you would just feed a PWM to voltage convertor module between this and your
