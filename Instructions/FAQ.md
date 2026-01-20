@@ -20,7 +20,7 @@ A: An immersion thermometer is reading the liquid temperature and the Airhead th
 
 Q: Why does it appear that you do everything in celcius and fahrenheit is an after-thought?
 
-A: Because that's just the way the world works. The temperature sensor used in the Airhead outputs its readings in celcius and bloating the code with bidirectional temperature translations just to satisfy one country on the planet doesn't make sense. Unlike a normal computer, an ESP32 doesn't have an endless pool of storage space an RAM.
+A: Because that's just the way the world works. The temperature sensor used in the Airhead outputs its readings in celcius and bloating the code with bidirectional temperature translations just to satisfy one country on the planet doesn't make sense. Unlike a normal computer, an ESP32 doesn't have an endless pool of storage space an RAM. But, that's the beauty of open source, create your own fork of the code and bloat it if you want to.
 
 ---
 
