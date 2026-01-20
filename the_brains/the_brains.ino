@@ -70,7 +70,7 @@ float Mode3Factor = 0;           // How much to increase/decrease the mode 3 tar
 float CorrectionFactor = 5.0;    // How much to correct temp sensor C readings (positive or negative)
                                  // Keep in mind that an external sensor will read slighly lower than
                                  // an immersion thermometer. So, we need a positive correction factor.
-                                 // Thie is why they use a 150F thermal snap switch to trigger on 212F.
+                                 // This is why they use a 150F thermal snap switch to trigger on 212F.
 byte UserTemp1 = 0;              // User selected mode 2 temperature or mode 3 start temperature
 byte UserTemp2 = 0;              // User selected ending temperature in mode 3
 byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
