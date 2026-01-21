@@ -32,7 +32,7 @@ The technical definition of the temperature controller in the Airhead is a PI co
 
 The brains of the operation is a [LilyGo T-Display-S3](https://www.amazon.com/gp/product/B0BLNKPL25/) ESP32 microcontroller with a built-in capacitive touch color LCD display. The boiler control code is a port of the code from my [RPi-Smart-Still](https://github.com/larry-athey/rpi-smart-still) project. This means that even though this is a newer project, the code has already been refined and fine tuned for 2 years in advance.
 
-Refer to the contents of the **/Diagrams/** and **/Instructions/** directories here to learn how to build this project. Be sure to check out the [FAQ](https://github.com/larry-athey/airhead/blob/main/Instructions/FAQ.md).
+Refer to the contents of the **/Diagrams/** and **/Instructions/** directories here to learn how to build this project, and be sure to check out the [FAQ](https://github.com/larry-athey/airhead/blob/main/Instructions/FAQ.md).
 
 _**NOTE:** Turn-key kits for those not comfortable with building this from scratch are now available from [my website](https://panhandleponics.com/technology-assisted-distillation/). There may be a short lead time on orders to allow for 3D printing of the 3D models or parts restocking. You may also drop-ship your air still clone to me to have the Airhead upgrade installed and tested with an actual run before I send it to you ready to roll! And it still works out to be less expensive than an original Air Still!_<br><br>
 
