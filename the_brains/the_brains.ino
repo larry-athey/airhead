@@ -13,8 +13,13 @@
 // upper left corner of a larger screen. Honestly, for as little information that's on the screen,
 // I don't see any point in using a larger screen or making it mobile web browser capable.
 //
+// No, I do not use anybody else's user interface library for the user interface here. They're all
+// entirely too bloated for what I need to do here. Since I wrote my own GUI for DOS BBS software
+// back in the 1990s (MAX Graphics) it wasn't all that complicated for me to do it again for this
+// little computer. It's not flashy, but it's also not unnecessarily bogged down with junk code.
+//
 // The code here follows the same logic used in my RPi-Smart-Still logic processor which has been
-// cooking for nearly 2 years now. We're dealing with a much smaller body of liquid here, so this
+// cooking for nearly 3 years now. We're dealing with a much smaller body of liquid here, so this
 // system uses smaller timing factors when checking for temperature changes and then adjusting the
 // boiler power to compensate.
 //
@@ -58,6 +63,7 @@
 bool ActiveRun = false;          // True if there's an active distillation run
 bool UpToTemp = false;           // True if the run startup has reached operating temperature
 bool GotInterrupt = false;       // True if touch input has been detected on the screen
+bool ConfigMode = false;         // True if the configuration mode is active
 unsigned long StartTime = 0;     // Start time of the current distillation run
 unsigned long FallBackTime = 0;  // Time of the still finally reached minimum operating temperature
 unsigned long LoopCounter = 0;   // Timekeeper for the loop to eliminate the need to delay it
@@ -67,10 +73,7 @@ float TempC = 0;                 // Current temperature reading C
 float TempF = 0;                 // Current temperature reading F
 float Mode3Temp = 0;             // Current target temperature when running in mode 3
 float Mode3Factor = 0;           // How much to increase/decrease the mode 3 target temperature
-float CorrectionFactor = 5.0;    // How much to correct temp sensor C readings (positive or negative)
-                                 // Keep in mind that an external sensor will read slighly lower than
-                                 // an immersion thermometer. So, we need a positive correction factor.
-                                 // This is why they use a 150F thermal snap switch to trigger on 212F.
+float Correction = 0.0;          // How much to correct temp sensor C readings (positive or negative)
 byte UserTemp1 = 0;              // User selected mode 2 temperature or mode 3 start temperature
 byte UserTemp2 = 0;              // User selected ending temperature in mode 3
 byte UserTime = 0;               // User selected distillation run time in mode 3 (hours)
@@ -79,9 +82,12 @@ byte UserMode = 1;               // Last used operation mode selected by the use
 byte CurrentMode = 1;            // 1 = Constant Power, 2 = Constant Temp, 3 = Timed w/Temps
 byte Mode3Direction = 1;         // Mode 3 temperature direction, 0 = decrease, 1 = increase
 byte PowerLevel = 0;             // Current power level 0-255, (100/255) * PowerLevel = % Power
+byte StartupPower = 0;           // Startup power percentage in temperature managed modes
+byte FallbackPower = 0;          // Fallback power percentage in temperature managed modes
+byte RestPeriod = 0;             // How many seconds to rest after the target temperature is reached
 byte ActiveButton = 0;           // Currently selected touch-screen button
 char Runtime[10];                // HH:MM:SS formatted time of the current distillation run
-String Version = "1.0.1";        // Current release version of the project
+String Version = "1.0.2";        // Current release version of the project
 //------------------------------------------------------------------------------------------------
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 158, ModeY2 = 84;
@@ -147,12 +153,16 @@ void setup() {
   // Get the last user settings from flash memory
   GetMemory();
   if (UserTemp1 == 0) {
-    // New chip, flash memory not initialized
-    UserTemp1 = 80;
-    UserTemp2 = 86;
-    UserTime  = 2;
-    UserPower = 80;
-    UserMode  = 1;
+    // System reset initiated or this is a new chip, initialize the flash memory
+    UserTemp1     = 80;
+    UserTemp2     = 86;
+    UserTime      = 2;
+    UserPower     = 80;
+    UserMode      = 1;
+    Correction    = 0.0;
+    StartupPower  = 50;
+    FallbackPower = 33;
+    RestPeriod    = 60;
     SetMemory();
   }
   CurrentMode = UserMode;
@@ -188,6 +198,9 @@ void setup() {
   // In order to eliminate screen flicker, everything is plotted to an off-screen buffer and popped onto the screen when done
   canvas->begin();
   ScreenUpdate();
+  PopoverMessage("Airhead v" + Version);
+  delay(2500);
+  ScreenUpdate();
 
   #ifndef SCR_OUT
   gpio_set_direction(SSR_OUT,GPIO_MODE_OUTPUT);
@@ -213,11 +226,15 @@ void setup() {
 //------------------------------------------------------------------------------------------------
 void GetMemory() { // Get the last user settings from flash memory on startup
   preferences.begin("prefs",true);
-  UserTemp1 = preferences.getUInt("usertemp1",0);
-  UserTemp2 = preferences.getUInt("usertemp2",0);
-  UserTime  = preferences.getUInt("usertime",0);
-  UserPower = preferences.getUInt("userpower",0);
-  UserMode  = preferences.getUInt("usermode",0);
+  UserTemp1     = preferences.getUInt("usertemp1",0);
+  UserTemp2     = preferences.getUInt("usertemp2",0);
+  UserTime      = preferences.getUInt("usertime",0);
+  UserPower     = preferences.getUInt("userpower",0);
+  UserMode      = preferences.getUInt("usermode",0);
+  Correction    = preferences.getFloat("correction",0.0);
+  StartupPower  = preferences.getUInt("startuppower",50);
+  FallbackPower = preferences.getUInt("fallbackpower",33);
+  RestPeriod    = preferences.getUInt("restperiod",60);
   preferences.end();
 }
 //------------------------------------------------------------------------------------------------
@@ -228,6 +245,10 @@ void SetMemory() { // Update flash memory with the current user settings
   preferences.putUInt("usertime",UserTime);
   preferences.putUInt("userpower",UserPower);
   preferences.putUInt("usermode",UserMode);
+  preferences.putFloat("correction",Correction);
+  preferences.putUInt("startuppower",StartupPower);
+  preferences.putUInt("fallbackpower",FallbackPower);
+  preferences.putUInt("restperiod",RestPeriod);
   preferences.end();
 }
 //------------------------------------------------------------------------------------------------
@@ -236,7 +257,7 @@ void TempUpdate() { // Update the temperature sensor values
   float Test = DT.getTempCByIndex(0); // Returns -127.00 if the device reading fails
   if (Test > -127.00) {
     TempC = Test;
-    TempC += CorrectionFactor; // CorrectionFactor can be a positive or negative value to calibrate
+    TempC += Correction;
   }
   TempF = TempC * 9 / 5 + 32;
   Serial.print("Temp C: "); Serial.println(TempC);
@@ -290,7 +311,7 @@ void RunState(byte State) { // Toggle the active distillation run state
         Mode3Factor  = float(Range) / float(UserTime * 4);
         Mode3Counter = millis();
       }
-      PowerAdjust(50);
+      PowerAdjust(StartupPower);
     } else {
       PowerAdjust(UserPower);
     }
@@ -300,6 +321,21 @@ void RunState(byte State) { // Toggle the active distillation run state
   }
 }
 //-----------------------------------------------------------------------------------------------
+void PopoverMessage(String Msg) { // Display popover message to the user
+  int16_t nX = 0, nY = 0, TextX;
+  uint16_t nWidth = 0, nHeight = 0;
+
+  canvas->setFont(&FreeSans9pt7b);
+  canvas->setTextColor(BLACK);
+  canvas->getTextBounds(Msg,0,0,&nX,&nY,&nWidth,&nHeight);
+  TextX = round(nWidth / 2);
+  canvas->fillRoundRect(160 - TextX - 12,60,nWidth + 26,40,5,WHITE);
+  canvas->drawRoundRect(160 - TextX - 12,60,nWidth + 26,40,5,BLACK);
+  canvas->setCursor(160 - TextX,85);
+  canvas->print(Msg);
+  canvas->flush();
+}
+//------------------------------------------------------------------------------------------------
 void DrawButton(byte WhichOne) { // Draws and highlights the specified button on the screen
   int CurrentPercent = round(0.392156863 * PowerLevel);
   byte Ftemp;
@@ -307,42 +343,61 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
   canvas->setFont(&FreeSans9pt7b);
   canvas->setTextColor(BTNTEXT);
   if (WhichOne == 0) {
-    canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,MODEBTN);
-    if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,HILITE);
-    if (ActiveRun) {
-      // Run Time
-      canvas->setCursor(ModeX1 + 10,ModeY1 + 25);
-      canvas->printf("R: %2s",Runtime);
-      // Power Level
-      canvas->setCursor(ModeX1 + 10,ModeY1 + 45);
-      canvas->printf("P: %2u%%",CurrentPercent);
-      // Temperature
-      canvas->setCursor(ModeX1 + 10,ModeY1 + 65);
-      canvas->printf("T: %2.1fC / %2.1fF",TempC,TempF);
+    if (ConfigMode) {
+      canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,DARKGREY);
+      if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,HILITE);
+      canvas->setCursor(ModeX1 + 35,ModeY1 + 25);
+      canvas->print("Correction");
+      canvas->setCursor(ModeX1 + 52,ModeY1 + 45);
+      canvas->print("Factor");
+      canvas->setCursor(ModeX1 + 57,ModeY1 + 65);
+      canvas->printf("%2.1fC",Correction);
     } else {
-      canvas->setCursor(ModeX1 + 45,ModeY1 + 35);
-      canvas->printf("Mode %2u",CurrentMode);
-      canvas->setCursor(ModeX1 + 15,ModeY1 + 55);
-      if (CurrentMode == 1) {
-        canvas->print("Constant Power");
-      } else if (CurrentMode == 2) {
-        canvas->print("Constant Temp");    
-      } else if (CurrentMode == 3) {
-        canvas->print("Timed w/Temp"); 
+      canvas->fillRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,MODEBTN);
+      if (ActiveButton == 0) canvas->drawRoundRect(ModeX1,ModeY1,ModeX2 - ModeX1,ModeY2 - ModeY1,5,HILITE);
+       if (ActiveRun) {
+        // Run Time
+        canvas->setCursor(ModeX1 + 10,ModeY1 + 25);
+        canvas->printf("R: %2s",Runtime);
+        // Power Level
+        canvas->setCursor(ModeX1 + 10,ModeY1 + 45);
+        canvas->printf("P: %2u%%",CurrentPercent);
+        // Temperature
+        canvas->setCursor(ModeX1 + 10,ModeY1 + 65);
+        canvas->printf("T: %2.1fC / %2.1fF",TempC,TempF);
+      } else {
+        canvas->setCursor(ModeX1 + 45,ModeY1 + 35);
+        canvas->printf("Mode %2u",CurrentMode);
+        canvas->setCursor(ModeX1 + 15,ModeY1 + 55);
+        if (CurrentMode == 1) {
+          canvas->print("Constant Power");
+        } else if (CurrentMode == 2) {
+          canvas->print("Constant Temp");    
+        } else if (CurrentMode == 3) {
+          canvas->print("Timed w/Temp"); 
+        }
       }
     }
   } else if (WhichOne == 1) {
-    if (ActiveRun) {
+    if (ConfigMode) {
       canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,STOPBTN);
-      canvas->setCursor(RunX1 + 60,RunY1 + 35);
-      canvas->print("Stop");
+      canvas->setCursor(RunX1 + 35,RunY1 + 35);
+      canvas->print("Restore All");
+      canvas->setCursor(RunX1 + 13,RunY1 + 55);
+      canvas->print("System Defaults");
     } else {
-      canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RUNBTN);
-      canvas->setCursor(RunX1 + 58,RunY1 + 35);
-      canvas->print("Start");
+      if (ActiveRun) {
+        canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,STOPBTN);
+        canvas->setCursor(RunX1 + 60,RunY1 + 35);
+        canvas->print("Stop");
+      } else {
+        canvas->fillRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,RUNBTN);
+        canvas->setCursor(RunX1 + 58,RunY1 + 35);
+        canvas->print("Start");
+      }
+      canvas->setCursor(RunX1 + 18,RunY1 + 55);
+      canvas->print("Distillation Run");
     }
-    canvas->setCursor(RunX1 + 18,RunY1 + 55);
-    canvas->print("Distillation Run");
     if (ActiveButton == 1) canvas->drawRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,HILITE);
   } else if (WhichOne == 2) {
     canvas->fillRoundRect(PowerX1,PowerY1,PowerX2 - PowerX1,PowerY2 - PowerY1,5,PWRBTN);
@@ -371,33 +426,63 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
     }
     if (ActiveButton == 3) canvas->drawRoundRect(TempX1,TempY1,TempX2 - TempX1,TempY2 - TempY1,5,HILITE);
   } else if (WhichOne == 4) {
-    canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,STARTBTN);
-    canvas->setCursor(StartX1 + 33,StartY1 + 25);
-    canvas->print("Start");
-    canvas->setCursor(StartX1 + 33,StartY1 + 45);
-    canvas->printf("%2uC",UserTemp1);
-    Ftemp = round(UserTemp1 * 9 / 5 + 32);
-    canvas->setCursor(StartX1 + 33,StartY1 + 65);
-    canvas->printf("%2uF",Ftemp);
+    if (ConfigMode) {
+      canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,DARKGREY);
+      canvas->setCursor(StartX1 + 23,StartY1 + 25);
+      canvas->print("Startup");
+      canvas->setCursor(StartX1 + 28,StartY1 + 45);
+      canvas->print("Power");
+      canvas->setCursor(StartX1 + 36,StartY1 + 65);
+      canvas->printf("%2u%%",StartupPower);
+    } else {
+      canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,STARTBTN);
+      canvas->setCursor(StartX1 + 33,StartY1 + 25);
+      canvas->print("Start");
+      canvas->setCursor(StartX1 + 33,StartY1 + 45);
+      canvas->printf("%2uC",UserTemp1);
+      Ftemp = round(UserTemp1 * 9 / 5 + 32);
+      canvas->setCursor(StartX1 + 33,StartY1 + 65);
+      canvas->printf("%2uF",Ftemp);
+    }
     if (ActiveButton == 4) canvas->drawRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,HILITE);
   } else if (WhichOne == 5) {
-    canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,ENDBTN);
-    canvas->setCursor(EndX1 + 36,EndY1 + 25);
-    canvas->print("End");
-    canvas->setCursor(EndX1 + 36,EndY1 + 45);
-    canvas->printf("%2uC",UserTemp2);
-    Ftemp = round(UserTemp2 * 9 / 5 + 32);
-    canvas->setCursor(EndX1 + 36,EndY1 + 65);
-    canvas->printf("%2uF",Ftemp);
+    if (ConfigMode) {
+      canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,DARKGREY);
+      canvas->setCursor(EndX1 + 20,EndY1 + 25);
+      canvas->print("Fallback");
+      canvas->setCursor(EndX1 + 28,EndY1 + 45);
+      canvas->print("Power");
+      canvas->setCursor(EndX1 + 36,EndY1 + 65);
+      canvas->printf("%2u%%",FallbackPower);
+    } else {
+      canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,ENDBTN);
+      canvas->setCursor(EndX1 + 36,EndY1 + 25);
+      canvas->print("End");
+      canvas->setCursor(EndX1 + 36,EndY1 + 45);
+      canvas->printf("%2uC",UserTemp2);
+      Ftemp = round(UserTemp2 * 9 / 5 + 32);
+      canvas->setCursor(EndX1 + 36,EndY1 + 65);
+      canvas->printf("%2uF",Ftemp);
+    }
     if (ActiveButton == 5) canvas->drawRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,HILITE);
   } else if (WhichOne == 6) {
-    canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,TIMEBTN);
-    canvas->setCursor(TimeX1 + 30,TimeY1 + 25);
-    canvas->print("Time");
-    canvas->setCursor(TimeX1 + 40,TimeY1 + 45);
-    canvas->printf("%2u",UserTime);
-    canvas->setCursor(TimeX1 + 28,TimeY1 + 65);
-    canvas->print("Hours");
+    if (ConfigMode) {
+      canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,DARKGREY);
+      canvas->setCursor(TimeX1 + 32,TimeY1 + 25);
+      canvas->print("Rest");
+      canvas->setCursor(TimeX1 + 25,TimeY1 + 45);
+      canvas->print("Period");
+      canvas->setCursor(TimeX1 + 36,TimeY1 + 65);
+      canvas->printf("%2us",RestPeriod);
+    } else {
+      canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,TIMEBTN);
+      canvas->setCursor(TimeX1 + 30,TimeY1 + 25);
+      canvas->print("Time");
+      canvas->setCursor(TimeX1 + 40,TimeY1 + 45);
+      canvas->printf("%2u",UserTime);
+      canvas->setCursor(TimeX1 + 28,TimeY1 + 65);
+      canvas->print("Hours");
+    }
     if (ActiveButton == 6) canvas->drawRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,HILITE);
   }
 }
@@ -406,7 +491,7 @@ void ScreenUpdate() { // Update button labels and highlight the active button
   canvas->fillScreen(BLACK);
   DrawButton(0);
   DrawButton(1);
-  if (CurrentMode == 3) {
+  if ((CurrentMode == 3) || (ConfigMode)) {
     DrawButton(4);
     DrawButton(5);
     DrawButton(6);
@@ -429,33 +514,51 @@ void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
   // Yes, the multiple ScreenUpdate() calls seems sloppy or careless.
   // I do this in order to provide quicker visual feedback to the user
   // because the loop() function only updates the screen every second.
+  if ((! ActiveRun) && (Xpos < 0)) { // Home button pressed, toggle ConfigMode if the system is idle
+    ConfigMode = !ConfigMode;
+    if (!ConfigMode) {
+      PopoverMessage("Writing to flash memory");
+      delay(2500);
+    }
+    ActiveButton = 0;
+    ScreenUpdate();
+    return;
+  }
   if (RegionPressed(Xpos,Ypos,ModeX1,ModeY1,ModeX2,ModeY2)) {
-    // Mode button
+    // Mode and Correction Offset button
     if (! ActiveRun) {
       ActiveButton = 0;
       ScreenUpdate();
     }
   } else if (RegionPressed(Xpos,Ypos,RunX1,RunY1,RunX2,RunY2)) {
-    // Start/Stop button
+    // Start/Stop and System Reset button
     ActiveButton = 1;
     ScreenUpdate();
-    if (ActiveRun) {
-      RunState(0);
-    } else {
-      RunState(1);
+    if (ConfigMode) { // System reset requested
+      UserTemp1 = 0;
+      SetMemory();
+      PopoverMessage("Restoring system defaults");
+      delay(3000);
+      ESP.restart();
+    } else { // Toggle run state
+      if (ActiveRun) {
+        RunState(0);
+      } else {
+        RunState(1);
+      }
+      ScreenUpdate();
     }
-    ScreenUpdate();
   }
   if (! ActiveRun) {
-    if (CurrentMode == 3) {
+    if ((CurrentMode == 3) || (ConfigMode)) {
       if (RegionPressed(Xpos,Ypos,StartX1,StartY1,StartX2,StartY2)) {
-        // Start Temp button
+        // Start Temp and Startup Power button
         ActiveButton = 4;
       } else if (RegionPressed(Xpos,Ypos,EndX1,EndY1,EndX2,EndY2)) {
-        // End Temp button
+        // End Temp and Fallback Power button
         ActiveButton = 5;
       } else if (RegionPressed(Xpos,Ypos,TimeX1,TimeY1,TimeX2,TimeY2)) {
-        // Time button
+        // Run Time and Rest Period button
         ActiveButton = 6;
       }
     } else {
@@ -472,35 +575,67 @@ void ProcessTouch(int Xpos,int Ypos) { // Handle touch-screen presses
 }
 //-----------------------------------------------------------------------------------------------
 void IncValue(byte WhichOne) { // Increment the value associated with the active screen button
-  if (WhichOne == 0) {
-    if (CurrentMode < 3) CurrentMode ++;
-  } else if (WhichOne == 2) {
-    if (UserPower < 100) UserPower ++;
-  } else if (WhichOne == 3) {
-    if (UserTemp1 < 100) UserTemp1 ++;
-  } else if (WhichOne == 4) {
-    if (UserTemp1 < 100) UserTemp1 ++;
-  } else if (WhichOne == 5) {
-    if (UserTemp2 < 100) UserTemp2 ++;
-  } else if (WhichOne == 6) {
-    if (UserTime < 24) UserTime ++;
+  if (ConfigMode) {
+    if (WhichOne == 0) {
+      if (Correction < 15.0) Correction += .1;
+    } else if (WhichOne == 2) {
+      // Not used in config mode
+    } else if (WhichOne == 3) {
+      // Not used in config mode
+    } else if (WhichOne == 4) {
+      if (StartupPower < 100) StartupPower ++;
+    } else if (WhichOne == 5) {
+      if (FallbackPower < 100) FallbackPower ++;
+    } else if (WhichOne == 6) {
+      if (RestPeriod < 255) RestPeriod ++;
+    }
+  } else {
+    if (WhichOne == 0) {
+      if (CurrentMode < 3) CurrentMode ++;
+    } else if (WhichOne == 2) {
+      if (UserPower < 100) UserPower ++;
+    } else if (WhichOne == 3) {
+      if (UserTemp1 < 100) UserTemp1 ++;
+    } else if (WhichOne == 4) {
+      if (UserTemp1 < 100) UserTemp1 ++;
+    } else if (WhichOne == 5) {
+      if (UserTemp2 < 100) UserTemp2 ++;
+    } else if (WhichOne == 6) {
+      if (UserTime < 24) UserTime ++;
+    }
   }
   ScreenUpdate();
 }
 //-----------------------------------------------------------------------------------------------
 void DecValue(byte WhichOne) { // Decrement the value associated with the active screen button
-  if (WhichOne == 0) {
-    if (CurrentMode > 1) CurrentMode --;
-  } else if (WhichOne == 2) {
-    if (UserPower > 10) UserPower --;
-  } else if (WhichOne == 3) {
-    if (UserTemp1 > 30) UserTemp1 --;
-  } else if (WhichOne == 4) {
-    if (UserTemp1 > 30) UserTemp1 --;
-  } else if (WhichOne == 5) {
-    if (UserTemp2 > 30) UserTemp2 --;
-  } else if (WhichOne == 6) {
-    if (UserTime > 1) UserTime --;
+  if (ConfigMode) {
+    if (WhichOne == 0) {
+      if (Correction > -15.0) Correction -= .1;
+    } else if (WhichOne == 2) {
+      // Not used in config mode
+    } else if (WhichOne == 3) {
+      // Not used in config mode
+    } else if (WhichOne == 4) {
+      if (StartupPower > 1) StartupPower --;
+    } else if (WhichOne == 5) {
+      if (FallbackPower > 1) FallbackPower --;
+    } else if (WhichOne == 6) {
+      if (RestPeriod > 1) RestPeriod --;
+    }
+  } else {
+    if (WhichOne == 0) {
+      if (CurrentMode > 1) CurrentMode --;
+    } else if (WhichOne == 2) {
+      if (UserPower > 1) UserPower --;
+    } else if (WhichOne == 3) {
+      if (UserTemp1 > 1) UserTemp1 --;
+    } else if (WhichOne == 4) {
+      if (UserTemp1 > 1) UserTemp1 --;
+    } else if (WhichOne == 5) {
+      if (UserTemp2 > 1) UserTemp2 --;
+    } else if (WhichOne == 6) {
+      if (UserTime > 1) UserTime --;
+    }
   }
   ScreenUpdate();
 }
@@ -588,8 +723,8 @@ void loop() {
             UpToTemp = true;
             FallBackTime = millis();
             if (CurrentMode == 3) StartTime = FallBackTime; // Mode 3 runs reset the timer when the minimum operating temperature has been reached
-            if (CurrentPercent > 33) CurrentPercent = 33; // Fall back to one third power and begin temperature management
-            PowerAdjust(CurrentPercent);                  // There will be a few minutes of temperature instability here
+            if (CurrentPercent > FallbackPower) CurrentPercent = FallbackPower;
+            PowerAdjust(CurrentPercent);
           } else {
             if (CurrentTime - LastAdjustment >= 60000) {
               if (CurrentPercent < 100) CurrentPercent ++;
@@ -601,13 +736,13 @@ void loop() {
             RunState(0);
           }
         } else {
-          if (CurrentTime - FallBackTime >= 60000) { // Wait 1 minute for the turbulence to calm down after the 33% fall-back
+          if (CurrentTime - FallBackTime >= (RestPeriod * 1000)) { // Wait for the turbulence to calm down after the fall-back
             if (CurrentMode == 2) { // Constant temperature mode
               Serial.print("Target Temp: "); Serial.println(float(UserTemp1),2);
               if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
                 // Temperature is managed to +/- .2 degree C
                 if (TempC >= (UserTemp1 + .2)) { // Over temperature
-                  if (CurrentPercent > 10) CurrentPercent --;
+                  if (CurrentPercent > 0) CurrentPercent --;
                   PowerAdjust(CurrentPercent); // Decrease power 1%
                 } else if (TempC <= (UserTemp1 - .2)) { // Under temperature
                   if (CurrentPercent < 100) CurrentPercent ++;
@@ -630,7 +765,7 @@ void loop() {
                 if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
                   // Temperature is managed to +/- .2 degree C
                   if (TempC >= (Mode3Temp + .2)) { // Over temperature
-                    if (CurrentPercent > 10) CurrentPercent --;
+                    if (CurrentPercent > 1) CurrentPercent --;
                     PowerAdjust(CurrentPercent); // Decrease power 1%
                   } else if (TempC <= (Mode3Temp - .2)) { // Under temperature
                     if (CurrentPercent < 100) CurrentPercent ++;
