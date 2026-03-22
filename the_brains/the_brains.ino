@@ -675,6 +675,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
 }
 //-----------------------------------------------------------------------------------------------
 void loop() {
+  bool Resting = false;
   int CurrentPercent = round(0.392156863 * PowerLevel);
   unsigned long CurrentTime = millis();
   if (CurrentTime > 4200000000) {
@@ -791,6 +792,8 @@ void loop() {
                 delay(2500);
               }
             }
+          } else {
+            Resting = true;  
           }
         }
       } else {
@@ -798,6 +801,7 @@ void loop() {
       }
     }
     ScreenUpdate();
+    if (Resting) PopoverMessage("Rest period now active");
     LoopCounter = CurrentTime;
   }
 }
