@@ -707,6 +707,14 @@ void loop() {
     if (TempC > 103) {
       Serial.println("Shutdown due to thermal runaway");
       RunState(0);
+      while (true) {
+        PopoverMessage("Thermal runaway shutdown");
+        delay(2500);
+        ScreenUpdate();
+        PopoverMessage("Reboot the appliance");
+        delay(2500);
+        ScreenUpdate();
+      }
     }
     // Handle the active distillation run
     if (ActiveRun) {
@@ -734,6 +742,9 @@ void loop() {
           if ((CurrentMode == 3) && (long(CurrentTime - StartTime) >= long(UserTime * 3600000))) {
             // Timer expired waiting to reach minimum operating temperature
             RunState(0);
+            Serial.print("Failed to reach temperature");
+            PopoverMessage("Failed to reach temperature");
+            delay(3000);
           }
         } else {
           if (CurrentTime - FallBackTime >= (RestPeriod * 1000)) { // Wait for the turbulence to calm down after the fall-back
@@ -775,6 +786,9 @@ void loop() {
                 Serial.print("Power Percent: "); Serial.println(CurrentPercent);
               } else { // Distillation run time has expired, shut down
                 RunState(0);
+                Serial.print("Distillation run complete");
+                PopoverMessage("Distillation run complete");
+                delay(2500);
               }
             }
           }
