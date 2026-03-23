@@ -15,7 +15,7 @@ _**ALSO:** If you'd like a stand-alone WiFi enabled version of the temperature/p
 
 Still Spirits brand Air Stills and the various clones all suffer the same design flaw where the temperature is managed the same way it is with an electric cooking appliance. This also includes the ones with adjustable temperature. They send full power to the heating element when heating up, shut it off when they're up to temperature, then repeat this cycle. Thanks for the unstable yo-yo temperatures!
 
-If you have any suspended solids in your wash, they will scorch and fuse to the bottom as they fall out of solution. This will add foul flavors to anything that you're distilling, especially gin. As with my [RPi-Smart-Still](https://github.com/larry-athey/rpi-smart-still) project, this problem is solved by replacing the relays or snap switches on the heating element with a custom low speed PWM _(0.20 Hz)_ and a solid state relay that never runs lower than 10% duty cycle.
+If you have any suspended solids in your wash, they will scorch and fuse to the bottom as they fall out of solution. This will add foul flavors to anything that you're distilling, especially gin. As with my [RPi-Smart-Still](https://github.com/larry-athey/rpi-smart-still) project, this problem is solved by replacing the relays or snap switches on the heating element with a custom low speed PWM _(0.20 Hz)_ and a solid state relay that pulses the power.
 
 As long as the heating element is always running even just a little bit, it will radiate heat upward and force most of the suspended solids to stay afloat. This will eliminate the possibility of scorching for the most part. Just don't try to fill your still with a thick goopy mash.
 
