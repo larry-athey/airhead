@@ -21,7 +21,7 @@ As long as the heating element is always running even just a little bit, it will
 
 This project aims to solve that problem and add three user selectable modes:
 
-1. Operate at a constant user selectable power level (10% to 100%)
+1. Operate at a constant user selectable power level (1% to 100%)
 2. Operate at a constant user selectable temperature (up to 100C/212F)
 3. Perform timed runs with a user selectable starting and ending temperature
 4. _Maybe I'll add WiFi to it someday_
