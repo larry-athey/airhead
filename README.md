@@ -25,6 +25,8 @@ This project aims to solve that problem and add three user selectable modes:
 2. Operate at a constant user selectable temperature (up to 100C/212F)
 3. Perform timed runs with a user selectable starting and ending temperature
 
+_See the [operation guide](https://github.com/larry-athey/airhead/blob/main/Instructions/Operation.md) for more information on these three modes._
+
 The greatest benefit of the custom low speed PWM and SSR is that it doesn't contribute to premature heating element failure as with the high-speed on/off switching in SCR controllers. SCR phase-angle control generates harmonics _(distortions in the AC sine wave)_ which leads to uneven current distribution, physical vibration, and stress within a heating element. The Airhead is actually better for your boiler's longevity!
 
 The technical definition of the temperature controller in the Airhead is a PI controller, there is no D _(derivative gain)_. The reason for this is because PID controllers will spend more time off than on, once the boiler is up to temperature. This is bad for distillation because there's no thermal velocity to push the ethanol upward out of your wash. The Airhead is intentionally thermally aggressive, unlike a PID controller.
