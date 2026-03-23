@@ -24,7 +24,6 @@ This project aims to solve that problem and add three user selectable modes:
 1. Operate at a constant user selectable power level (1% to 100%)
 2. Operate at a constant user selectable temperature (up to 100C/212F)
 3. Perform timed runs with a user selectable starting and ending temperature
-4. _Maybe I'll add WiFi to it someday_
 
 The greatest benefit of the custom low speed PWM and SSR is that it doesn't contribute to premature heating element failure as with the high-speed on/off switching in SCR controllers. SCR phase-angle control generates harmonics _(distortions in the AC sine wave)_ which leads to uneven current distribution, physical vibration, and stress within a heating element. The Airhead is actually better for your boiler's longevity!
 
