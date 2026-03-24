@@ -14,8 +14,8 @@
 // I don't see any point in using a larger screen or making it mobile web browser capable.
 //
 // No, I do not use anybody else's user interface library for the user interface here. They're all
-// entirely too bloated for what I need to do here. Since I wrote my own GUI for DOS BBS software
-// back in the 1990s (MAX Graphics) it wasn't all that complicated for me to do it again for this
+// entirely too bloated for what I need to do. Since I wrote my own GUI for DOS BBS software back
+// in the 1990s (MAX Graphics) it wasn't really all that complicated for me to do it again on this
 // little computer. It's not flashy, but it's also not unnecessarily bogged down with junk code.
 //
 // The code here follows the same logic used in my RPi-Smart-Still logic processor which has been
@@ -23,11 +23,16 @@
 // system uses smaller timing factors when checking for temperature changes and then adjusting the
 // boiler power to compensate.
 //
+// This is a PI controller, NOT PID! The controller is intentionally thermally aggressive in order
+// to create thermal velocity to push ethanol out of the wash. Unlike a PID controller that spends
+// more time off than on once the target temperature has been reached. Minor overshoot it expected
+// and required in order to maintain upward thermal velocity. This is distillation, not brewing.
+//
 // My suggestion for the installation of the temperature sensor is to use one in a TO-92 case and
 // attach it in place of the original snap switch using a TO-92 chassis heat sink mount. If those
 // are hard to find, any other strip of metal with holes in the ends for the mounting bolts works
 // just fine. If possible, use wire with silicone insulation for the connections, and heat shrink
-// the leads to prevent any shorts. Thermal transfer compound may or may not be necessary.
+// the leads to prevent any shorts. Good thermal transfer compound is also absolutely necessary!
 //
 // This controller will work with any SCR board that accepts a PWM input. If your SCR board uses
 // variable voltage, you would just feed a PWM to voltage convertor module between this and your
