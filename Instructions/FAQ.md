@@ -20,7 +20,7 @@ A: An immersion thermometer is reading the liquid temperature and the Airhead th
 
 Q: Why does it seem like you have something against PID controllers?
 
-A: I don't, but they just have no place in distillation, especially in a pot still. Precision targeted temperature control is really only useful in brewing and an Air Still is entirely too small for that. I realize that George Duncan championed PID controllers but they only work in distillation if you're running a hard boil because they'll go lazy at ethanol boiling temperature and you'll lose all thermal velocity. Nobody bought an Air Still for a 1 gallon run to take 8 hours.
+A: I don't, but they just have no place in distillation, especially in a pot still. Precision targeted temperature control is really only useful in brewing and an Air Still is entirely too small for that. I realize that George Duncan championed PID controllers but they only work in distillation if you're running a hard boil because they'll go lazy at ethanol boiling temperature and then you'll lose all thermal velocity. Nobody bought an Air Still for a 1 gallon distillation run to take 8 hours to complete.
 
 ---
 
