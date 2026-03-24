@@ -707,8 +707,8 @@ void loop() {
     // Safety net in case of thermal runaway
     if (TempC > 103) {
       Serial.println("Shutdown due to thermal runaway");
-      RunState(0);
       while (true) {
+        RunState(0);
         PopoverMessage("Thermal runaway shutdown");
         delay(2500);
         ScreenUpdate();
