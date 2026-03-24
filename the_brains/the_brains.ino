@@ -18,11 +18,6 @@
 // in the 1990s (MAX Graphics) it wasn't really all that complicated for me to do it again on this
 // little computer. It's not flashy, but it's also not unnecessarily bogged down with junk code.
 //
-// The code here follows the same logic used in my RPi-Smart-Still logic processor which has been
-// cooking for nearly 3 years now. We're dealing with a much smaller body of liquid here, so this
-// system uses smaller timing factors when checking for temperature changes and then adjusting the
-// boiler power to compensate.
-//
 // This is a PI controller, NOT PID! The controller is intentionally thermally aggressive in order
 // to create thermal velocity to push ethanol out of the wash. Unlike a PID controller that spends
 // more time off than on once the target temperature has been reached. Minor overshoot it expected
