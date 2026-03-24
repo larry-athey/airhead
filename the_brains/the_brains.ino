@@ -20,7 +20,7 @@
 //
 // This is a PI controller, NOT PID! The controller is intentionally thermally aggressive in order
 // to create thermal velocity to push ethanol out of the wash. Unlike a PID controller that spends
-// more time off than on once the target temperature has been reached. Minor overshoot it expected
+// more time off than on once the target temperature has been reached. Minor overshoot is expected
 // and required in order to maintain upward thermal velocity. This is distillation, not brewing.
 //
 // My suggestion for the installation of the temperature sensor is to use one in a TO-92 case and
