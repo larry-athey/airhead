@@ -18,6 +18,12 @@ A: An immersion thermometer is reading the liquid temperature and the Airhead th
 
 ---
 
+Q: Why does it seem like you have something against PID controllers?
+
+A: I don't, but they just have no place in distillation, especially in a pot still. Precision targeted temperature control is really only useful in brewing and an Air Still is entirely too small for that. I realize that George Duncan championed PID controllers but they only work in distillation if you're running a hard boil because they'll go lazy at ethanol boiling temperature and you'll lose all thermal velocity. Nobody bought an Air Still for a 1 gallon run to take 8 hours.
+
+---
+
 Q: Why does it appear that you do everything in celcius and fahrenheit is an after-thought?
 
 A: Because that's just the way the world works. The temperature sensor used in the Airhead outputs its readings in celcius and bloating the code with bidirectional temperature translations just to satisfy one country on the planet doesn't make sense. Unlike a normal computer, an ESP32 doesn't have an endless pool of storage space and RAM. But, that's the beauty of open source, create your own fork of the code and bloat it if you want to. 45+ years of programming has taught me that wasteful coding equals crappy performance.
