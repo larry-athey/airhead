@@ -1,6 +1,6 @@
 # Installation Guide Video
 
-I have put together the video [Airhead Installation Using a Vevor Air Still](https://youtu.be/vFivj2nX99s) to show people how to install the Airhead Turn-Key Kit in a Vevor water distiller. I also offer people the option to drop-ship their Vevor air still clone to me to have the Airhead installed and tested with an actual run before shipping it out to them. It's only slightly more than the price of the kit alone and saves you the trouble of installing it yourself.
+I have put together the video [Airhead Installation Using a Vevor Air Still](https://youtu.be/vFivj2nX99s) to show people how to install the Airhead Turn-Key Kit in a Vevor water distiller. I also offer people the option to drop-ship their Vevor air still clones to me to have the Airhead installed and tested with an actual run before shipping it out to them. It's only slightly more than the price of the kit alone and saves you the trouble of installing it yourself.
 
 Please use this video as your guide rather than the original instructions below. The original instructions were created for people who are building their own Airhead upgrade from scratch and some parts do not apply to the turn-key kit that I sell.
 
