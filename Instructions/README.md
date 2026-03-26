@@ -2,7 +2,7 @@
 
 I have put together the video [Airhead Installation Using a Vevor Air Still](https://youtu.be/vFivj2nX99s) to show people how to install the Airhead Turn-Key Kit in a Vevor water distiller. I also offer people the option to drop-ship their Vevor air still clones to me to have the Airhead installed and tested with an actual run before shipping it out to them. It's only slightly more than the price of the kit alone and saves you the trouble of installing it yourself.
 
-I also put together the video [Airhead + Air Still Full Demo](https://www.youtube.com/watch?v=bEKPDaXU4ro) that shows how to use the Airhead after it's installed.
+I also put together the video [Airhead + Air Still Full Demo](https://www.youtube.com/watch?v=bEKPDaXU4ro) that shows how to use the Airhead after it's installed. This example shows how to distill wine in order to get high-proof brandy out of it. You can also use the Airhead to make gin and to even clean up whiskey that you may have over-oaked. Just make sure that the overall body of liquid in the still is no more than 40% ABV or things could go BOOM!
 
 # Airhead Turn-Key Kit
 
