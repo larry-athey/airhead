@@ -2,6 +2,8 @@
 
 I have put together the video [Airhead Installation Using a Vevor Air Still](https://youtu.be/vFivj2nX99s) to show people how to install the Airhead Turn-Key Kit in a Vevor water distiller. I also offer people the option to drop-ship their Vevor air still clones to me to have the Airhead installed and tested with an actual run before shipping it out to them. It's only slightly more than the price of the kit alone and saves you the trouble of installing it yourself.
 
+I also put together the video [Airhead + Air Still Full Demo](https://www.youtube.com/watch?v=bEKPDaXU4ro) that shows how to use the Airhead after it's installed.
+
 # Airhead Turn-Key Kit
 
 For those who aren't up to [component level](https://github.com/larry-athey/airhead/tree/main/Instructions/DIY-Build) electronics work or 3D printing, [Airhead turn-key kits](https://panhandleponics.com/technology-assisted-distillation/) are available from my website for $140 plus shipping in the USA where the USPS flat-rate box coverage area applies. Orders to Alaska and Hawaii require a special URL to be emailed to you due to the added shipping expense.
