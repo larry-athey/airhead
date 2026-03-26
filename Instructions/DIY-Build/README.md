@@ -61,4 +61,4 @@ Finally, as shown in the photo **Airhead-SSR-Installed.jpg** above, the solid st
 
 _**NOTE:** If you think your temperature sensor is picking up too much heat from the heating element in the location shown in the photos, move it over where the snap switch was installed. That region of the aluminum bracket is further away from the heating element and has more free air around the mounting point. This will tame down its readings a little bit and may be beneficial to your use of the still. If you applied thermal transfer compound, you may also want to try wiping it off test things again._
 
-<img width="1024" src="./Airhead-Finished.jpg">
+<img width="1024" src="./Airhead-Finished-Build.jpg">
