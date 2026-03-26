@@ -1,6 +1,6 @@
 # Airhead Operation
 
-<img width="1024" src="./Airhead-Finished-Build.jpg"><br>
+<img width="1024" src="./DIY-Build/Airhead-Finished-Build.jpg"><br>
 
 As you have probably noticed by the photos on the front page of this GitHub repo, the Airhead has three operating modes. Each of the modes are user configurable and your last used settings will be restored each time you start up your still. In temperature managed modes 2 and 3, the temperature is checked every 30 seconds and the power is adjusted accordingly. The temperature is managed to +/- 0.2C/0.36F in order to maintain a fair level of accuracy at temperatures down to 38C/100F without beating the CPU to death. 
 
