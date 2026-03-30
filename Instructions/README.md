@@ -1,6 +1,6 @@
 # Airhead Turn-Key Kit
 
-For those who aren't up to [component level](https://github.com/larry-athey/airhead/tree/main/Instructions/DIY-Build) electronics work or 3D printing, [Airhead turn-key kits](https://panhandleponics.com/technology-assisted-distillation/) are available from my website for $140 plus shipping in the USA where the USPS flat-rate box coverage area applies. Installation requires no soldering and only basic tools. Orders to Alaska and Hawaii require a special URL to be emailed to you due to the added shipping expense.
+For those who aren't up to [component level](https://github.com/larry-athey/airhead/tree/main/Instructions/DIY-Build) electronics work and 3D printing, [Airhead turn-key kits](https://panhandleponics.com/technology-assisted-distillation/) are available from my website for $140 plus shipping in the USA where the USPS flat-rate box coverage area applies. Installation requires no soldering and only basic tools. Orders to Alaska and Hawaii require a special URL to be emailed to you due to the added shipping expense.
 
 Please keep in mind that I'm not running a full blown mail-order operation. I only have four 3D printers and only one that is large enough to print the Airhead spacer ring. Each of these kits take 12 hours to print all parts, so I'm only capable of building and testing one Airhead every 3 days. My other three printers are pretty much dedicated to printing [Boilermaker](https://github.com/larry-athey/boilermaker) cases which I can also only build and test one every 3 days.
 
