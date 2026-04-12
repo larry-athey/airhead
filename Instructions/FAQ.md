@@ -14,7 +14,7 @@ A: No, there's a huge difference between suspended solids and a bucket of mash. 
 
 Q: Why does a thermometer in the boiler show a higher temperature than I see on the screen?
 
-A: An immersion thermometer is reading the liquid temperature and the Airhead thermometer is reading the vessel temperature. This is why they used a 150F snap switch to open up when the water in the boiler hits 212F. Press the home button _(the gold circle to the left of the screen)_ to enter configuration mode. You can adjust the temperature sensor correction factor -15C to +15C to dial in your sensor readings. Be sure that your temperature sensor is installed with thermal compound for the best results.
+A: An immersion thermometer is reading the liquid temperature and the Airhead thermometer is reading the vessel temperature. This is why they used a 150F snap switch to open up when the water in the boiler hits 212F. Press the home button _(the gold circle to the left of the screen)_ to enter configuration mode. You can adjust the temperature sensor correction factor -15C to +15C to dial in your sensor readings. Be sure that your temperature sensor is installed with thermal compound for the best results. See the page [Configuration.md](https://github.com/larry-athey/airhead/blob/main/Instructions/Calibration.md)
 
 ---
 
