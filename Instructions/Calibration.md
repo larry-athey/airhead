@@ -9,7 +9,7 @@ Keep in mind that an immersion thermometer isn't the most accurate way of compar
 ## How to do a water boil calibration
 
 1. Reset the Correction Factor to 0.0C
-2. Fill the still with plan water
+2. Fill the still with plain water
 3. Switch to mode 2 and set the target temperature to 100C/212F
 4. Put the lid back on, plug it in, and start the run
 5. Make a note of the temperature when you start seeing the first drops of water coming out
