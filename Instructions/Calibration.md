@@ -6,7 +6,7 @@ Calibrating the correction factor of the Airhead temperature sensor is actually 
 
 Keep in mind that an immersion thermometer isn't the most accurate way of comparing the readings to determine the correction factor. If you were to use one, an old analog unit that works using a bi-metal coil would be the most reliable one since they aren't affected by the EMF noise that comes from the heating element. A water boil test will always be the most reliable method.
 
-## How to do a water boil calibration
+## How to perform a water boil calibration
 
 1. Reset the Correction Factor to 0.0C
 2. Fill the still with plain water
