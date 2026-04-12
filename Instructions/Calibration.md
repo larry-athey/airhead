@@ -4,7 +4,7 @@
 
 Calibrating the correction factor of the Airhead temperature sensor is actually stupid-simple and only requires you to know your altitude above sea level. Water boils at 100C/212F at sea level and that temperature drops by 0.5C/1F for every 500 feet you are above sea level. So in my case where I'm 4000 feet above sea level, water boils at 95.5C/204F.
 
-Keep in mind that an immersion thermometer isn't the most accurate way of comparing the readings to determine the correction factor. If you were to use one, an old analog unit that works using a bi-metal coil would be the most reliable one since they aren't affected by the EMF noise that comes from the heating element. A water boil test will always be the most reliable.
+Keep in mind that an immersion thermometer isn't the most accurate way of comparing the readings to determine the correction factor. If you were to use one, an old analog unit that works using a bi-metal coil would be the most reliable one since they aren't affected by the EMF noise that comes from the heating element. A water boil test will always be the most reliable method.
 
 ## How to do a water boil calibration
 
