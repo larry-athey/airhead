@@ -18,4 +18,4 @@ Keep in mind that an immersion thermometer isn't the most accurate way of compar
 8. Note the temperature when water drops start coming out again
 9. Repeat until you have the sensor dialed in, it doesn't have to be dead accurate
 
-Keep in mind that barrometric pressure can affect this, but not by a whole lot. You could easily see your boiling temperature go up or down by 0.5C/1F depending on the weather. Also keep in mind that some vapor will remain in the condenser every time you stop and restart the boiler, so you can easily ignore the first few drops on a restart.
+Keep in mind that barrometric pressure can affect this, but not by a whole lot. You could easily see your boiling temperature go up or down by 0.5C/1F depending on the weather. Also keep in mind that some vapor will remain in the condenser every time you stop and restart the boiler, so you can easily ignore the first few drops after a restart.
