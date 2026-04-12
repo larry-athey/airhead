@@ -20,4 +20,4 @@ Keep in mind that an immersion thermometer isn't the most accurate way of compar
 
 Keep in mind that barrometric pressure can affect this, but not by a whole lot. You could easily see your boiling temperature go up or down by 0.5C/1F depending on the weather. Also keep in mind that some vapor will remain in the condenser every time you stop and restart the boiler, so you can easily ignore the first few drops after a restart.
 
-It's also important to note that even after your air still reaches boiling temperature, you will see the temperature continue to rise. This is just a side effect of the lid being on and causing a pressure increase in the still. The only thing you should concern yourself with is the temperature when you first start seeing drops coming out on a cold(ish) start up.
+It's also important to note that even after your air still reaches boiling temperature, you will see the temperature continue to rise. This is just a side effect of the lid being on and causing a pressure increase in the still. The only thing that you should concern yourself with is the temperature when you first start seeing drops coming out on a cold(ish) start up.
