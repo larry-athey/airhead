@@ -13,4 +13,7 @@ Calibrating the correction factor of the Airhead temperature sensor is actually 
 5. Make a note of the temperature when you start seeing the first drops of water coming out
 6. Stop the run, go back to the configuration page and adjust the Correction Factor as needed
 7. Retart the run, you may want to add a couple ice cubes to cool it down first
-8. Repeat as necessary
+8. Note the temperature when water drops start coming out again
+9. Repeat until you have the sensor dialed in, it doesn't have to be dead accurate
+
+Keep in mind that barrometric pressure can affect this, but not by a whole lot. You could easily see your boiling temperature go up or down by 0.5C/1F depending on the weather.
