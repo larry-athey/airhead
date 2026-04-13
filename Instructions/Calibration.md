@@ -12,7 +12,7 @@ Keep in mind that an immersion thermometer isn't the most accurate way of compar
 2. Fill the still with plain water
 3. Switch to mode 2 and set the target temperature to 100C/212F
 4. Put the lid back on, plug it in, and start the run
-5. Make a note of the temperature when you start seeing the first steady drops of water coming out
+5. Make a note of the temperature when you start seeing the first steady water drops coming out
 6. Stop the run, go back to the configuration page and adjust the Correction Factor as needed
 7. Retart the run, you may want to add a couple ice cubes to cool down the water first
 8. Note the temperature when steady water drops start coming out again _(see the note below)_
