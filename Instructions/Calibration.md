@@ -15,7 +15,7 @@ Keep in mind that an immersion thermometer isn't the most accurate way of compar
 5. Make a note of the temperature when you start seeing the first steady drops of water coming out
 6. Stop the run, go back to the configuration page and adjust the Correction Factor as needed
 7. Retart the run, you may want to add a couple ice cubes to cool down the water first
-8. Note the temperature when water drops start coming out again _(see the note below)_
+8. Note the temperature when steady water drops start coming out again _(see the note below)_
 9. Repeat until you have the sensor dialed in, it doesn't have to be dead accurate
 
 Keep in mind that barrometric pressure can affect this, but not by a whole lot. You could easily see your boiling temperature go up or down by 0.5C/1F depending on the weather. Also keep in mind that some vapor will remain in the condenser every time you stop and restart the boiler, so you can easily ignore the first few drops after a restart.
