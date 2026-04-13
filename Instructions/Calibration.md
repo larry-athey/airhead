@@ -22,4 +22,4 @@ Keep in mind that barrometric pressure can affect this, but not by a whole lot. 
 
 It's also important to note that even after your air still reaches boiling temperature, you will see the temperature continue to rise. This is just a side effect of the lid being on and causing a pressure increase in the still. The only thing that you should concern yourself with is the temperature when you first start seeing steady drops of coming out on a cold(ish) start up.
 
-After you get your correction factor dialed in, you may wish to write that on the back of the still or label it somehow. This is because any time you tap on the big red button to restore all system defaults, the correction factor will be returned to zero. This will save you from having to do the calibration all over again.
+After you get your correction factor dialed in, you may wish to write that on the back of the still or label it somehow. This is because any time you tap on the big red button to restore all system defaults, the correction factor will be returned to zero. This will save you from having to do the calibration all over again if you forget that setting.
