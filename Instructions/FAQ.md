@@ -24,6 +24,12 @@ A: I don't, but they just have no place in distillation, especially in a pot sti
 
 ---
 
+Q: Is there some kind of "rule of thumb" that you follow for the Mode 3 temperatures?
+
+A: Sort of, but it's just based on basic physics. The higher your starting ABV, the lower your starting temperature needs to be since ethanol has a lower boiling point. If you're starting with a low ABV, then you need a higher temperature to force the ethanol out **before** you start getting water vapor. In cases of distilling anything 12% ABV or less, you can actually just set the starting and ending temperatures to 86C/186F and let it run for 2 hours. If you're making gin, then you'd start around 80C/176F and end at 86C/186F.
+
+---
+
 Q: Why does it appear that you do everything in celcius and fahrenheit is an after-thought?
 
 A: Because that's just the way the world works. The temperature sensor used in the Airhead outputs its readings in celcius and bloating the code with bidirectional temperature translations just to satisfy one country on the planet doesn't make sense. Unlike a normal computer, an ESP32 doesn't have an endless pool of storage space and RAM. But, that's the beauty of open source, create your own fork of the code and bloat it if you want to. 45+ years of programming has taught me that wasteful coding equals crappy performance.
