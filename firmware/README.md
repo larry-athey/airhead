@@ -10,7 +10,7 @@ Start your web browser and go to **http://192.168.4.1**
 
 If you are unable to connect, check to make sure that your device pulled an IP address from the Airhead. If it does not pull one, you will need to manually configure a static IP address on your device. Here are settings that will work for you if you encounter this problem.
 
-Address: 192.168.4.100
-Subnet Mask: 255.255.255.0
-Gateway: 192.168.4.1
-DNS: 192.168.4.1
+Address: 192.168.4.100<br>
+Subnet Mask: 255.255.255.0<br>
+Gateway: 192.168.4.1<br>
+DNS: 192.168.4.1<br>
