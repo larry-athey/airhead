@@ -5,3 +5,12 @@ As of the Airhead v1.0.2 source code, end users can now update their firmware ov
 To put the Airhead into firmware update mode, turn on the power then press and hold the **Value-** button as soon as the screen lights up. When you see the banner on the screen that says **"Firmare Update Mode"** you can let go of the button.
 
 The Airhead will start up a WiFi access point with the SSID **"Airhead-Firmware-Updater"** and the password to connect is **"12345678"**.
+
+Start your web browser and go to **http://192.168.4.1**
+
+If you are unable to connect, check to make sure that your device pulled an IP address from the Airhead. If it does not pull one, you will need to manually configure a static IP address on your device. Here are settings that will work for you if you encounter this problem.
+
+Address: 192.168.4.100
+Subnet Mask: 255.255.255.0
+Gateway: 192.168.4.1
+DNS: 192.168.4.1
