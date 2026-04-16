@@ -243,18 +243,9 @@ void setup() {
       Serial.println("mDNS started - http://esp32.local");
     }
 
-    // Set the login page, sent upon browser connection
+    // Set the server home page, sent upon browser connection
     server.on("/",HTTP_GET,[]() {
-      server.send(200,"text/html",loginIndex);
-    });
-
-    // Set the login authentication handler
-    server.on("/serverIndex",HTTP_GET,[]() {
-      if (server.arg("userid") == http_username && server.arg("pwd") == http_password) {
-        server.send(200,"text/html",serverIndex);
-      } else {
-        server.send(401,"text/plain","Login failed");
-      }
+      server.send(200,"text/html",serverIndex);
     });
 
     // Set the OTA firmware update handler
