@@ -4,7 +4,7 @@ As of the Airhead v1.0.2 source code, end users can now update their firmware ov
 
 To put the Airhead into firmware update mode, turn on the power then press and hold the **Value-** button as soon as the screen lights up. When you see the banner on the screen that says **"Firmare Update Mode"** you can let go of the button.
 
-The Airhead will start up a WiFi access point with the SSID **"Airhead-Firmware-Updater"** and the password to connect is **"12345678"**.
+The Airhead will start up a WiFi access point with the SSID **"Airhead-Firmware-Updater"** and the password to connect is **"12345678"**. Keep in mind that the Airhead is working without an onboard antenna, so the reliable WiFi range is limited to just a few feet.
 
 Start your web browser and go to **http://192.168.4.1**
 
