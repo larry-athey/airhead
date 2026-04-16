@@ -48,6 +48,7 @@
 #include "Wire.h"                // I2C communications library for touch-screen interface
 #define TOUCH_MODULES_CST_SELF   // Tell TouchLib.h to use the CST816 chip routines
 #include "TouchLib.h"            // LilyGo touch-screen interface library
+#include "ota_update.h"          // Over-The-Air firmware updating library
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
 //#define SCR_OUT 1              // PWM output to an SCR board (comment out if using a Boilermaker style SSR)
@@ -61,9 +62,10 @@
 #define TOUCH_RES 21             // Reset pin for touch-screen controller chip
 //------------------------------------------------------------------------------------------------
 bool ActiveRun = false;          // True if there's an active distillation run
-bool UpToTemp = false;           // True if the run startup has reached operating temperature
-bool GotInterrupt = false;       // True if touch input has been detected on the screen
 bool ConfigMode = false;         // True if the configuration mode is active
+bool GotInterrupt = false;       // True if touch input has been detected on the screen
+bool UpToTemp = false;           // True if the run startup has reached operating temperature
+bool UpdateMode = false;         // True if the Airhead is running in firmware update mode
 unsigned long StartTime = 0;     // Start time of the current distillation run
 unsigned long FallBackTime = 0;  // Time of the still finally reached minimum operating temperature
 unsigned long LoopCounter = 0;   // Timekeeper for the loop to eliminate the need to delay it
@@ -87,7 +89,7 @@ byte FallbackPower = 0;          // Fallback power percentage in temperature man
 byte RestPeriod = 0;             // How many seconds to rest after the target temperature is reached
 byte ActiveButton = 0;           // Currently selected touch-screen button
 char Runtime[10];                // HH:MM:SS formatted time of the current distillation run
-String Version = "1.0.2";        // Current release version of the project
+String Version = "1.0.2a";       // Current release version of the project
 //------------------------------------------------------------------------------------------------
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 158, ModeY2 = 84;
@@ -222,6 +224,67 @@ void setup() {
   // Initialize the timing related variables
   LoopCounter = millis();
   LastAdjustment = LoopCounter;
+
+  // If the Value- is being pressed, activate the firmware update mode
+  if (digitalRead(DEC_BTN) == 0) {
+    UpdateMode = true;
+    PopoverMessage("Firmware Update Mode");
+    Serial.println("Starting Airhead Firmware Updater (AP mode)...");
+
+    // Start WiFi Access Point
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(ap_ssid,ap_password);
+    IPAddress myIP = WiFi.softAPIP();
+    Serial.print("AP IP address: ");
+    Serial.println(myIP);
+
+    // Start Bonjour/ZeroConf
+    if (MDNS.begin("esp32")) {
+      Serial.println("mDNS started - http://esp32.local");
+    }
+
+    // Set the login page, sent upon browser connection
+    server.on("/",HTTP_GET,[]() {
+      server.send(200,"text/html",loginIndex);
+    });
+
+    // Set the login authentication handler
+    server.on("/serverIndex",HTTP_GET,[]() {
+      if (server.arg("userid") == http_username && server.arg("pwd") == http_password) {
+        server.send(200,"text/html",serverIndex);
+      } else {
+        server.send(401,"text/plain","Login failed");
+      }
+    });
+
+    // Set the OTA firmware update handler
+    server.on("/update",HTTP_POST,[]() {
+      server.sendHeader("Connection","close");
+      server.send(200,"text/plain",(Update.hasError()) ? "FAIL" : "OK");
+      ESP.restart();
+    },[]() {
+      HTTPUpload& upload = server.upload();
+      if (upload.status == UPLOAD_FILE_START) {
+        Serial.printf("Update: %s\n",upload.filename.c_str());
+        if (!Update.begin(UPDATE_SIZE_UNKNOWN)) {
+          Update.printError(Serial);
+        }
+      } else if (upload.status == UPLOAD_FILE_WRITE) {
+        if (Update.write(upload.buf,upload.currentSize) != upload.currentSize) {
+          Update.printError(Serial);
+        }
+      } else if (upload.status == UPLOAD_FILE_END) {
+        if (Update.end(true)) {
+          Serial.printf("Update Success: %u bytes\n",upload.totalSize);
+        } else {
+          Update.printError(Serial);
+        }
+      }
+    });
+
+    server.begin();
+    Serial.println("HTTP server ready. Connect to the AP and go to 192.168.4.1");
+  }
 }
 //------------------------------------------------------------------------------------------------
 void GetMemory() { // Get the last user settings from flash memory on startup
@@ -675,6 +738,12 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
 }
 //-----------------------------------------------------------------------------------------------
 void loop() {
+  if (UpdateMode) {
+    server.handleClient();
+    delay(1);
+    return;
+  }
+
   bool Resting = false;
   int CurrentPercent = round(0.392156863 * PowerLevel);
   unsigned long CurrentTime = millis();
