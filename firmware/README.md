@@ -14,3 +14,7 @@ Address: 192.168.4.100<br>
 Subnet Mask: 255.255.255.0<br>
 Gateway: 192.168.4.1<br>
 DNS: 192.168.4.1<br>
+
+Click on the button to browse to your **airhead-firmware.bin** file and click the blue button to start the upload.
+
+Once the upload progress bar has completed, the Airhead will reboot and will be running the new firmware.
