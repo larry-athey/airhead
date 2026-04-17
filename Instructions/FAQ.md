@@ -16,7 +16,7 @@ Q: Why does a thermometer in the boiler show a higher temperature than I see on 
 
 A: An immersion thermometer is reading the liquid temperature and the Airhead thermometer is reading the vessel temperature. This is why they used a 150F snap switch to open up when the water in the boiler hits 212F. Press the home button _(the gold circle to the left of the screen)_ to enter configuration mode. You can adjust the temperature sensor correction factor -15C to +15C to dial in your sensor readings. Be sure that your temperature sensor is installed with thermal compound for the best results. For more details, see the page [Configuration.md](https://github.com/larry-athey/airhead/blob/main/Instructions/Calibration.md)
 
-_**NOTE:** The +/- 15C (or +/- 27F) correction factor range is effective for a theoretical altitude up to 13,500 feet above sea level. If you are needing to apply an unreasonably high correction factor, then you have a thermal condictivity problem with the temperature sensor._
+_**NOTE:** The +/- 15C (or +/- 27F) correction factor range is effective for a theoretical altitude up to 13,500 feet above sea level. If you are needing to apply an unreasonably high correction factor, then you have a thermal conductivity problem with the temperature sensor. Make sure that you are using thermal compound when installing the temperature sensor or mount it to the center bolt that holds the bottom of the case on. You will likely need to use a negative correction factor after this._
 
 ---
 
