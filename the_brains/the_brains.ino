@@ -18,22 +18,23 @@
 // in the 1990s (MAX Graphics) it wasn't really all that complicated for me to do it again on this
 // little computer. It's not flashy, but it's also not unnecessarily bogged down with junk code.
 //
-// This is a PI controller, NOT PID! The controller is intentionally thermally aggressive in order
-// to create thermal velocity to push ethanol out of the wash. Unlike a PID controller that spends
-// more time off than on once the target temperature has been reached. Minor overshoot is expected
-// and required in order to maintain upward thermal velocity. This is distillation, not brewing.
-//
 // My suggestion for the installation of the temperature sensor is to use one in a TO-92 case and
-// attach it in place of the original snap switch using a TO-92 chassis heat sink mount. If those
-// are hard to find, any other strip of metal with holes in the ends for the mounting bolts works
-// just fine. If possible, use wire with silicone insulation for the connections, and heat shrink
-// the leads to prevent any shorts. Good thermal transfer compound is also absolutely necessary!
+// attach it to the bolt near the front of the boiler vessel using a transistor chassis mount or
+// a copper wiring lug crimped down tight against the temperature sensor. Use wire with silicone
+// insulation for all connections and heat shrink the leads to prevent any shorts. You absolutely
+// need good thermal transfer compound at all contact points, even around the sensor itself!
 //
 // This controller will work with any SCR board that accepts a PWM input. If your SCR board uses
 // variable voltage, you would just feed a PWM to voltage convertor module between this and your
 // your SCR board. Or, if you comment out the SCR_OUT constant definition, you can use this with
 // any zero-crossing trigger solid state relay. Absolutely do not use a random-turn-on SSR! SCR
 // board or a solid state relay "Boilermaker style", the choice is totally up to you.
+//
+// You will see that this code has two app modes, Airhead and μBoilermaker. This is toggled from
+// one mode to the other by selecting the Mode button on the screen and holding the Value+ button
+// for 30 seconds. μBoilermaker uses PID temperature management rather than the PI method used by
+// the Airhead mode. This mode is intended for use in a special adaptation of this project built
+// into 1800 watt cast iron electric hot plates, commonly used with stove-top stills & brew pots.
 //
 // NOTE: You can still use a solid state relay in the place of an SCR board, but at a much
 //       lower frequency. If your mains power is 50 Hz, then you would use 100 Hz for your
@@ -49,9 +50,11 @@
 #define TOUCH_MODULES_CST_SELF   // Tell TouchLib.h to use the CST816 chip routines
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 #include "ota_update.h"          // Over-The-Air firmware updating library
+#include "QuickPID.h"            // PID calculation library from https://github.com/Dlloydev/QuickPID (used in μBoilermaker mode)
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
 //#define SCR_OUT 1              // PWM output to an SCR board (comment out if using a Boilermaker style SSR)
+#define FAN_OUT 2                // Cooling fan on/off toggle (optional)
 #define SCL 17                   // I2C clock pin
 #define SDA 18                   // I2C data pin
 #define SCREEN_BACKLIGHT 38      // Screen backlight LED pin
@@ -88,8 +91,9 @@ byte StartupPower = 0;           // Startup power percentage in temperature mana
 byte FallbackPower = 0;          // Fallback power percentage in temperature managed modes
 byte RestPeriod = 0;             // How many seconds to rest after the target temperature is reached
 byte ActiveButton = 0;           // Currently selected touch-screen button
+byte AppMode = 0;                // 0 = Airhead mode, 1 = μBoilermaker mode
 char Runtime[10];                // HH:MM:SS formatted time of the current distillation run
-String Version = "1.0.2a";       // Current release version of the project
+String Version = "1.0.2b";       // Current release version of the project
 //------------------------------------------------------------------------------------------------
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 158, ModeY2 = 84;
@@ -120,6 +124,19 @@ TouchLib Touch(Wire,SDA,SCL,CTS820_SLAVE_ADDRESS,TOUCH_RES);
 OneWire oneWire(ONE_WIRE);
 DallasTemperature DT(&oneWire);
 Preferences preferences;
+//------------------------------------------------------------------------------------------------
+// v1.0.2b add-on to provide PID control in μBoilermaker app mode
+float targetTemp = 32.0;         // PID target temperature
+float pidOutput = 0.0;           // PID Computed PWM percentage (0-100)
+float Kp = 1.0;                  // PID Proportional gain (0.1 to 10.0)
+float Ki = 0.005;                // PID Integral gain (0.001 to 0.5)
+float Kd = 1.0;                  // PID Derivative gain (0.0 to 2.0)
+float sampleTime = 10.0;         // PID Sample time (5 to 30 seconds)
+QuickPID myPID(&TempC,&pidOutput,&targetTemp,Kp,Ki,Kd,
+               QuickPID::pMode::pOnMeas,
+               QuickPID::dMode::dOnMeas,
+               QuickPID::iAwMode::iAwCondition,
+               QuickPID::Action::direct);
 //------------------------------------------------------------------------------------------------
 #ifndef SCR_OUT
 #include "esp_timer.h"   // High resolution timer library for use with interrupt driven code
@@ -165,6 +182,9 @@ void setup() {
     StartupPower  = 50;
     FallbackPower = 33;
     RestPeriod    = 60;
+    Kp            = 1.0;
+    Ki            = 0.005;
+    Kd            = 1.0;
     SetMemory();
   }
   CurrentMode = UserMode;
@@ -174,6 +194,10 @@ void setup() {
   digitalWrite(TOUCH_RES,LOW);
   delay(500);
   digitalWrite(TOUCH_RES,HIGH);
+
+  // Initialize the optional fan toggle pin
+  pinMode(FAN_OUT,OUTPUT);
+  digitalWrite(FAN_OUT,LOW);
 
   // Initialize all of the necessary GPIO libraries
   DT.begin();
@@ -200,7 +224,14 @@ void setup() {
   // In order to eliminate screen flicker, everything is plotted to an off-screen buffer and popped onto the screen when done
   canvas->begin();
   ScreenUpdate();
-  PopoverMessage("Airhead v" + Version);
+  if (AppMode == 0) {
+    PopoverMessage("Airhead v" + Version);
+  } else {
+    PopoverMessage("Micro Boilermaker v" + Version);
+    myPID.SetOutputLimits(0,100);
+    myPID.SetSampleTimeUs(sampleTime * 1000000);
+    myPID.SetMode(myPID.Control::automatic);
+  }
   delay(2500);
   ScreenUpdate();
 
@@ -289,6 +320,10 @@ void GetMemory() { // Get the last user settings from flash memory on startup
   StartupPower  = preferences.getUInt("startuppower",50);
   FallbackPower = preferences.getUInt("fallbackpower",33);
   RestPeriod    = preferences.getUInt("restperiod",60);
+  AppMode       = preferences.getUInt("appmode",0);
+  Kp            = preferences.getFloat("pid_kp",1.0);
+  Ki            = preferences.getFloat("pid_ki",0.005);
+  Kd            = preferences.getFloat("pid_kd",1.0);
   preferences.end();
 }
 //------------------------------------------------------------------------------------------------
@@ -303,6 +338,10 @@ void SetMemory() { // Update flash memory with the current user settings
   preferences.putUInt("startuppower",StartupPower);
   preferences.putUInt("fallbackpower",FallbackPower);
   preferences.putUInt("restperiod",RestPeriod);
+  preferences.putUInt("appmode",AppMode);
+  preferences.putFloat("pid_kp",Kp);
+  preferences.putFloat("pid_ki",Ki);
+  preferences.putFloat("pid_kd",Kd);
   preferences.end();
 }
 //------------------------------------------------------------------------------------------------
@@ -350,6 +389,7 @@ void RunState(byte State) { // Toggle the active distillation run state
     StartTime = millis();
     ActiveRun = true;
     UpToTemp  = false;
+    digitalWrite(FAN_OUT,HIGH);
     if (CurrentMode > 1) {
       if (CurrentMode == 3) {
         byte Range;
@@ -365,13 +405,21 @@ void RunState(byte State) { // Toggle the active distillation run state
         Mode3Factor  = float(Range) / float(UserTime * 4);
         Mode3Counter = millis();
       }
-      PowerAdjust(StartupPower);
+      if (AppMode == 1) {
+        targetTemp = UserTemp1;
+        myPID.Reset();
+        myPID.SetTunings(Kp,Ki,Kd);
+        myPID.SetSampleTimeUs(sampleTime * 1000000);
+      } else {
+        PowerAdjust(StartupPower);
+      }
     } else {
       PowerAdjust(UserPower);
     }
   } else {
     ActiveRun = false;
     PowerAdjust(0);
+    digitalWrite(FAN_OUT,LOW);
   }
 }
 //-----------------------------------------------------------------------------------------------
@@ -482,12 +530,21 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
   } else if (WhichOne == 4) {
     if (ConfigMode) {
       canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,DARKGREY);
-      canvas->setCursor(StartX1 + 23,StartY1 + 25);
-      canvas->print("Startup");
-      canvas->setCursor(StartX1 + 28,StartY1 + 45);
-      canvas->print("Power");
-      canvas->setCursor(StartX1 + 36,StartY1 + 65);
-      canvas->printf("%2u%%",StartupPower);
+      if (AppMode == 0) {
+        canvas->setCursor(StartX1 + 23,StartY1 + 25);
+        canvas->print("Startup");
+        canvas->setCursor(StartX1 + 28,StartY1 + 45);
+        canvas->print("Power");
+        canvas->setCursor(StartX1 + 36,StartY1 + 65);
+        canvas->printf("%2u%%",StartupPower);
+      } else {
+        canvas->setCursor(StartX1 + 37,StartY1 + 25);
+        canvas->print("PID");
+        canvas->setCursor(StartX1 + 25,StartY1 + 45);
+        canvas->print("P Gain");
+        canvas->setCursor(StartX1 + 37,StartY1 + 65);
+        canvas->printf("%.1f",Kp);  
+      }
     } else {
       canvas->fillRoundRect(StartX1,StartY1,StartX2 - StartX1,StartY2 - StartY1,5,STARTBTN);
       canvas->setCursor(StartX1 + 33,StartY1 + 25);
@@ -502,12 +559,21 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
   } else if (WhichOne == 5) {
     if (ConfigMode) {
       canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,DARKGREY);
-      canvas->setCursor(EndX1 + 20,EndY1 + 25);
-      canvas->print("Fallback");
-      canvas->setCursor(EndX1 + 28,EndY1 + 45);
-      canvas->print("Power");
-      canvas->setCursor(EndX1 + 36,EndY1 + 65);
-      canvas->printf("%2u%%",FallbackPower);
+      if (AppMode == 0) {
+        canvas->setCursor(EndX1 + 20,EndY1 + 25);
+        canvas->print("Fallback");
+        canvas->setCursor(EndX1 + 28,EndY1 + 45);
+        canvas->print("Power");
+        canvas->setCursor(EndX1 + 36,EndY1 + 65);
+        canvas->printf("%2u%%",FallbackPower);
+      } else {
+        canvas->setCursor(EndX1 + 37,EndY1 + 25);
+        canvas->print("PID");
+        canvas->setCursor(EndX1 + 27,EndY1 + 45);
+        canvas->print("I Gain");
+        canvas->setCursor(EndX1 + 30,EndY1 + 65);
+        canvas->printf("%.3f",Ki);
+      }
     } else {
       canvas->fillRoundRect(EndX1,EndY1,EndX2 - EndX1,EndY2 - EndY1,5,ENDBTN);
       canvas->setCursor(EndX1 + 36,EndY1 + 25);
@@ -522,12 +588,21 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
   } else if (WhichOne == 6) {
     if (ConfigMode) {
       canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,DARKGREY);
-      canvas->setCursor(TimeX1 + 32,TimeY1 + 25);
-      canvas->print("Rest");
-      canvas->setCursor(TimeX1 + 25,TimeY1 + 45);
-      canvas->print("Period");
-      canvas->setCursor(TimeX1 + 36,TimeY1 + 65);
-      canvas->printf("%2us",RestPeriod);
+      if (AppMode == 0) {
+        canvas->setCursor(TimeX1 + 32,TimeY1 + 25);
+        canvas->print("Rest");
+        canvas->setCursor(TimeX1 + 25,TimeY1 + 45);
+        canvas->print("Period");
+        canvas->setCursor(TimeX1 + 36,TimeY1 + 65);
+        canvas->printf("%2us",RestPeriod);
+      } else {
+        canvas->setCursor(TimeX1 + 37,TimeY1 + 25);
+        canvas->print("PID");
+        canvas->setCursor(TimeX1 + 25,TimeY1 + 45);
+        canvas->print("D Gain");
+        canvas->setCursor(TimeX1 + 37,TimeY1 + 65);
+        canvas->printf("%.1f",Kd);
+      }
     } else {
       canvas->fillRoundRect(TimeX1,TimeY1,TimeX2 - TimeX1,TimeY2 - TimeY1,5,TIMEBTN);
       canvas->setCursor(TimeX1 + 30,TimeY1 + 25);
@@ -637,11 +712,23 @@ void IncValue(byte WhichOne) { // Increment the value associated with the active
     } else if (WhichOne == 3) {
       // Not used in config mode
     } else if (WhichOne == 4) {
-      if (StartupPower < 100) StartupPower ++;
+      if (AppMode == 0) {
+        if (StartupPower < 100) StartupPower ++;
+      } else{
+        if (Kp < 10.0) Kp += 0.1;
+      }
     } else if (WhichOne == 5) {
-      if (FallbackPower < 100) FallbackPower ++;
+      if (AppMode == 0) {
+        if (FallbackPower < 100) FallbackPower ++;
+      } else {
+        if (Ki < 0.5) Ki += 0.001;
+      }
     } else if (WhichOne == 6) {
-      if (RestPeriod < 255) RestPeriod ++;
+      if (AppMode == 0) {
+        if (RestPeriod < 255) RestPeriod ++;
+      } else {
+        if (Kd < 2.0) Kd += 0.1;
+      }
     }
   } else {
     if (WhichOne == 0) {
@@ -670,11 +757,23 @@ void DecValue(byte WhichOne) { // Decrement the value associated with the active
     } else if (WhichOne == 3) {
       // Not used in config mode
     } else if (WhichOne == 4) {
-      if (StartupPower > 1) StartupPower --;
+      if (AppMode == 0) {
+        if (StartupPower > 1) StartupPower --;
+      } else {
+        if (Kp > 0.1) Kp -= 0.1;
+      }
     } else if (WhichOne == 5) {
-      if (FallbackPower > 1) FallbackPower --;
+      if (AppMode == 0) {
+        if (FallbackPower > 1) FallbackPower --;
+      } else {
+        if (Ki > 0.001) Ki -= 0.001;
+      }
     } else if (WhichOne == 6) {
-      if (RestPeriod > 1) RestPeriod --;
+      if (AppMode == 0) {
+        if (RestPeriod > 1) RestPeriod --;
+      } else {
+        if (Kd > 0.0) Kd -= 0.1;
+      }
     }
   } else {
     if (WhichOne == 0) {
@@ -695,7 +794,7 @@ void DecValue(byte WhichOne) { // Decrement the value associated with the active
 }
 //-----------------------------------------------------------------------------------------------
 void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
-  byte HoldCounter = 0;
+  int HoldCounter = 0;
 
   if (WhichOne == 1) {
     // Increment active screen button value by 1
@@ -707,6 +806,19 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
         while (digitalRead(INC_BTN) == 0) {
           IncValue(ActiveButton);
           delay(250);
+          HoldCounter ++;
+          if ((! ConfigMode) && (ActiveButton == 0) && (HoldCounter > 270)) { // Switch app app mode
+            if (AppMode == 0) {
+              AppMode = 1;
+              PopoverMessage("Now in Micro Boilermaker mode");
+            } else {
+              AppMode = 0;
+              PopoverMessage("Now in Airhead mode");
+            }
+            SetMemory();
+            delay(3000);
+            ESP.restart();
+          }
         }
       }
     }
@@ -792,10 +904,12 @@ void loop() {
             UpToTemp = true;
             FallBackTime = millis();
             if (CurrentMode == 3) StartTime = FallBackTime; // Mode 3 runs reset the timer when the minimum operating temperature has been reached
-            if (CurrentPercent > FallbackPower) CurrentPercent = FallbackPower;
-            PowerAdjust(CurrentPercent);
+            if (AppMode == 0) {
+              if (CurrentPercent > FallbackPower) CurrentPercent = FallbackPower;
+              PowerAdjust(CurrentPercent);
+            }
           } else {
-            if (CurrentTime - LastAdjustment >= 60000) {
+            if ((AppMode == 0) && (CurrentTime - LastAdjustment >= 60000)) {
               if (CurrentPercent < 100) CurrentPercent ++;
               PowerAdjust(CurrentPercent);
             }
@@ -808,18 +922,22 @@ void loop() {
             delay(3000);
           }
         } else {
-          if (CurrentTime - FallBackTime >= (RestPeriod * 1000)) { // Wait for the turbulence to calm down after the fall-back
+          if ((CurrentTime - FallBackTime >= (RestPeriod * 1000)) || (AppMode == 1)) { // Airhead mode waits for turbulence to calm down after the fall-back
             if (CurrentMode == 2) { // Constant temperature mode
               Serial.print("Target Temp: "); Serial.println(float(UserTemp1),2);
-              if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
-                // Temperature is managed to +/- .2 degree C
-                if (TempC >= (UserTemp1 + .2)) { // Over temperature
-                  if (CurrentPercent > 0) CurrentPercent --;
-                  PowerAdjust(CurrentPercent); // Decrease power 1%
-                } else if (TempC <= (UserTemp1 - .2)) { // Under temperature
-                  if (CurrentPercent < 100) CurrentPercent ++;
-                  PowerAdjust(CurrentPercent); // Increase power 1%
+              if (AppMode == 0) {
+                if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
+                  // Temperature is managed to +/- .2 degree C
+                  if (TempC >= (UserTemp1 + .2)) { // Over temperature
+                    if (CurrentPercent > 0) CurrentPercent --;
+                    PowerAdjust(CurrentPercent); // Decrease power 1%
+                  } else if (TempC <= (UserTemp1 - .2)) { // Under temperature
+                    if (CurrentPercent < 100) CurrentPercent ++;
+                    PowerAdjust(CurrentPercent); // Increase power 1%
+                  }
                 }
+              } else {
+                if (myPID.Compute()) PowerAdjust(round(pidOutput));
               }
               Serial.print("Power Percent: "); Serial.println(CurrentPercent);
             } else { // Timed distillation run with progressive temperature adjustment
@@ -834,15 +952,20 @@ void loop() {
                 }
                 Serial.print("Mode 3 Factor: "); Serial.println(Mode3Factor);
                 Serial.print("Target Temp: "); Serial.println(Mode3Temp,2);
-                if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
-                  // Temperature is managed to +/- .2 degree C
-                  if (TempC >= (Mode3Temp + .2)) { // Over temperature
-                    if (CurrentPercent > 0) CurrentPercent --;
-                    PowerAdjust(CurrentPercent); // Decrease power 1%
-                  } else if (TempC <= (Mode3Temp - .2)) { // Under temperature
-                    if (CurrentPercent < 100) CurrentPercent ++;
-                    PowerAdjust(CurrentPercent); // Increase power 1%
+                if (AppMode == 0) {
+                  if (CurrentTime - LastAdjustment >= 30000) { // Only make power adjustments once every 30 seconds
+                    // Temperature is managed to +/- .2 degree C
+                    if (TempC >= (Mode3Temp + .2)) { // Over temperature
+                      if (CurrentPercent > 0) CurrentPercent --;
+                      PowerAdjust(CurrentPercent); // Decrease power 1%
+                    } else if (TempC <= (Mode3Temp - .2)) { // Under temperature
+                      if (CurrentPercent < 100) CurrentPercent ++;
+                      PowerAdjust(CurrentPercent); // Increase power 1%
+                    }
                   }
+                } else {
+                  targetTemp = Mode3Temp;
+                  if (myPID.Compute()) PowerAdjust(round(pidOutput));
                 }
                 Serial.print("Power Percent: "); Serial.println(CurrentPercent);
               } else { // Distillation run time has expired, shut down
