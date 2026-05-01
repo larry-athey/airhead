@@ -406,7 +406,11 @@ void RunState(byte State) { // Toggle the active distillation run state
         Mode3Counter = millis();
       }
       if (AppMode == 1) {
-        targetTemp = float(UserTemp1);
+        if (CurrentMode == 3) {
+          targetTemp = Mode3Temp;
+        } else {
+          targetTemp = float(UserTemp1);
+        }
         myPID.Reset();
         myPID.SetTunings(Kp,Ki,Kd);
         myPID.SetSampleTimeUs(sampleTime * 1000000);
