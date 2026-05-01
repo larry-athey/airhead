@@ -395,18 +395,18 @@ void RunState(byte State) { // Toggle the active distillation run state
         byte Range;
         if (UserTemp1 < UserTemp2) {
           Mode3Direction = 1;
-          Mode3Temp = UserTemp1;
+          Mode3Temp = float(UserTemp1);
           Range = UserTemp2 - UserTemp1;
         } else {
           Mode3Direction = 0;
-          Mode3Temp = UserTemp2;
+          Mode3Temp = float(UserTemp2);
           Range = UserTemp1 - UserTemp2;
         }
         Mode3Factor  = float(Range) / float(UserTime * 4);
         Mode3Counter = millis();
       }
       if (AppMode == 1) {
-        targetTemp = UserTemp1;
+        targetTemp = float(UserTemp1);
         myPID.Reset();
         myPID.SetTunings(Kp,Ki,Kd);
         myPID.SetSampleTimeUs(sampleTime * 1000000);
@@ -912,6 +912,8 @@ void loop() {
             if ((AppMode == 0) && (CurrentTime - LastAdjustment >= 60000)) {
               if (CurrentPercent < 100) CurrentPercent ++;
               PowerAdjust(CurrentPercent);
+            } else {
+              if (myPID.Compute()) PowerAdjust(round(pidOutput));
             }
           }
           if ((CurrentMode == 3) && (long(CurrentTime - StartTime) >= long(UserTime * 3600000))) {
