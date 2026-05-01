@@ -22,7 +22,7 @@ _**NOTE:** The +/- 15C (or +/- 27F) correction factor range is effective for a t
 
 Q: Why does it seem like you have something against PID controllers?
 
-A: I don't, but they just have no place in distillation, especially in a pot still. Precision targeted temperature control is really only useful in brewing and an Air Still is entirely too small for that. I realize that George Duncan championed PID controllers, but they only work in distillation if you're running a hard boil because they'll go lazy at ethanol boiling temperature and then you'll lose all thermal velocity. Nobody bought an Air Still for a 1 gallon distillation run to take 4 hours to complete.
+A: I don't, but they just have no place in distillation, especially in a pot still. Precision targeted temperature control is really only useful in brewing and an Air Still is entirely too small for that. I realize that George Duncan championed PID controllers, but they only work in distillation if you're running a hard boil because they'll go lazy at ethanol boiling temperature and then you'll lose all thermal velocity. Nobody bought an Air Still for a 1 gallon pot still distillation run to take 4 to 8 hours to complete.
 
 _**NOTE:** A test using an 80C/176F to 86C/186F progressive run redistilling a gallon of 80 proof vodka takes 2 hours with the Airhead's default PI controller. Switching to the hidden μBoilermaker (micro Boilermaker) mode which uses PID, the run takes 4 hours to accomplish the same amount of 140 proof output._
 
