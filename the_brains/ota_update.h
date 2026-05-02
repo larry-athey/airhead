@@ -34,7 +34,7 @@ const char serverIndex[] PROGMEM = R"rawliteral(
   <style>
     body { background:#3498db; font-family:sans-serif; text-align:center; padding:20px; }
     form { background:#fff; max-width:360px; margin:40px auto; padding:30px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
-    #file-input { display:block; width:100%; padding:12px; margin:15px 0; border:2px dashed #3498db; border-radius:6px; cursor:pointer; background:#f9f9f9; }
+    #file-input { display:block; width:92%; padding:12px; margin:15px 0; border:2px dashed #3498db; border-radius:6px; cursor:pointer; background:#f9f9f9; }
     input[type=submit] { background:#3498db; color:white; border:none; padding:14px; font-size:16px; cursor:pointer; width:100%; border-radius:4px; }
     #prgbar { background:#f1f1f1; border-radius:10px; height:12px; margin:20px 0; overflow:hidden; }
     #bar { background:#3498db; width:0%; height:100%; transition:width 0.3s; }
