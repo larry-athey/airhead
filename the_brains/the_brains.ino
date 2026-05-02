@@ -811,7 +811,7 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
           IncValue(ActiveButton);
           delay(250);
           HoldCounter ++;
-          if ((! ConfigMode) && (ActiveButton == 0) && (HoldCounter > 270)) { // Switch app app mode
+          if ((! ConfigMode) && (ActiveButton == 0) && (HoldCounter > 210)) { // Switch app app mode
             if (AppMode == 0) {
               AppMode = 1;
               PopoverMessage("Now in Micro Boilermaker mode");
