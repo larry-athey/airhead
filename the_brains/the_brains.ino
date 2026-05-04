@@ -49,8 +49,10 @@
 #include "Wire.h"                // I2C communications library for touch-screen interface
 #define TOUCH_MODULES_CST_SELF   // Tell TouchLib.h to use the CST816 chip routines
 #include "TouchLib.h"            // LilyGo touch-screen interface library
-#include "ota_update.h"          // Over-The-Air firmware updating library
 #include "QuickPID.h"            // PID calculation library from https://github.com/Dlloydev/QuickPID (used in μBoilermaker mode)
+#include "ota_update.h"          // Over-The-Air firmware updating library
+#include "ah_splash.h"
+#include "ubm_splash.h"
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
 //#define SCR_OUT 1              // PWM output to an SCR board (comment out if using a Boilermaker style SSR)
@@ -223,16 +225,23 @@ void setup() {
 
   // In order to eliminate screen flicker, everything is plotted to an off-screen buffer and popped onto the screen when done
   canvas->begin();
-  ScreenUpdate();
+  canvas->fillScreen(0); 
+  const uint16_t* bitmap = nullptr;
   if (AppMode == 0) {
-    PopoverMessage("Airhead v" + Version);
+    bitmap = Airhead;
   } else {
-    PopoverMessage("Micro Boilermaker v" + Version);
+    bitmap = uBoilermaker;
     myPID.SetOutputLimits(0,100);
     myPID.SetSampleTimeUs(sampleTime * 1000000);
     myPID.SetMode(myPID.Control::automatic);
   }
-  delay(2500);
+  gfx->draw16bitRGBBitmap(0,0,(uint16_t*)bitmap,320,170);
+  gfx->setFont(&FreeSans9pt7b);
+  gfx->setTextColor(WHITE);
+  gfx->setCursor(245,158);
+  gfx->print("v" + Version);
+  delay(5000);
+  canvas->flush();
   ScreenUpdate();
 
   #ifndef SCR_OUT
@@ -501,8 +510,13 @@ void DrawButton(byte WhichOne) { // Draws and highlights the specified button on
         canvas->setCursor(RunX1 + 58,RunY1 + 35);
         canvas->print("Start");
       }
-      canvas->setCursor(RunX1 + 18,RunY1 + 55);
-      canvas->print("Distillation Run");
+      if (AppMode == 0) {
+        canvas->setCursor(RunX1 + 18,RunY1 + 55);
+        canvas->print("Distillation Run");
+      } else {
+        canvas->setCursor(RunX1 + 14,RunY1 + 55);
+        canvas->print("Boilermaker Run");
+      }
     }
     if (ActiveButton == 1) canvas->drawRoundRect(RunX1,RunY1,RunX2 - RunX1,RunY2 - RunY1,5,HILITE);
   } else if (WhichOne == 2) {
@@ -911,6 +925,9 @@ void loop() {
             if (AppMode == 0) {
               if (CurrentPercent > FallbackPower) CurrentPercent = FallbackPower;
               PowerAdjust(CurrentPercent);
+            } else {
+              PopoverMessage("Target temperature reached");
+              delay(2500);              
             }
           } else {
             if ((AppMode == 0) && (CurrentTime - LastAdjustment >= 60000)) {
