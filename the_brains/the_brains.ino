@@ -51,8 +51,8 @@
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 #include "QuickPID.h"            // PID calculation library from https://github.com/Dlloydev/QuickPID (used in μBoilermaker mode)
 #include "ota_update.h"          // Over-The-Air firmware updating library
-#include "ah_splash.h"
-#include "ubm_splash.h"
+#include "ah_splash.h"           // Airhead mode splash screen
+#include "ubm_splash.h"          // μBoilermaker mode splash screen
 //------------------------------------------------------------------------------------------------
 #define ONE_WIRE 13              // 1-Wire network pin for the DS18B20 temperature sensor
 //#define SCR_OUT 1              // PWM output to an SCR board (comment out if using a Boilermaker style SSR)
@@ -926,6 +926,7 @@ void loop() {
               if (CurrentPercent > FallbackPower) CurrentPercent = FallbackPower;
               PowerAdjust(CurrentPercent);
             } else {
+              myPID.Reset();
               PopoverMessage("Target temperature reached");
               delay(2500);              
             }
