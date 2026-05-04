@@ -926,7 +926,7 @@ void loop() {
               if (CurrentPercent > FallbackPower) CurrentPercent = FallbackPower;
               PowerAdjust(CurrentPercent);
             } else {
-              myPID.Reset();
+              myPID.Initialize();
               PopoverMessage("Target temperature reached");
               delay(2500);              
             }
