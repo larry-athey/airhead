@@ -10,6 +10,8 @@ The reason for the μBoilermaker is to satisfy the numerous requests for a Boile
 
 Unlike the full Boilermaker, these are sold on my website as 120-volt-only and bench/counter-top-only. The size of the case only allows for 14 gauge grounded power cables and they only ship with an SSR-40DA solid state relay mounted to the same heat sink used in the Airhead. These are priced the same as the full Boilermaker with 120 volt pigtails, they're just a smaller version with a touch screen.
 
+---
+
 <img width="1024" alt="image" src="https://github.com/user-attachments/assets/ad1b7c8b-17d2-45b3-ac26-9599273d4303">
 
 ---
