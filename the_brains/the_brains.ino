@@ -938,12 +938,11 @@ void loop() {
                 PowerAdjust(CurrentPercent);
               }
             } else {
-              if (TempC < (targetTemp - 5)) { // μBM runs in PI mode to preheat the boiler before switching to PID mode, prevents temperature over shoot
+              if (TempC < (targetTemp - 2)) { // μBM runs in PI mode to preheat the boiler before switching to PID mode, prevents temperature over shoot
                 if (CurrentTime - LastAdjustment >= 60000) {
                   if (CurrentPercent < 100) CurrentPercent ++;
                   PowerAdjust(CurrentPercent); // μBM starts at 10% power and increases the PI controller power 1% every minute
                 }
-                myPID.Compute();
               } else { // Now we switch to PID mode, very similar to the "Cruise Then Brew" mode in the full-blown Boilermaker
                 if (myPID.Compute()) PowerAdjust(round(pidOutput));
               }
