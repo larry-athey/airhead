@@ -233,7 +233,6 @@ void setup() {
     bitmap = uBoilermaker;
     myPID.SetOutputLimits(0,100);
     myPID.SetSampleTimeUs(sampleTime * 1000000);
-    myPID.SetMode(myPID.Control::automatic);
   }
   gfx->draw16bitRGBBitmap(0,0,(uint16_t*)bitmap,320,170);
   gfx->setFont(&FreeSans9pt7b);
@@ -423,6 +422,7 @@ void RunState(byte State) { // Toggle the active distillation run state
         myPID.Reset();
         myPID.SetTunings(Kp,Ki,Kd);
         myPID.SetSampleTimeUs(sampleTime * 1000000);
+        myPID.SetMode(myPID.Control::manual);
         PowerAdjust(10);
       } else {
         PowerAdjust(StartupPower);
@@ -927,8 +927,13 @@ void loop() {
               if (CurrentPercent > FallbackPower) CurrentPercent = FallbackPower;
               PowerAdjust(CurrentPercent);
             } else {
-              myPID.Initialize(); // Soft restart of the PID controller once the target temperature has been reached
-              PopoverMessage("Target temperature reached");
+              if (CurrentPercent > FallbackPower) {
+                 CurrentPercent = FallbackPower; // Force a fallback if we're above the fallback power level in the Airhead configuration
+                 PowerAdjust(CurrentPercent);
+              }
+              myPID.SetOutputSum(float(CurrentPercent));
+              myPID.SetMode(myPID.Control::automatic); // Transition to the PID controller once the target temperature has been reached
+              PopoverMessage("PID Controller Now Active");
               delay(2500);              
             }
           } else {
@@ -940,8 +945,13 @@ void loop() {
             } else {
               if (TempC < (targetTemp - 1)) { // μBM runs in PI mode to preheat the boiler before switching to PID mode, prevents temperature over shoot
                 if (CurrentTime - LastAdjustment >= 60000) {
-                  if (CurrentPercent < 100) CurrentPercent ++;
-                  PowerAdjust(CurrentPercent); // μBM starts at 10% power and increases the PI controller power 1% every minute
+                  if (CurrentPercent < 30) { // Custom preset "Cruise Then Brew" mode that caters to fermentation temperatures at lower targets
+                    CurrentPercent ++;
+                  } else {
+                    if (CurrentPercent < 100) CurrentPercent += 2;
+                    if (TempC >= (targetTemp - 5)) myPID.Compute(); // Begin tuning the PID controller as we start approaching the target temperature
+                  }
+                  PowerAdjust(CurrentPercent); // μBM starts at 10% power and increases the PI controller power every minute
                 }
               } else { // Now we switch to PID mode, very similar to the "Cruise Then Brew" mode in the full-blown Boilermaker
                 if (myPID.Compute()) PowerAdjust(round(pidOutput));
