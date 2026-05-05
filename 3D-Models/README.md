@@ -2,4 +2,4 @@ All Airhead related 3D models were created by [James "The Doc"](https://www.yout
 
 The model **Airhead Inside Plate.stl** is only necessary if you are installing an Airhead in a metal Air Still clone that came with a built-in adjustable temperature controller. Removing the stock controller leaves a large rectangular hole where the bolt holes would be drilled in a plastic-body clone. This plate covers that hole from the inside and provides the two bolt holes and a wire pass-thru hole.
 
-3D models in the **uBM** folder are for the μBoilermaker (Micro Boilermaker)
+3D models in the **uBM** folder are for the μBoilermaker (Micro Boilermaker), see [uBoilermaker.md](https://github.com/larry-athey/airhead/blob/main/Instructions/uBoilermaker.md) for more information.
