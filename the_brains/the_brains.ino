@@ -32,9 +32,9 @@
 //
 // You will see that this code has two app modes, Airhead and μBoilermaker. This is toggled from
 // one mode to the other by selecting the Mode button on the screen and holding the Value+ button
-// for 30 seconds. μBoilermaker uses PID temperature management rather than the PI method used by
+// for 15 seconds. μBoilermaker uses PID temperature management rather than the PI method used by
 // the Airhead mode. This mode is intended for use in a special adaptation of this project built
-// into 1800 watt cast iron electric hot plates, commonly used with stove-top stills & brew pots.
+// into 1500 watt cast iron electric hot plates, commonly used with stove-top stills & brew pots.
 //
 // NOTE: You can still use a solid state relay in the place of an SCR board, but at a much
 //       lower frequency. If your mains power is 50 Hz, then you would use 100 Hz for your
