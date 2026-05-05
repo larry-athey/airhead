@@ -423,6 +423,7 @@ void RunState(byte State) { // Toggle the active distillation run state
         myPID.Reset();
         myPID.SetTunings(Kp,Ki,Kd);
         myPID.SetSampleTimeUs(sampleTime * 1000000);
+        PowerAdjust(10);
       } else {
         PowerAdjust(StartupPower);
       }
@@ -926,16 +927,26 @@ void loop() {
               if (CurrentPercent > FallbackPower) CurrentPercent = FallbackPower;
               PowerAdjust(CurrentPercent);
             } else {
-              myPID.Initialize();
+              myPID.Initialize(); // Soft restart of the PID controller once the target temperature has been reached
               PopoverMessage("Target temperature reached");
               delay(2500);              
             }
           } else {
-            if ((AppMode == 0) && (CurrentTime - LastAdjustment >= 60000)) {
-              if (CurrentPercent < 100) CurrentPercent ++;
-              PowerAdjust(CurrentPercent);
+            if (AppMode == 0) {
+              if (CurrentTime - LastAdjustment >= 60000) {
+                if (CurrentPercent < 100) CurrentPercent ++;
+                PowerAdjust(CurrentPercent);
+              }
             } else {
-              if (myPID.Compute()) PowerAdjust(round(pidOutput));
+              if (TempC < (targetTemp - 5)) { // μBM runs in PI mode to preheat the boiler before switching to PID mode, prevents temperature over shoot
+                if (CurrentTime - LastAdjustment >= 60000) {
+                  if (CurrentPercent < 100) CurrentPercent ++;
+                  PowerAdjust(CurrentPercent); // μBM starts at 10% power and increases the PI controller power 1% every minute
+                }
+                myPID.Compute();
+              } else { // Now we switch to PID mode, very similar to the "Cruise Then Brew" mode in the full-blown Boilermaker
+                if (myPID.Compute()) PowerAdjust(round(pidOutput));
+              }
             }
           }
           if ((CurrentMode == 3) && (long(CurrentTime - StartTime) >= long(UserTime * 3600000))) {
