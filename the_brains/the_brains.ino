@@ -130,7 +130,7 @@ Preferences preferences;
 // v1.0.2b add-on to provide PID control in μBoilermaker app mode
 float targetTemp = 32.0;         // PID target temperature
 float pidOutput = 0.0;           // PID Computed PWM percentage (0-100)
-float Kp = 1.0;                  // PID Proportional gain (0.1 to 10.0)
+float Kp = 2.0;                  // PID Proportional gain (0.1 to 10.0)
 float Ki = 0.005;                // PID Integral gain (0.001 to 0.5)
 float Kd = 1.0;                  // PID Derivative gain (0.0 to 2.0)
 float sampleTime = 10.0;         // PID Sample time (5 to 30 seconds)
@@ -184,7 +184,7 @@ void setup() {
     StartupPower  = 50;
     FallbackPower = 33;
     RestPeriod    = 60;
-    Kp            = 1.0;
+    Kp            = 2.0;
     Ki            = 0.005;
     Kd            = 1.0;
     SetMemory();
@@ -329,7 +329,7 @@ void GetMemory() { // Get the last user settings from flash memory on startup
   FallbackPower = preferences.getUInt("fallbackpower",33);
   RestPeriod    = preferences.getUInt("restperiod",60);
   AppMode       = preferences.getUInt("appmode",0);
-  Kp            = preferences.getFloat("pid_kp",1.0);
+  Kp            = preferences.getFloat("pid_kp",2.0);
   Ki            = preferences.getFloat("pid_ki",0.005);
   Kd            = preferences.getFloat("pid_kd",1.0);
   preferences.end();
@@ -421,7 +421,6 @@ void RunState(byte State) { // Toggle the active distillation run state
         }
         myPID.Reset();
         myPID.SetTunings(Kp,Ki,Kd);
-        myPID.SetSampleTimeUs(sampleTime * 1000000);
         myPID.SetMode(myPID.Control::manual);
         PowerAdjust(10);
       } else {
