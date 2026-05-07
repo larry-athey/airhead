@@ -12,6 +12,8 @@ Unlike the full Boilermaker, these are sold on my website as 120-volt-only and b
 
 [Operation](https://github.com/larry-athey/airhead/blob/main/Instructions/Operation.md) of the μBoilermaker is completely identical to the Airhead, the only real difference are the options on the calibration page which are PID gain parameters. The target audience for these are people using stove-top stills with an electric hot plate, home beer brewers, and people who want far better control over an electric smoker, all without the need for a WiFi connection.
 
+_**NOTE:** If you are using an electric hot plate, you will want to bypass its internal temperature control dial or it will interrupt your power once you reach its maximum temperature. It's also recommended that you maintain good ventilation under it because most also have a thermal snap switch that will cut out if it overheats internally._
+
 ---
 
 <img width="1024" alt="image" src="https://github.com/user-attachments/assets/ad1b7c8b-17d2-45b3-ac26-9599273d4303">
