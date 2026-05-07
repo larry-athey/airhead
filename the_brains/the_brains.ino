@@ -129,9 +129,9 @@ Preferences preferences;
 //------------------------------------------------------------------------------------------------
 // v1.0.2b add-on to provide PID control in μBoilermaker app mode
 float targetTemp = 32.0;         // PID target temperature
-float pidOutput = 0.0;           // PID Computed PWM percentage (0-100)
+float pidOutput = 0.0;           // PID Computed PWM percentage (0-100) 
 float Kp = 2.0;                  // PID Proportional gain (0.1 to 10.0)
-float Ki = 0.005;                // PID Integral gain (0.001 to 0.5)
+float Ki = 0.003;                // PID Integral gain (0.001 to 0.5)
 float Kd = 0.1;                  // PID Derivative gain (0.0 to 2.0)
 float sampleTime = 10.0;         // PID Sample time (5 to 30 seconds)
 QuickPID myPID(&TempC,&pidOutput,&targetTemp,Kp,Ki,Kd,
