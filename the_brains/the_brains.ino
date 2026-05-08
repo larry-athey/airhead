@@ -50,6 +50,7 @@
 #define TOUCH_MODULES_CST_SELF   // Tell TouchLib.h to use the CST816 chip routines
 #include "TouchLib.h"            // LilyGo touch-screen interface library
 #include "QuickPID.h"            // PID calculation library from https://github.com/Dlloydev/QuickPID (used in μBoilermaker mode)
+#include "sTune.h"               // QuickPID autotune library from https://github.com/Dlloydev/sTune (used in μBoilermaker mode)
 #include "ota_update.h"          // Over-The-Air firmware updating library
 #include "ah_splash.h"           // Airhead mode splash screen
 #include "ubm_splash.h"          // μBoilermaker mode splash screen
@@ -139,6 +140,10 @@ QuickPID myPID(&TempC,&pidOutput,&targetTemp,Kp,Ki,Kd,
                QuickPID::dMode::dOnMeas,
                QuickPID::iAwMode::iAwCondition,
                QuickPID::Action::direct);
+sTune tuner(&TempC,&pidOutput,
+            sTune::ZN_PID,
+            sTune::reverseIP,
+            sTune::printSUMMARY);
 //------------------------------------------------------------------------------------------------
 #ifndef SCR_OUT
 #include "esp_timer.h"   // High resolution timer library for use with interrupt driven code
@@ -434,6 +439,76 @@ void RunState(byte State) { // Toggle the active distillation run state
     PowerAdjust(0);
     digitalWrite(FAN_OUT,LOW);
   }
+}
+//-----------------------------------------------------------------------------------------------
+void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermaker mode
+  float outputStep;
+  myPID.SetMode(myPID.Control::manual);
+  pidOutput = 0.0f;
+
+  PopoverMessage("Running PID Autotune");
+  Serial.printf("\n=== Autotune starting for mode %d ===\n",Mode);
+  Serial.println("Ensure the boiler is not empty");
+  delay(2000);
+
+  if (Mode == 1) {
+    tuner.SetTuningMethod(sTune::NoOvershoot_PID); // Mash
+    outputStep = 35.0f;
+  } else {
+    tuner.SetTuningMethod(sTune::ZN_PID); // Wash or Water
+    outputStep = 25.0f;
+  }
+
+  tuner.Configure(220.0f,100.0f,0.0f,outputStep,600,30,150);
+  DT.setResolution(10);
+  LoopCounter = millis();
+  StartTime = LoopCounter;
+
+  while (true) {
+    unsigned long CurrentTime = millis();
+    DT.requestTemperatures();
+    TempC = DT.getTempCByIndex(0);
+
+    uint8_t status = tuner.Run();
+
+    PowerAdjust(round(pidOutput));
+
+    if (CurrentTime - LoopCounter >= 1000) {
+      unsigned long allSeconds = (CurrentTime - StartTime) / 1000;
+      int runHours = allSeconds / 3600;
+      int secsRemaining = allSeconds % 3600;
+      int runMinutes = secsRemaining / 60;
+      int runSeconds = secsRemaining % 60;
+      sprintf(Runtime,"%02u:%02u:%02u",runHours,runMinutes,runSeconds);
+      PopoverMessage("PID Tunning Progress " + String(Runtime));
+      LoopCounter = CurrentTime;
+    }
+
+    if (status == tuner.tunings) { // Test finished
+      Kp = tuner.GetKp();
+      Ki = tuner.GetKi();
+      Kd = tuner.GetKd();
+
+      Serial.println("Autotune complete!");
+      Serial.printf("Kp = %.4f\n",Kp);
+      Serial.printf("Ki = %.4f\n",Ki);
+      Serial.printf("Kd = %.4f\n",Kd);
+      break;
+    }
+
+    delay(200);
+  }
+
+  DT.setResolution(12);
+  PowerAdjust(0);
+
+  // Update myPID with the new gain values
+  myPID.SetTunings(Kp,Ki,Kd);
+  SetMemory();
+  ScreenUpdate();
+  PopoverMessage("PID Autotune Complete");
+  delay(2500);
+  ScreenUpdate();
 }
 //-----------------------------------------------------------------------------------------------
 void PopoverMessage(String Msg) { // Display popover message to the user
@@ -825,6 +900,10 @@ void ProcessButton(byte WhichOne) { // Handle increment/decrement button inputs
           IncValue(ActiveButton);
           delay(250);
           HoldCounter ++;
+          if ((! ConfigMode) && (AppMode == 1) && (ActiveButton == 0) && (digitalRead(DEC_BTN) == 0)) {
+            performAutotune(0);
+            return;
+          }
           if ((! ConfigMode) && (ActiveButton == 0) && (HoldCounter > 210)) { // Switch app app mode
             if (AppMode == 0) {
               AppMode = 1;
