@@ -19,7 +19,7 @@ Unlike the full Boilermaker, these are sold on my website as 120-volt-only and b
 3. Hold **Value+** for at least 5 seconds, then press **Value-** at the same time.
 4. The test takes 5–15 minutes. Watch the screen for progress.
 
-After tuning completes, the new **P, I, and D** values will be saved. You can manually tweak them on the calibration screen if needed.
+After tuning completes, the new **P, I, and D** values will be saved. You can manually tweak them on the calibration page if needed.
 
 **What is PID? (simple version)**
 PID is a control method that tries to reach and hold your exact target temperature smoothly:
