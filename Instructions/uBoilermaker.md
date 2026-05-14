@@ -34,7 +34,7 @@ In the Temperature Cruise mode of the full Boilermaker, the **Change Wait** and 
 
 - PID gives very steady temperature — great for mashing, sous-vide style control, or electric smokers.
 - It is **not** as thermally aggressive as the normal Airhead PI mode. Once at temperature it will pulse the heater more gently, so you will see significantly slower vapor production in distillation.
-- The temperature control becomes more stable the longer it runs because the PID is training itself on the load.
+- The temperature control becomes more stable the longer it runs because the PID is training itself on the current load.
 - Autotune results are a good starting point, but every boiler/setup is different. Feel free to tweak the numbers ±20–50% and test.
 
 _**NOTE:** If you are using an electric hot plate, you will want to bypass its internal temperature control dial or it will interrupt your power once you reach its maximum temperature. It's also recommended that you maintain good ventilation under it because most also have a thermal snap switch that will cut out if it overheats internally. The μBoilermaker does not work with inductive cooktops!_
