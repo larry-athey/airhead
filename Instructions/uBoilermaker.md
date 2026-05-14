@@ -31,7 +31,7 @@ PID is a control method that tries to reach and hold your exact target temperatu
 **Realistic expectations:**
 
 - PID gives very steady temperature — great for mashing, sous-vide style control, or electric smokers.
-- It is **not** as thermally aggressive as the normal Airhead PI mode. Once at temperature it will pulse the heater more gently, so you may see slightly slower vapor production in distillation.
+- It is **not** as thermally aggressive as the normal Airhead PI mode. Once at temperature it will pulse the heater more gently, so you will see significantly slower vapor production in distillation.
 - The temperature control becomes more stable the longer it runs because the PID is training itself on the load.
 - Autotune results are a good starting point, but every boiler/setup is different. Feel free to tweak the numbers ±20–50% and test.
 
