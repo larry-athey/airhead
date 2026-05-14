@@ -17,7 +17,7 @@ Unlike the full Boilermaker, these are sold on my website as 120-volt-only and b
 1. Fill the boiler to its normal full mark with water.
 2. Select Mode 3.
 3. Hold **Value+** for at least 5 seconds, then press **Value-** at the same time.
-4. The test takes 5–15 minutes. Watch the screen (or serial output if connected) for progress.
+4. The test takes 5–15 minutes. Watch the screen for progress.
 
 After tuning completes, the new **P, I, and D** values will be saved. You can manually tweak them on the calibration screen if needed.
 
