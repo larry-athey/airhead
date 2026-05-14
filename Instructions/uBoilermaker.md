@@ -12,7 +12,7 @@ Unlike the full Boilermaker, these are sold on my website as 120-volt-only and b
 
 [Operation](https://github.com/larry-athey/airhead/blob/main/Instructions/Operation.md) of the μBoilermaker is completely identical to the Airhead, the only real difference are the options on the calibration page which are PID gain parameters. The target audience for these are people using stove-top stills with an electric hot plate, home beer brewers, and people who want far better control over an electric smoker, all without the need for a WiFi connection.
 
-**How to run autotune:**
+**How to run PID autotune:**
 
 1. Fill the boiler to its normal full mark with water.
 2. Select Mode 3.
