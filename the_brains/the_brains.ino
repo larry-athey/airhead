@@ -442,7 +442,6 @@ void RunState(byte State) { // Toggle the active distillation run state
 }
 //-----------------------------------------------------------------------------------------------
 void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermaker mode
-  #include "cmath"
   float outputStep,Kpp,Kii,Kdd;
   myPID.SetMode(myPID.Control::manual);
   pidOutput = 0.0f;
@@ -514,22 +513,17 @@ void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermake
   PowerAdjust(0);
   ScreenUpdate();
 
-  if (std::isnan(Kpp) || std::isnan(Kii) || std::isnan(Kdd)) {
-    // Invalid tuning — do NOT save to flash
-    Serial.println("Invalid tuning values detected — skipping save");
-    PopoverMessage("PID Autotune Failed");
-  } else {
-    // Update myPID with the new gain values
-    if (Kpp < 0.1) Kpp = 0.1;
-    if (Kii < 0.001) Kii = 0.001;
-    if (Kdd < 0.0) Kdd = 0.0;
-    Kp = Kpp;
-    Ki = Kii;
-    Kd = Kdd;
-    myPID.SetTunings(Kp,Ki,Kd);
-    SetMemory();
-    PopoverMessage("PID Autotune Complete");
-  }
+  // Update myPID with the new gain values
+  if (Kpp < 0.1) Kpp = 0.1;
+  if (Kii < 0.001) Kii = 0.001;
+  if (Kdd < 0.0) Kdd = 0.0;
+  Kp = Kpp;
+  Ki = Kii;
+  Kd = Kdd;
+  myPID.SetTunings(Kp,Ki,Kd);
+  SetMemory();
+  PopoverMessage("PID Autotune Complete");
+
   delay(3000);
   ScreenUpdate();
 }
