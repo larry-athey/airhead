@@ -34,8 +34,6 @@ PID is a control method that tries to reach and hold your exact target temperatu
 - It is **not** as thermally aggressive as the normal Airhead PI mode. Once at temperature it will pulse the heater more gently, so you may see slightly slower vapor production in distillation.
 - Autotune results are a good starting point, but every boiler/setup is different. Feel free to tweak the numbers ±20–50% and test.
 
-If the autotune ever returns weird values (P=0, negative D, etc.), just preheat more and try again.
-
 _**NOTE:** If you are using an electric hot plate, you will want to bypass its internal temperature control dial or it will interrupt your power once you reach its maximum temperature. It's also recommended that you maintain good ventilation under it because most also have a thermal snap switch that will cut out if it overheats internally. The μBoilermaker does not work with inductive cooktops!_
 
 ---
