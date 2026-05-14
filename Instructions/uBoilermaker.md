@@ -28,6 +28,8 @@ PID is a control method that tries to reach and hold your exact target temperatu
 - **I (Integral)** — Corrects small long-term errors (like slowly drifting a bit low).
 - **D (Derivative)** — Looks at how fast the temperature is changing and helps prevent overshooting.
 
+In the Temperature Cruise mode of the full Boilermaker, the **Change Wait** and **Adjustment Rate** are equal to the **P** parameter and the **Deviation Rate** is equal to the **I** parameter. These values also exist in the Airhead's PI controller, but are static settings.
+
 **Realistic expectations:**
 
 - PID gives very steady temperature — great for mashing, sous-vide style control, or electric smokers.
