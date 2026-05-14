@@ -514,12 +514,15 @@ void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermake
   PowerAdjust(0);
   ScreenUpdate();
 
-  if (std::isnan(Kpp) || std::isnan(Kii) || std::isnan(Kdd) || Kpp <= 0.0f || Kii < 0.0f || Kdd < 0.0f) {
+  if (std::isnan(Kpp) || std::isnan(Kii) || std::isnan(Kdd)) {
     // Invalid tuning — do NOT save to flash
     Serial.println("Invalid tuning values detected — skipping save");
     PopoverMessage("PID Autotune Failed");
   } else {
     // Update myPID with the new gain values
+    if (Kpp < 0.1) Kpp = 0.1;
+    if (Kii < 0.001) Kii = 0.001;
+    if (Kdd < 0.0) Kdd = 0.0;
     Kp = Kpp;
     Ki = Kii;
     Kd = Kdd;
