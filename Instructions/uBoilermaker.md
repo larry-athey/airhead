@@ -4,7 +4,7 @@
 
 ---
 
-The μBoilermaker is 100% based on the Airhead, but is a stand-alone boiler controller for 120 volt resistive loads up to 1500 watts and uses PID temperature control, unlike the aggressive PI controller used by the Airhead. You can switch any Airhead into μBoilermaker mode by holding the Value+ button for 15 seconds after you have selected Mode 3. Use the same procedure to switch things back.
+The μBoilermaker is 100% based on the Airhead, but is a stand-alone boiler controller for 120 volt resistive loads up to 1500 watts and uses an autotuning PID temperature controller, unlike the aggressive PI controller used by the Airhead. You can switch any Airhead into μBoilermaker mode by holding the Value+ button for 15 seconds after you have selected Mode 3. Use the same procedure to switch things back.
 
 The reason for the μBoilermaker is to satisfy the numerous requests for a Boilermaker that isn't WiFi dependent. This isn't a one-to-one implementation of the full Boilermaker, but it provides a person the ability to have constant power, constant temperature, or timed runs with progressive temperature. It also uses a preset **Cruise Then Brew** mode and runs in PI control until 1C below the target temp.
 
