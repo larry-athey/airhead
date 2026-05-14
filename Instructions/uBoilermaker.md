@@ -12,7 +12,29 @@ Unlike the full Boilermaker, these are sold on my website as 120-volt-only and b
 
 [Operation](https://github.com/larry-athey/airhead/blob/main/Instructions/Operation.md) of the μBoilermaker is completely identical to the Airhead, the only real difference are the options on the calibration page which are PID gain parameters. The target audience for these are people using stove-top stills with an electric hot plate, home beer brewers, and people who want far better control over an electric smoker, all without the need for a WiFi connection.
 
-One exception to the operation similarities is that if you hold the Value+ button for at least 5 seconds after selecting Mode 3 and then press the Value- button at the same time, this will activate a PID autotuning procedure. Only perform this procedure if the boiler is filled to its full mark with water! This procedure can take 5 to 10 minutes to complete.
+**How to run autotune:**
+
+1. Fill the boiler to its normal full mark with water.
+2. Select Mode 3.
+3. Hold **Value+** for at least 5 seconds, then press **Value-** at the same time.
+4. The test takes 5–15 minutes. Watch the screen (or serial output if connected) for progress.
+
+After tuning completes, the new **P, I, and D** values will be saved. You can manually tweak them on the calibration screen if needed.
+
+**What is PID? (simple version)**
+PID is a control method that tries to reach and hold your exact target temperature smoothly:
+
+- **P (Proportional)** — How strongly it reacts to being off-target.
+- **I (Integral)** — Corrects small long-term errors (like slowly drifting a bit low).
+- **D (Derivative)** — Looks at how fast the temperature is changing and helps prevent overshooting.
+
+**Realistic expectations:**
+
+- PID gives very steady temperature — great for mashing, sous-vide style control, or electric smokers.
+- It is **not** as thermally aggressive as the normal Airhead PI mode. Once at temperature it will pulse the heater more gently, so you may see slightly slower vapor production in distillation.
+- Autotune results are a good starting point, but every boiler/setup is different. Feel free to tweak the numbers ±20–50% and test.
+
+If the autotune ever returns weird values (P=0, negative D, etc.), just preheat more and try again.
 
 _**NOTE:** If you are using an electric hot plate, you will want to bypass its internal temperature control dial or it will interrupt your power once you reach its maximum temperature. It's also recommended that you maintain good ventilation under it because most also have a thermal snap switch that will cut out if it overheats internally. The μBoilermaker does not work with inductive cooktops!_
 
