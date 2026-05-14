@@ -442,14 +442,26 @@ void RunState(byte State) { // Toggle the active distillation run state
 }
 //-----------------------------------------------------------------------------------------------
 void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermaker mode
-  float outputStep;
+  #include "cmath"
+  float outputStep,Kpp,Kii,Kdd;
   myPID.SetMode(myPID.Control::manual);
   pidOutput = 0.0f;
-
-  PopoverMessage("Running PID Autotune");
+  
   Serial.printf("\n=== Autotune starting for mode %d ===\n",Mode);
   Serial.println("Ensure the boiler is not empty");
-  delay(2000);
+
+  // Preheat the boiler to 66C/150F at 80% power
+  PopoverMessage("Preheating Boiler...");
+  PowerAdjust(80);
+  while (TempC < 66) { 
+    TempUpdate();
+    delay(1000);
+  }
+
+  // Fall back to 0% power and rest 15 seconds before autotuning
+  PowerAdjust(0);
+  PopoverMessage("Running PID Autotune");
+  delay(15000);
 
   if (Mode == 1) {
     tuner.SetTuningMethod(sTune::NoOvershoot_PID); // Mash
@@ -466,8 +478,7 @@ void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermake
 
   while (true) {
     unsigned long CurrentTime = millis();
-    DT.requestTemperatures();
-    TempC = DT.getTempCByIndex(0);
+    TempUpdate();
 
     uint8_t status = tuner.Run();
 
@@ -485,14 +496,14 @@ void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermake
     }
 
     if (status == tuner.tunings) { // Test finished
-      Kp = tuner.GetKp();
-      Ki = tuner.GetKi();
-      Kd = tuner.GetKd();
+      Kpp = tuner.GetKp();
+      Kii = tuner.GetKi();
+      Kdd = tuner.GetKd();
 
       Serial.println("Autotune complete!");
-      Serial.printf("Kp = %.4f\n",Kp);
-      Serial.printf("Ki = %.4f\n",Ki);
-      Serial.printf("Kd = %.4f\n",Kd);
+      Serial.printf("New Kp = %.4f\n",Kpp);
+      Serial.printf("New Ki = %.4f\n",Kii);
+      Serial.printf("New Kd = %.4f\n",Kdd);
       break;
     }
 
@@ -501,13 +512,22 @@ void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermake
 
   DT.setResolution(12);
   PowerAdjust(0);
-
-  // Update myPID with the new gain values
-  myPID.SetTunings(Kp,Ki,Kd);
-  SetMemory();
   ScreenUpdate();
-  PopoverMessage("PID Autotune Complete");
-  delay(2500);
+
+  if (std::isnan(Kpp) || std::isnan(Kii) || std::isnan(Kdd) || Kpp <= 0.0f || Kii < 0.0f || Kdd < 0.0f) {
+    // Invalid tuning — do NOT save to flash
+    Serial.println("Invalid tuning values detected — skipping save");
+    PopoverMessage("PID Autotune Failed");
+  } else {
+    // Update myPID with the new gain values
+    Kp = Kpp;
+    Ki = Kii;
+    Kd = Kdd;
+    myPID.SetTunings(Kp,Ki,Kd);
+    SetMemory();
+    PopoverMessage("PID Autotune Complete");
+  }
+  delay(3000);
   ScreenUpdate();
 }
 //-----------------------------------------------------------------------------------------------
