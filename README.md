@@ -9,6 +9,8 @@ _**NEWSFLASH:** If you'd like a far more advanced stand-alone WiFi enabled versi
 **Facebook Idiot:** _Why would you bother?_<br>
 **Me:** It's only a "bother" for somebody who couldn't do it on their best day. I'd rather have nicer things.
 
+_...No, I don't use AI to design and build my projects, I actually still know how to use my brain..._
+
 ---
 
 Still Spirits brand Air Stills and the various clones all suffer the same design flaw where the temperature is managed the same way it is with an electric cooking appliance. This also includes the ones with adjustable temperature. They send full power to the heating element when heating up, shut it off when they're up to temperature, then repeat this cycle. Thanks for the unstable yo-yo temperatures!
