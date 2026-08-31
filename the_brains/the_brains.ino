@@ -492,37 +492,43 @@ void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermake
       int runSeconds = secsRemaining % 60;
       sprintf(Runtime,"%02u:%02u:%02u",runHours,runMinutes,runSeconds);
       PopoverMessage("PID Tunning Progress " + String(Runtime));
+      Serial.printf("status=%u  pidOutput=%.1f  TempC=%.2f\n",status,pidOutput,TempC);
       LoopCounter = CurrentTime;
     }
 
     if (status == tuner.tunings) { // Test finished
-      Kpp = tuner.GetKp();
-      Kii = tuner.GetKi();
-      Kdd = tuner.GetKd();
+      tuner.GetAutoTunings(&Kpp,&Kii,&Kdd);
 
       Serial.println("Autotune complete!");
       Serial.printf("New Kp = %.4f\n",Kpp);
       Serial.printf("New Ki = %.4f\n",Kii);
       Serial.printf("New Kd = %.4f\n",Kdd);
+
       break;
     }
 
     delay(200);
+    yield();
   }
 
   DT.setResolution(12);
   PowerAdjust(0);
   ScreenUpdate();
 
-  // Update myPID with the new gain values
-  if (Kpp < 0.1) Kpp = 0.1;
-  if (Kii < 0.001) Kii = 0.001;
-  if (Kdd < 0.0) Kdd = 0.0;
-  Kp = Kpp;
-  Ki = Kii;
-  Kd = Kdd;
-  myPID.SetTunings(Kp,Ki,Kd);
-  SetMemory();
+  // Reject NaN / Inf / zero / negative tuning values
+  bool valid = isfinite(Kpp) && isfinite(Kii) && isfinite(Kdd) && (Kpp > 0.0f) && (Kpp <= 10.0f) && (Kii >= 0.0f) && (Kii <= 0.5f) && (Kdd >= 0.0f) && (Kdd <= 2.0f);
+
+  if (valid) {
+    // Update myPID with the new gain values
+    Kp = Kpp;
+    Ki = Kii;
+    Kd = Kdd;
+    myPID.SetTunings(Kp,Ki,Kd);
+    SetMemory();
+  } else {
+    // Keep the defaults (or previous good values you already have stored)
+    Serial.println("PID auto tune failed - keeping existing settings");
+  }
   PopoverMessage("PID Autotune Complete");
 
   delay(3000);
