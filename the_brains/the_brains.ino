@@ -96,7 +96,7 @@ byte RestPeriod = 0;             // How many seconds to rest after the target te
 byte ActiveButton = 0;           // Currently selected touch-screen button
 byte AppMode = 0;                // 0 = Airhead mode, 1 = μBoilermaker mode
 char Runtime[10];                // HH:MM:SS formatted time of the current distillation run
-String Version = "1.0.2b";       // Current release version of the project
+String Version = "1.0.2c";       // Current release version of the project
 //------------------------------------------------------------------------------------------------
 // Coordinates for touch-screen buttons (Modes 1 and 2)
 int ModeX1 = 0, ModeY1 = 0, ModeX2 = 158, ModeY2 = 84;
@@ -131,8 +131,8 @@ Preferences preferences;
 // v1.0.2b add-on to provide PID control in μBoilermaker app mode
 float targetTemp = 32.0;         // PID target temperature
 float pidOutput = 0.0;           // PID Computed PWM percentage (0-100) 
-float Kp = 2.0;                  // PID Proportional gain (0.1 to 10.0)
-float Ki = 0.003;                // PID Integral gain (0.001 to 0.5)
+float Kp = 0.1;                  // PID Proportional gain (0.1 to 10.0)
+float Ki = 0.029;                // PID Integral gain (0.001 to 0.5)
 float Kd = 0.1;                  // PID Derivative gain (0.0 to 2.0)
 float sampleTime = 10.0;         // PID Sample time (5 to 30 seconds)
 QuickPID myPID(&TempC,&pidOutput,&targetTemp,Kp,Ki,Kd,
@@ -142,7 +142,7 @@ QuickPID myPID(&TempC,&pidOutput,&targetTemp,Kp,Ki,Kd,
                QuickPID::Action::direct);
 sTune tuner(&TempC,&pidOutput,
             sTune::ZN_PID,
-            sTune::reverseIP,
+            sTune::directIP,
             sTune::printSUMMARY);
 //------------------------------------------------------------------------------------------------
 #ifndef SCR_OUT
@@ -464,13 +464,14 @@ void performAutotune(byte Mode) { // Autotune the PID controller in μBoilermake
 
   if (Mode == 1) {
     tuner.SetTuningMethod(sTune::NoOvershoot_PID); // Mash
-    outputStep = 35.0f;
+    outputStep = 40.0f;
   } else {
     tuner.SetTuningMethod(sTune::ZN_PID); // Wash or Water
-    outputStep = 25.0f;
+    outputStep = 45.0f;
   }
 
-  tuner.Configure(220.0f,100.0f,0.0f,outputStep,600,30,150);
+  tuner.Configure(40.0f,100.0f,0.0f,outputStep,600,30,150);
+  tuner.SetEmergencyStop(105.0f);
   DT.setResolution(10);
   LoopCounter = millis();
   StartTime = LoopCounter;
