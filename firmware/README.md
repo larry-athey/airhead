@@ -8,6 +8,8 @@ The Airhead will start up a WiFi access point with the SSID **"Airhead-Firmware-
 
 Start your web browser and go to **http://192.168.4.1**
 
+<img width="1024" alt="image" src="https://github.com/user-attachments/assets/554edb17-937c-48e4-909a-5f2a67102660"><br>
+
 If you are unable to connect, check to make sure that your device pulled an IP address from the Airhead. If it does not pull one, you will need to manually configure a static IP address on your device. Here are settings that will work for you if you encounter this problem.
 
 Address: 192.168.4.100<br>
