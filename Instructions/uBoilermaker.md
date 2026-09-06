@@ -12,7 +12,7 @@ Unlike the full Boilermaker, these are sold on my website as 120-volt-only and b
 
 [Operation](https://github.com/larry-athey/airhead/blob/main/Instructions/Operation.md) of the μBoilermaker is completely identical to the Airhead, the only real difference are the options on the calibration page which are PID gain parameters. The target audience for these are people using stove-top stills with an electric hot plate, home beer brewers, and people who want far better control over an electric smoker, all without the need for a WiFi connection.
 
-**How to run PID autotune:**
+### How to run PID autotune:
 
 1. Fill the boiler to its normal full mark with water.
 2. Select Mode 3.
@@ -21,20 +21,21 @@ Unlike the full Boilermaker, these are sold on my website as 120-volt-only and b
 
 After tuning completes, the new **P, I, and D** values will be saved. You can manually tweak them on the calibration page if needed.
 
-**What is PID? (simple version)**
+### What is PID? (simple version)
+
 PID is a control method that tries to reach and hold your exact target temperature smoothly:
 
 - **P (Proportional)** — How strongly it reacts to being off-target.
 - **I (Integral)** — Corrects small long-term errors (like slowly drifting a bit low).
 - **D (Derivative)** — Looks at how fast the temperature is changing and helps prevent overshooting.
 
-**And now the scientific version**
+### And now the scientific version
 
 <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/41ac7c06-2256-4e52-a8fe-57cfb0335ac4"><br>
 
 In the Temperature Cruise mode of the full Boilermaker, the **Change Wait** and **Adjustment Rate** are equal to the **P** parameter and the **Deviation Rate** is equal to the **I** parameter. These values also exist in the Airhead's PI controller, but are static settings.
 
-**Realistic expectations:**
+### Realistic expectations:
 
 - PID gives very steady temperature — great for mashing, fermenting, sous-vide style control, or electric smokers.
 - It is **not** as thermally aggressive as the normal Airhead PI mode. Once at temperature it will pulse the heater more gently, so you will see significantly slower vapor production in distillation.
